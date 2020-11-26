@@ -1,36 +1,36 @@
-import React from 'react';
+import React from "react";
 
-import Toolbar from '@material-ui/core/Toolbar';
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import DividerMU from '@material-ui/core/Divider';
-import Tooltip from '@material-ui/core/Tooltip';
-import { withStyles } from '@material-ui/core/styles';
+import Toolbar from "@material-ui/core/Toolbar";
+import AppBar from "@material-ui/core/AppBar";
+import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import DividerMU from "@material-ui/core/Divider";
+import Tooltip from "@material-ui/core/Tooltip";
+import { withStyles } from "@material-ui/core/styles";
 
 import {
   FaBrush as BrushIcon,
   FaRedo as RedoIcon,
   FaBars as MenuIcon,
   FaGithub as GithubIcon,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
-import Link from 'components/Link';
+import Link from "components/Link";
 
-import useTheme from 'store/theme';
-import useSW from 'store/sw';
+import useTheme from "store/theme";
+import useSW from "store/sw";
 
-import { title, repository } from 'config';
+import { title, repository } from "config";
 
-import useStyles from './styles';
+import useStyles from "./styles";
 
 const Divider = withStyles({
   root: {
-    'margin-left': 7,
-    'margin-right': 7,
+    "margin-left": 7,
+    "margin-right": 7,
   },
-})(props => <DividerMU flexItem orientation="vertical" {...props} />);
+})((props) => <DividerMU flexItem orientation="vertical" {...props} />);
 
 function AppBar_({ onMenuOpen }) {
   const classes = useStyles();
@@ -54,11 +54,7 @@ function AppBar_({ onMenuOpen }) {
     >
       <Toolbar className={classes.toolbar}>
         <Box display="flex" className={classes.main}>
-          <IconButton
-            edge="start"
-            aria-label="open menu"
-            onClick={onMenuOpen}
-          >
+          <IconButton edge="start" aria-label="open menu" onClick={onMenuOpen}>
             <MenuIcon />
           </IconButton>
           <Link to="/">
@@ -68,19 +64,24 @@ function AppBar_({ onMenuOpen }) {
           </Link>
         </Box>
         <Box display="flex">
-          {
-            swState.isUpdated && (
-              <>
-                <Tooltip title="The application has newer version; press to update" arrow>
-                  <IconButton aria-label="update the application" color="secondary" onClick={handleAppUpdate}>
-                    <RedoIcon />
-                  </IconButton>
-                </Tooltip>
-                <Divider />
-              </>
-            )
-          }
-          <Tooltip title="It's open source" arrow>
+          {swState.isUpdated && (
+            <>
+              <Tooltip
+                title="The application has newer version; press to update"
+                arrow
+              >
+                <IconButton
+                  aria-label="update the application"
+                  color="secondary"
+                  onClick={handleAppUpdate}
+                >
+                  <RedoIcon />
+                </IconButton>
+              </Tooltip>
+              <Divider />
+            </>
+          )}
+          {/* <Tooltip title="It's open source" arrow>
             <IconButton
               aria-label="go to github page"
               component="a"
@@ -90,7 +91,8 @@ function AppBar_({ onMenuOpen }) {
             >
               <GithubIcon /> 
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
+          Logout
           <Divider />
           <Tooltip title="Change theme" arrow>
             <IconButton
