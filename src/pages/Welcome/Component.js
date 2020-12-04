@@ -62,7 +62,7 @@ function Welcome(props) {
         >
           Telusuri
         </Button>
-        {props.isLoggedIn && <p>{props.user}</p>}
+        {props.isLoggedIn && <p>Halo, {props.user.username}!</p>}
         {!props.isLoggedIn && (
           <Button
             variant="outlined"

@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "dayjs": "^1.8.28",
+    "formik": "^2.2.5",
     "formik-material-ui": "^3.0.1",
     "is-mobile": "^2.2.1",
     "notistack": "^0.9.17",

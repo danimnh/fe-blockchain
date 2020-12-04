@@ -8,6 +8,10 @@ const useStyles = makeStyles(() => ({
     "align-items": "center",
     height: "100%",
   },
+  button: {
+    width: "300px",
+    marginTop: 10,
+  },
 }));
 
 export default useStyles;
