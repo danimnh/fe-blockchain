@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 import QrReader from "react-qr-reader";
 import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+// import Typography from "@material-ui/core/Typography";
+// import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import { FaReact as ReactIcon } from "react-icons/fa";
+// import { FaReact as ReactIcon } from "react-icons/fa";
 
 import Meta from "components/Meta";
 
