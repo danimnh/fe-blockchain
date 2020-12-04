@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import AppBar from 'sections/AppBar';
-import Menu from 'sections/Menu';
+import AppBar from "sections/AppBar";
+import Menu from "sections/Menu";
 
-function Navigation() {
+function Navigation(handleLogout) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  console.log("navigation");
+  console.log(handleLogout);
 
   const handleMenuOpen = () => {
     setIsMenuOpen(true);
@@ -16,8 +18,16 @@ function Navigation() {
 
   return (
     <>
-      <Menu isOpen={isMenuOpen} onClose={handleMenuClose} onOpen={handleMenuOpen} />
-      <AppBar isMenuOpen={isMenuOpen} onMenuOpen={handleMenuOpen} />
+      <Menu
+        isOpen={isMenuOpen}
+        onClose={handleMenuClose}
+        onOpen={handleMenuOpen}
+      />
+      <AppBar
+        isMenuOpen={isMenuOpen}
+        onMenuOpen={handleMenuOpen}
+        props={handleLogout}
+      />
     </>
   );
 }

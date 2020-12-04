@@ -33,7 +33,7 @@ const Divider = withStyles({
   },
 })((props) => <DividerMU flexItem orientation="vertical" {...props} />);
 
-function AppBar_({ onMenuOpen }) {
+function AppBar_({ onMenuOpen, props }) {
   const classes = useStyles();
   const [, themeActions] = useTheme();
   const [swState, swActions] = useSW();
@@ -93,7 +93,8 @@ function AppBar_({ onMenuOpen }) {
               <GithubIcon /> 
             </IconButton>
           </Tooltip> */}
-          Logout
+
+          <Button onClick={props.handleLogout}>Logout</Button>
           <Divider />
           <Tooltip title="Change theme" arrow>
             <IconButton

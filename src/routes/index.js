@@ -4,7 +4,12 @@ const routes = [
   {
     exact: true,
     component: asyncComponentLoader(() => import("pages/Login")),
-    path: "/Login",
+    path: "/login",
+  },
+  {
+    exact: true,
+    component: asyncComponentLoader(() => import("pages/Sign_Up")),
+    path: "/signup",
   },
   {
     exact: true,
@@ -28,8 +33,8 @@ const routes = [
   },
   {
     exact: true,
-    component: asyncComponentLoader(() => import("pages/Page4")),
-    path: "/page-4",
+    component: asyncComponentLoader(() => import("pages/Product_Page")),
+    path: "/:batchId",
   },
   {
     component: asyncComponentLoader(() => import("components/NotFound")),

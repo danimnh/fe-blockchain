@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) => ({
     // "align-items": "center",
     height: "100%",
   },
+  button: {
+    width: "300px",
+    marginTop: 10,
+  },
   wrapper: {
     display: "flex",
     "user-select": "none",

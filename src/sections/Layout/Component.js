@@ -11,16 +11,33 @@ import useStyles from "./styles";
 
 function Layout() {
   const classes = useStyles();
-  let isLoggedIn = false;
+  const [isLoggedIn, setLoggedIn] = React.useState(false);
+  const [user, setUser] = React.useState({ name: "" });
   return (
     <>
       <Notifications />
-      {isLoggedIn && <Navigation />}
-
+      {isLoggedIn && (
+        <Navigation
+          handleLogout={() => {
+            setLoggedIn(false);
+            setUser("");
+          }}
+        />
+      )}
       <Box component="main" className={classes.wrapper}>
         <Box className={classes.spacer} />
         <Box className={classes.content}>
-          <Content />
+          <Content
+            user={user}
+            setUser={() => {
+              setUser("Petani A");
+            }}
+            handleLogin={(user) => {
+              setLoggedIn(true);
+              setUser(user);
+            }}
+            isLoggedIn={isLoggedIn}
+          />
           <Copyright />
         </Box>
       </Box>

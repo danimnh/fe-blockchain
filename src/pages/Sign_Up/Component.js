@@ -10,25 +10,16 @@ import { Link as RouterLink } from "react-router-dom";
 
 import useStyles from "./styles";
 
-function LoginPage(props) {
+function SignUpPage() {
   const classes = useStyles();
-  // const handleLogin = () => {
-  //   setLoggedIn(!isLoggedIn);
-  //   console.log(isLoggedIn);
-  // };
+
   return (
     <>
-      <Meta title="Login Page" description="Login Page" />
+      <Meta title="Signup Page" description="Signup Page" />
       <Container maxWidth="sm" className={classes.root}>
+        Sign up
         <TextField placeholder="username" />
         <TextField placeholder="password" />
-        <Button
-          component={RouterLink}
-          to="/"
-          onClick={props.handleLogin("abcde")}
-        >
-          Login
-        </Button>
         <Button component={RouterLink} to="/">
           kembali ke halaman awal
         </Button>
@@ -37,4 +28,4 @@ function LoginPage(props) {
   );
 }
 
-export default LoginPage;
+export default SignUpPage;
