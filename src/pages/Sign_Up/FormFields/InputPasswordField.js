@@ -6,7 +6,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 export default function InputField(props) {
-  const { errorText, ...rest } = props;
+  const { ...rest } = props;
   const [field, meta] = useField(props);
   const [showPassword, setShowPassword] = React.useState(false);
 

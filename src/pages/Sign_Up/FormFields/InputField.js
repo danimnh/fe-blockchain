@@ -4,7 +4,10 @@ import { useField } from "formik";
 import { TextField } from "@material-ui/core";
 
 export default function InputField(props) {
-  const { errorText, ...rest } = props;
+  const {
+    // errorText,
+    ...rest
+  } = props;
   const [field, meta] = useField(props);
 
   function _renderHelperText() {
