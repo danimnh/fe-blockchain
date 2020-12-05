@@ -11,6 +11,7 @@ import useStyles from "./styles";
 
 function Layout() {
   const classes = useStyles();
+  //debug appbar TO-DO : memoize user
   const [isLoggedIn, setLoggedIn] = React.useState(false);
   const [user, setUser] = React.useState({ name: "" });
   return (
@@ -37,6 +38,9 @@ function Layout() {
               setUser(user);
             }}
             isLoggedIn={isLoggedIn}
+            handleSignUp={() => {
+              console.log("handleSignUp is called");
+            }}
           />
           <Copyright />
         </Box>

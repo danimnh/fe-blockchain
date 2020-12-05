@@ -1,13 +1,14 @@
 import React from "react";
 import WelcomePage from "pages/Welcome";
 import LoginPage from "pages/Login";
+import SignUpPage from "pages/Sign_Up";
 import Page from "components/Page";
 
 import { Switch, Route } from "react-router-dom";
 
 // import routes from "routes";
 
-function Content({ user, handleLogin, isLoggedIn }) {
+function Content({ user, handleLogin, isLoggedIn, handleSignUp }) {
   return (
     <Page>
       <Switch>
@@ -23,6 +24,11 @@ function Content({ user, handleLogin, isLoggedIn }) {
           exact
           path="/login"
           render={() => <LoginPage handleLogin={handleLogin} />}
+        />
+        <Route
+          exact
+          path="/daftar"
+          render={() => <SignUpPage handleSignUp={handleSignUp} />}
         />
       </Switch>
     </Page>

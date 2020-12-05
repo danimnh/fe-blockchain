@@ -4,9 +4,19 @@ const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     flexDirection: "column",
-    "justify-content": "center",
+    "justify-content": "flex-start",
     "align-items": "center",
     height: "100%",
+  },
+  button: {
+    width: "130px",
+    margin: 10,
+  },
+  center: {
+    marginTop: 20,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
   },
 }));
 

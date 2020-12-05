@@ -10,7 +10,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
 
 import {
-  FaBrush as BrushIcon,
+  // FaBrush as BrushIcon,
   FaRedo as RedoIcon,
   FaBars as MenuIcon,
   // FaGithub as GithubIcon,
@@ -18,7 +18,7 @@ import {
 
 import Link from "components/Link";
 
-import useTheme from "store/theme";
+// import useTheme from "store/theme";
 import useSW from "store/sw";
 
 // import { title, repository } from "config";
@@ -35,12 +35,12 @@ const Divider = withStyles({
 
 function AppBar_({ onMenuOpen, props }) {
   const classes = useStyles();
-  const [, themeActions] = useTheme();
+  // const [, themeActions] = useTheme();
   const [swState, swActions] = useSW();
 
-  function handleToggleTheme() {
-    themeActions.toggle();
-  }
+  // function handleToggleTheme() {
+  //   themeActions.toggle();
+  // }
 
   function handleAppUpdate() {
     swActions.update();
@@ -96,7 +96,7 @@ function AppBar_({ onMenuOpen, props }) {
 
           <Button onClick={props.handleLogout}>Logout</Button>
           <Divider />
-          <Tooltip title="Change theme" arrow>
+          {/* <Tooltip title="Change theme" arrow>
             <IconButton
               aria-label="toggle theme"
               edge="end"
@@ -104,7 +104,7 @@ function AppBar_({ onMenuOpen, props }) {
             >
               <BrushIcon />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
         </Box>
       </Toolbar>
     </AppBar>

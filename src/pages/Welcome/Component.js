@@ -77,7 +77,7 @@ function Welcome(props) {
           <Button
             variant="outlined"
             component={RouterLink}
-            to="/signup"
+            to="/daftar"
             className={classes.button}
           >
             Buat Akun

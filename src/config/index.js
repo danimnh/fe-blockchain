@@ -70,7 +70,7 @@ const cancelationMessage = "operation is manually canceled";
 
 const dateFormat = "MMMM DD, YYYY";
 
-const title = "React PWA";
+const title = "Sistem Rantai Pasok";
 
 const themePair = ["dark", "light"];
 
