@@ -2,7 +2,7 @@ export default {
   formId: "SignUpForm",
   formField: {
     name: {
-      name: "Name",
+      name: "name",
       label: "Nama",
       requiredErrorMsg: "Name is required",
     },
@@ -28,18 +28,18 @@ export default {
     },
     noKK: {
       name: "noKK",
-      label: "noKK*",
+      label: "Nomor Kartu Keluarga",
       requiredErrorMsg: "Nomor Kartu Keluarga is required",
       invalidErrorMsg: "Nomor Kartu Keluarga is not valid (e.g. 70000)",
     },
     noNPWP: {
       name: "noNPWP",
-      label: "noNPWP*",
+      label: "Nomor NPWP",
       requiredErrorMsg: "Nomor NPWP is required",
     },
     noNIK: {
       name: "noNIK",
-      label: "NIK is required.",
+      label: "Nomor Induk Kependudukan (NIK)",
     },
     memberType: {
       name: "memberType",
@@ -47,9 +47,25 @@ export default {
       requiredErrorMsg: "memberType is required",
     },
     memberInfo: {
+      luasLahan: {
+        name: "luasLahan",
+        label: "Luas Lahan (dalam hektar)",
+      },
+      alamatToko: {
+        name: "alamatToko",
+        label: "Alamat Toko",
+      },
+      alamatLahan: {
+        name: "alamatLahan",
+        label: "Alamat Lahan",
+      },
+      kelompokTani: {
+        name: "kelompokTani",
+        label: "Kelompok Tani",
+      },
       name: "memberInfo",
       label: "memberInfo*",
-      requiredErrorMsg: "Card number is required",
+      requiredErrorMsg: "memberInfo required",
     },
   },
 };

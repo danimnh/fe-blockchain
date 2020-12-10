@@ -28,7 +28,7 @@ const routes = [
   },
   {
     exact: true,
-    component: asyncComponentLoader(() => import("pages/Page3")),
+    component: asyncComponentLoader(() => import("pages/Product_Details_Page")),
     path: "/page-3",
   },
   {

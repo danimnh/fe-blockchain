@@ -5,8 +5,6 @@ import Menu from "sections/Menu";
 
 function Navigation(handleLogout) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log("navigation");
-  console.log(handleLogout);
 
   const handleMenuOpen = () => {
     setIsMenuOpen(true);

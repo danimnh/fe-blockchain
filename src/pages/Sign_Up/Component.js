@@ -21,6 +21,7 @@ const steps = [
   "Informasi Pekerjaan",
 ];
 const { formField } = checkoutFormModel;
+
 function _renderStepContent(step) {
   switch (step) {
     case 0:
@@ -40,6 +41,7 @@ function _renderStepContent(step) {
 function SignUpPage() {
   const history = useHistory();
   const classes = useStyles();
+  // const [ memberType, setMemberType ] = useState('')
   const [activeStep, setActiveStep] = useState(0);
   const isLastStep = activeStep === steps.length - 1;
   //nextStep
@@ -93,8 +95,7 @@ function SignUpPage() {
           ) : (
             <Formik
               initialValues={{
-                firstName: "",
-                lastName: "",
+                name: "",
                 contact: "",
                 dateOfBirth: "",
                 noKK: "",

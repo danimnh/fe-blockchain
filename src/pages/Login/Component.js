@@ -21,7 +21,7 @@ function LoginPage(props) {
     <>
       <Meta title="Login Page" description="Login Page" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h4">Masuk Member Rantai Pasok</Typography>
+        <Typography variant="h4">Masuk Aktor Rantai Pasok</Typography>
         <Formik
           initialValues={{ username: "", password: "" }}
           validate={(values) => {
@@ -36,7 +36,8 @@ function LoginPage(props) {
           onSubmit={(values) => {
             setTimeout(() => {
               alert(JSON.stringify(values, null, 2));
-              props.handleLogin(values);
+              props.handleLogin(values.username);
+              localStorage.setItem("user", values.username);
             }, 500);
           }}
         >

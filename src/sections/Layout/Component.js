@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Box from "@material-ui/core/Box";
 
@@ -8,12 +8,27 @@ import Navigation from "sections/Navigation";
 import Notifications from "sections/Notifications";
 
 import useStyles from "./styles";
-
-function Layout() {
+const Layout = () => {
   const classes = useStyles();
-  //debug appbar TO-DO : memoize user
   const [isLoggedIn, setLoggedIn] = React.useState(false);
-  const [user, setUser] = React.useState({ name: "" });
+  const [user, setUser] = React.useState();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    const loggedInUser = localStorage.getItem("user");
+
+    setLoggedIn(loggedIn);
+    // setUser(loggedInUser);
+
+    console.log("useEffect is called");
+    console.log(loggedInUser);
+    setUser(loggedInUser);
+    // if (loggedInUser) {
+    //   const foundUser = JSON.parse(loggedInUser);
+    // setUser(foundUser);
+    // setLoggedIn(true);
+    // }
+  }, []);
   return (
     <>
       <Notifications />
@@ -22,6 +37,8 @@ function Layout() {
           handleLogout={() => {
             setLoggedIn(false);
             setUser("");
+            localStorage.removeItem("user");
+            localStorage.removeItem("isLoggedIn");
           }}
         />
       )}
@@ -30,13 +47,14 @@ function Layout() {
         <Box className={classes.content}>
           <Content
             user={user}
-            setUser={() => {
-              setUser("Petani A");
-            }}
             handleLogin={(user) => {
               setLoggedIn(true);
               setUser(user);
+              console.log("handleLogin");
+              console.log(user);
+              localStorage.setItem("isLoggedIn", true);
             }}
+            setSubmitUser-
             isLoggedIn={isLoggedIn}
             handleSignUp={() => {
               console.log("handleSignUp is called");
@@ -47,6 +65,6 @@ function Layout() {
       </Box>
     </>
   );
-}
+};
 
 export default Layout;

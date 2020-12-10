@@ -17,14 +17,14 @@ import useStyles from "./styles";
 
 function Welcome(props) {
   const [qrRead, setqrRead] = useState("");
-  console.log("props welcome");
-  console.log(props);
   const handleChange = (event) => {
     setqrRead(event.target.value);
   };
   const matchSmallScreen = useMediaQuery("(max-width: 600px)");
   const classes = useStyles({ isSmallScreen: matchSmallScreen });
+  console.log("welcome");
 
+  console.log(props);
   const handleScan = (data) => {
     if (data) {
       setqrRead(data);
@@ -57,12 +57,12 @@ function Welcome(props) {
         <Button
           variant="contained"
           component={RouterLink}
-          to={"/" + qrRead}
+          to={"/product/" + qrRead}
           className={classes.button}
         >
           Telusuri
         </Button>
-        {props.isLoggedIn && <p>Halo, {props.user.username}!</p>}
+        {props.isLoggedIn && <p>Halo, {props.user}!</p>}
         {!props.isLoggedIn && (
           <Button
             variant="outlined"

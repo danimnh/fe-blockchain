@@ -18,6 +18,7 @@ export default function InputField(props) {
   }
 
   return (
+    <>
     <TextField
       type="text"
       error={meta.touched && meta.error && true}
@@ -25,5 +26,7 @@ export default function InputField(props) {
       {...field}
       {...rest}
     />
+ 
+  </>
   );
 }

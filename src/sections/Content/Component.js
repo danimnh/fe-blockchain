@@ -2,6 +2,9 @@ import React from "react";
 import WelcomePage from "pages/Welcome";
 import LoginPage from "pages/Login";
 import SignUpPage from "pages/Sign_Up";
+import ProductPage from "pages/Product_Page";
+import ProductDetailPage from "pages/Product_Details_Page";
+
 import Page from "components/Page";
 
 import { Switch, Route } from "react-router-dom";
@@ -29,6 +32,16 @@ function Content({ user, handleLogin, isLoggedIn, handleSignUp }) {
           exact
           path="/daftar"
           render={() => <SignUpPage handleSignUp={handleSignUp} />}
+        />
+        <Route
+          exact
+          path="/product/:batchId"
+          render={(props) => <ProductPage {...props} />}
+        />
+        <Route
+          exact
+          path="/product/:batchId/details/:trxID"
+          render={(props) => <ProductDetailPage {...props} />}
         />
       </Switch>
     </Page>
