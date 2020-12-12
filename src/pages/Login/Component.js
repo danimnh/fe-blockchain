@@ -35,9 +35,9 @@ function LoginPage(props) {
           }}
           onSubmit={(values) => {
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              props.handleLogin(values.username);
-              localStorage.setItem("user", values.username);
+              // alert(JSON.stringify(values, null, 2));
+              props.handleLogin(values);
+              // localStorage.setItem("user", values.username);
             }, 500);
           }}
         >
@@ -66,8 +66,6 @@ function LoginPage(props) {
                 variant="contained"
                 color="primary"
                 onClick={submitForm}
-                component={RouterLink}
-                to="/"
               >
                 Masuk
               </Button>

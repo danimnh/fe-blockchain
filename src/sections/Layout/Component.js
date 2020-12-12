@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
+import axios from "axios";
 
 import Box from "@material-ui/core/Box";
+import { useHistory } from "react-router-dom";
 
 import Content from "sections/Content";
 import Copyright from "sections/Copyright";
@@ -10,25 +12,10 @@ import Notifications from "sections/Notifications";
 import useStyles from "./styles";
 const Layout = () => {
   const classes = useStyles();
-  const [isLoggedIn, setLoggedIn] = React.useState(false);
+  const [isLoggedIn, setLoggedIn] = React.useState(true);
   const [user, setUser] = React.useState();
-
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn");
-    const loggedInUser = localStorage.getItem("user");
-
-    setLoggedIn(loggedIn);
-    // setUser(loggedInUser);
-
-    console.log("useEffect is called");
-    console.log(loggedInUser);
-    setUser(loggedInUser);
-    // if (loggedInUser) {
-    //   const foundUser = JSON.parse(loggedInUser);
-    // setUser(foundUser);
-    // setLoggedIn(true);
-    // }
-  }, []);
+  const history = useHistory();
+  useEffect(() => {}, []);
   return (
     <>
       <Notifications />
@@ -37,8 +24,20 @@ const Layout = () => {
           handleLogout={() => {
             setLoggedIn(false);
             setUser("");
-            localStorage.removeItem("user");
-            localStorage.removeItem("isLoggedIn");
+            axios
+              .get("logout", user)
+              .then((res) => {
+                console.log(res.data);
+                alert(JSON.stringify(res.data.message));
+                history.push("/");
+                localStorage.removeItem("token");
+              })
+              .catch((err) => {
+                alert(err);
+                history.replace("/");
+              });
+
+            history.replace("/");
           }}
         />
       )}
@@ -48,11 +47,23 @@ const Layout = () => {
           <Content
             user={user}
             handleLogin={(user) => {
-              setLoggedIn(true);
-              setUser(user);
-              console.log("handleLogin");
-              console.log(user);
-              localStorage.setItem("isLoggedIn", true);
+              axios
+                .post("login", user)
+                .then((res) => {
+                  console.log(res.data);
+                  // alert("Berhasil Login!");
+                  history.push("/");
+                  localStorage.setItem("token", res.data.token);
+                })
+                .catch((err) => {
+                  alert(err);
+                  history.replace("/");
+                });
+              // setLoggedIn(true);
+              // setUser(user);
+              // console.log("handleLogin");
+              // console.log(user);
+              // localStorage.setItem("isLoggedIn", true);
             }}
             setSubmitUser-
             isLoggedIn={isLoggedIn}
