@@ -75,6 +75,14 @@ function ProductDetailPage(props) {
               <p>{props.match.params.batchId}</p>
             </Grid>
           </Grid> */}
+
+          <Button
+            className={{ width: "300px", marginTop: 10 }}
+            variant="contained"
+            color="primary"
+          >
+            Konfirmasi Transaksi
+          </Button>
         </Grid>
       </Container>
     </>

@@ -8,9 +8,8 @@ import Box from "@material-ui/core/Box";
 import DividerMU from "@material-ui/core/Divider";
 import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
-
+import { MdNotifications } from "react-icons/md";
 import {
-  FaBrush as BrushIcon,
   FaRedo as RedoIcon,
   FaBars as MenuIcon,
   // FaGithub as GithubIcon,
@@ -18,7 +17,7 @@ import {
 
 import Link from "components/Link";
 
-import useTheme from "store/theme";
+// import useTheme from "store/theme";
 import useSW from "store/sw";
 
 // import { title, repository } from "config";
@@ -33,14 +32,14 @@ const Divider = withStyles({
   },
 })((props) => <DividerMU flexItem orientation="vertical" {...props} />);
 
-function AppBar_({ onMenuOpen, props }) {
+function AppBar_({ onMenuOpen, onNotifOpen, props }) {
   const classes = useStyles();
-  const [, themeActions] = useTheme();
+  // const [, themeActions] = useTheme();
   const [swState, swActions] = useSW();
 
-  function handleToggleTheme() {
-    themeActions.toggle();
-  }
+  // function handleToggleTheme() {
+  //   themeActions.toggle();
+  // }
 
   function handleAppUpdate() {
     swActions.update();
@@ -96,15 +95,10 @@ function AppBar_({ onMenuOpen, props }) {
 
           <Button onClick={props.handleLogout}>Logout</Button>
           <Divider />
-          <Tooltip title="Change theme" arrow>
-            <IconButton
-              aria-label="toggle theme"
-              edge="end"
-              onClick={handleToggleTheme}
-            >
-              <BrushIcon />
-            </IconButton>
-          </Tooltip>
+
+          <IconButton edge="end" onClick={onNotifOpen}>
+            <MdNotifications />
+          </IconButton>
         </Box>
       </Toolbar>
     </AppBar>

@@ -133,6 +133,18 @@ function ProductPage(props) {
           {/* v grid closes */}
         </Grid>
         <Typography variant="h6">Transaksi</Typography>
+        {true && (
+          <Button
+            className={{ width: "300px", marginTop: 10 }}
+            fullWidth
+            variant="contained"
+            color="primary"
+            component={RouterLink}
+            to="/addNew"
+          >
+            Tambah Transaksi
+          </Button>
+        )}
         {mockUpTrx.map((trxID) => {
           return (
             <Card className={classes.cardContainer}>

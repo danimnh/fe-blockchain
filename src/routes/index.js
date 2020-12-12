@@ -23,7 +23,7 @@ const routes = [
   },
   {
     exact: true,
-    component: asyncComponentLoader(() => import("pages/Page2")),
+    component: asyncComponentLoader(() => import("pages/Add_Trx_Page")),
     path: "/page-2",
   },
   {

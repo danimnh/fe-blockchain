@@ -4,6 +4,7 @@ import LoginPage from "pages/Login";
 import SignUpPage from "pages/Sign_Up";
 import ProductPage from "pages/Product_Page";
 import ProductDetailPage from "pages/Product_Details_Page";
+import AddTrx from "pages/Add_Trx_Page";
 
 import Page from "components/Page";
 
@@ -43,6 +44,7 @@ function Content({ user, handleLogin, isLoggedIn, handleSignUp }) {
           path="/product/:batchId/details/:trxID"
           render={(props) => <ProductDetailPage {...props} />}
         />
+        <Route exact path="/addNew" render={(props) => <AddTrx {...props} />} />
       </Switch>
     </Page>
   );
