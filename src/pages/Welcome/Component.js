@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import QrReader from "react-qr-reader";
 import Container from "@material-ui/core/Container";
 // import Typography from "@material-ui/core/Typography";
@@ -31,17 +31,8 @@ function Welcome(props) {
     console.error(err);
   };
 
-  useEffect(() => {
-    console.log("useEffect is called");
-    axios
-      .get("user")
-
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  useEffect((props) => {
+    props.refreshLayout();
   }, []);
   return (
     <>
@@ -69,7 +60,6 @@ function Welcome(props) {
           component={RouterLink}
           to={"/product/" + qrRead}
           className={classes.button}
-          onClick={localStorage.removeItem("token")}
         >
           Telusuri
         </Button>

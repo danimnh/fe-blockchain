@@ -10,6 +10,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
 import { MdNotifications } from "react-icons/md";
 import {
+  // FaBrush as BrushIcon,
   FaRedo as RedoIcon,
   FaBars as MenuIcon,
   // FaGithub as GithubIcon,
@@ -90,6 +91,15 @@ function AppBar_({ onMenuOpen, onNotifOpen, props }) {
               href={repository}
             >
               <GithubIcon /> 
+            </IconButton>
+          </Tooltip> */}
+          {/* <Tooltip title="Change theme" arrow>
+            <IconButton
+              aria-label="toggle theme"
+              edge="end"
+              onClick={handleToggleTheme}
+            >
+              <BrushIcon />
             </IconButton>
           </Tooltip> */}
 

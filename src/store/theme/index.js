@@ -1,12 +1,12 @@
-import { atom, useRecoilState } from 'recoil';
+import { atom, useRecoilState } from "recoil";
 
-import * as effects from 'store/effects';
+import * as effects from "store/effects";
 
-import { themePair } from 'config';
+import { themePair } from "config";
 
 const themeModeState = atom({
-  key: 'themeModeState',
-  default: localStorage.getItem('theme-mode') || 'dark',
+  key: "themeModeState",
+  default: localStorage.getItem("theme-mode") || "light",
 });
 
 function useTheme() {

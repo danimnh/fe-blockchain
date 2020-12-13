@@ -72,7 +72,7 @@ const dateFormat = "MMMM DD, YYYY";
 
 const title = "Sistem Rantai Pasok";
 
-const themePair = ["dark", "light"];
+const themePair = ["light", "dark"];
 
 const notifications = {
   options: {

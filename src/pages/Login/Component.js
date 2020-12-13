@@ -37,6 +37,7 @@ function LoginPage(props) {
             setTimeout(() => {
               // alert(JSON.stringify(values, null, 2));
               props.handleLogin(values);
+              // setIsLoading(false);
               // localStorage.setItem("user", values.username);
             }, 500);
           }}

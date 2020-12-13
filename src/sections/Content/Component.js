@@ -12,7 +12,13 @@ import { Switch, Route } from "react-router-dom";
 
 // import routes from "routes";
 
-function Content({ user, handleLogin, isLoggedIn, handleSignUp }) {
+function Content({
+  user,
+  handleLogin,
+  isLoggedIn,
+  handleSignUp,
+  refreshLayout,
+}) {
   return (
     <Page>
       <Switch>
@@ -22,7 +28,13 @@ function Content({ user, handleLogin, isLoggedIn, handleSignUp }) {
         <Route
           exact
           path="/"
-          render={() => <WelcomePage isLoggedIn={isLoggedIn} user={user} />}
+          render={() => (
+            <WelcomePage
+              isLoggedIn={isLoggedIn}
+              user={user}
+              refreshLayout={refreshLayout}
+            />
+          )}
         />
         <Route
           exact
