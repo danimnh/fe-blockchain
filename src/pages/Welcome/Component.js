@@ -15,7 +15,7 @@ import Meta from "components/Meta";
 
 import useStyles from "./styles";
 
-function Welcome(props) {
+function Welcome({ isLoggedIn, user, refreshLayout }) {
   const [qrRead, setqrRead] = useState("");
   const handleChange = (event) => {
     setqrRead(event.target.value);
@@ -31,8 +31,8 @@ function Welcome(props) {
     console.error(err);
   };
 
-  useEffect((props) => {
-    props.refreshLayout();
+  useEffect(() => {
+    refreshLayout();
   }, []);
   return (
     <>
@@ -63,8 +63,8 @@ function Welcome(props) {
         >
           Telusuri
         </Button>
-        {props.isLoggedIn && <p>Halo, {props.user}!</p>}
-        {!props.isLoggedIn && (
+        {isLoggedIn && <p>Halo, {user}!</p>}
+        {!isLoggedIn && (
           <Button
             variant="outlined"
             component={RouterLink}
@@ -74,7 +74,7 @@ function Welcome(props) {
             Masuk
           </Button>
         )}
-        {!props.isLoggedIn && (
+        {!isLoggedIn && (
           <Button
             variant="outlined"
             component={RouterLink}
