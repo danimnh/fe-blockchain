@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
-// import axios from "axios";
+
 import QrReader from "react-qr-reader";
 import Container from "@material-ui/core/Container";
 // import Typography from "@material-ui/core/Typography";
@@ -15,11 +15,13 @@ import Meta from "components/Meta";
 
 import useStyles from "./styles";
 
-function Welcome({ isLoggedIn, user, refreshLayout }) {
+function Welcome(props) {
   const [qrRead, setqrRead] = useState("");
   const handleChange = (event) => {
     setqrRead(event.target.value);
   };
+  const refreshingLayout = props.refreshLayout;
+  // eslint-disable-line react-hooks/exhaustive-deps
   const matchSmallScreen = useMediaQuery("(max-width: 600px)");
   const classes = useStyles({ isSmallScreen: matchSmallScreen });
   const handleScan = (data) => {
@@ -32,7 +34,7 @@ function Welcome({ isLoggedIn, user, refreshLayout }) {
   };
 
   useEffect(() => {
-    refreshLayout();
+    refreshingLayout();
   }, []);
   return (
     <>
@@ -63,8 +65,8 @@ function Welcome({ isLoggedIn, user, refreshLayout }) {
         >
           Telusuri
         </Button>
-        {isLoggedIn && <p>Halo, {user}!</p>}
-        {!isLoggedIn && (
+        {props.isLoggedIn && <p>Halo, {props.user}!</p>}
+        {!props.isLoggedIn && (
           <Button
             variant="outlined"
             component={RouterLink}
@@ -74,7 +76,7 @@ function Welcome({ isLoggedIn, user, refreshLayout }) {
             Masuk
           </Button>
         )}
-        {!isLoggedIn && (
+        {!props.isLoggedIn && (
           <Button
             variant="outlined"
             component={RouterLink}
