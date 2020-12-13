@@ -35,6 +35,7 @@ function Welcome(props) {
 
   useEffect(() => {
     refreshingLayout();
+    // eslint-disable-next-line
   }, []);
   return (
     <>
