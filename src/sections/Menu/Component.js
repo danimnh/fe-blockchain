@@ -2,7 +2,7 @@ import React from "react";
 
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 
-import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -11,7 +11,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 
-import { FaHome as WelcomeIcon } from "react-icons/fa";
+// import { FaHome as WelcomeIcon } from "react-icons/fa";
 
 import { isMobile } from "utils";
 
@@ -39,10 +39,24 @@ function Menu({ isOpen, onClose, onOpen, props }) {
       <List className={classes.list}>
         <div className={classes.toolbar} />
         <StyledMenuItem onClick={onClose} component={RouterLink} to="/">
-          <ListItemIcon>
+          {/* <ListItemIcon>
             <WelcomeIcon />
-          </ListItemIcon>
-          <ListItemText primary="Welcome" />
+          </ListItemIcon> */}
+          <ListItemText primary="Halaman Utama" />
+        </StyledMenuItem>
+        <StyledMenuItem
+          onClick={onClose}
+          component={RouterLink}
+          to="/create_transaction"
+        >
+          <ListItemText primary="Tambah Transaksi" />
+        </StyledMenuItem>
+        <StyledMenuItem
+          onClick={onClose}
+          component={RouterLink}
+          to="/read_pending_transaction"
+        >
+          <ListItemText primary="Lihat Transaksi Masuk" />
         </StyledMenuItem>
         <StyledMenuItem
           onClick={(onClose, props.handleLogout)}

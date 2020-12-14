@@ -8,7 +8,7 @@ import Box from "@material-ui/core/Box";
 import DividerMU from "@material-ui/core/Divider";
 import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
-import { MdNotifications } from "react-icons/md";
+// import { MdNotifications } from "react-icons/md";
 import {
   // FaBrush as BrushIcon,
   FaRedo as RedoIcon,
@@ -33,7 +33,7 @@ const Divider = withStyles({
   },
 })((props) => <DividerMU flexItem orientation="vertical" {...props} />);
 
-function AppBar_({ onMenuOpen, onNotifOpen, props }) {
+function AppBar_({ onMenuOpen }) {
   const classes = useStyles();
   // const [, themeActions] = useTheme();
   const [swState, swActions] = useSW();
@@ -103,12 +103,12 @@ function AppBar_({ onMenuOpen, onNotifOpen, props }) {
             </IconButton>
           </Tooltip> */}
 
-          <Button onClick={props.handleLogout}>Logout</Button>
+          {/* <Button onClick={props.handleLogout}>Logout</Button> */}
           <Divider />
 
-          <IconButton edge="end" onClick={onNotifOpen}>
+          {/* <IconButton edge="end" onClick={onNotifOpen}>
             <MdNotifications />
-          </IconButton>
+          </IconButton> */}
         </Box>
       </Toolbar>
     </AppBar>

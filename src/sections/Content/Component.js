@@ -5,6 +5,7 @@ import SignUpPage from "pages/Sign_Up";
 import ProductPage from "pages/Product_Page";
 import ProductDetailPage from "pages/Product_Details_Page";
 import AddTrx from "pages/Add_Trx_Page";
+import TransactionList from "pages/TransactionList";
 
 import Page from "components/Page";
 
@@ -56,7 +57,18 @@ function Content({
           path="/product/:batchId/details/:trxID"
           render={(props) => <ProductDetailPage {...props} />}
         />
-        <Route exact path="/addNew" render={(props) => <AddTrx {...props} />} />
+        <Route
+          exact
+          path="/create_transaction"
+          render={() => <AddTrx refreshLayout={refreshLayout} user={user} />}
+        />
+        <Route
+          exact
+          path="/read_pending_transaction"
+          render={() => (
+            <TransactionList refreshLayout={refreshLayout} user={user} />
+          )}
+        />
       </Switch>
     </Page>
   );

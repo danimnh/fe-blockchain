@@ -18,7 +18,7 @@ const routes = [
   },
   {
     exact: true,
-    component: asyncComponentLoader(() => import("pages/Page1")),
+    component: asyncComponentLoader(() => import("pages/TransactionList")),
     path: "/page-1",
   },
   {

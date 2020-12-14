@@ -4,7 +4,9 @@ import { getActions as getSWActions } from "store/sw";
 
 import "./global.css";
 
-axios.defaults.baseURL = "http://13.229.214.74:3001/";
+// axios.defaults.baseURL = "http://13.229.214.74:3001/";
+axios.defaults.baseURL = "https://be-blockchain.herokuapp.com/";
+
 if (!document.ie) {
   // check for ie
   Promise.all([import("react"), import("react-dom"), import("App")]).then(

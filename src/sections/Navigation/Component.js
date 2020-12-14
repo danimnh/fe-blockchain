@@ -7,7 +7,8 @@ import Notification from "sections/Notification";
 function Navigation(handleLogout) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
-
+  // const handleLogouts = props.handleLogout;
+  // console.log(handleLogout);
   const handleMenuOpen = () => {
     setIsMenuOpen(true);
   };

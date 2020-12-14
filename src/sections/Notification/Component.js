@@ -21,12 +21,11 @@ const StyledMenuItem = withStyles({ root: { width: "100%" } })((props) => (
   <MenuItem {...props} />
 ));
 
-function Notification({ isOpen, onClose, onOpen }) {
+function Notification({ isOpen, onClose, onOpen, notif }) {
   const classes = useStyles({
     isOpen,
     isMobile,
   });
-
   return (
     <SwipeableDrawer
       anchor="right"
@@ -40,7 +39,7 @@ function Notification({ isOpen, onClose, onOpen }) {
         <div className={classes.toolbar} />
         <StyledMenuItem
           disabled
-          onClick={() => console.log("pressed")}
+          onClick={() => console.log(notif)}
           component={RouterLink}
         >
           <ListItemText primary="Notifikasi" />
