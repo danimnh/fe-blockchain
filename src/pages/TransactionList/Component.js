@@ -47,8 +47,12 @@ function TransactionList() {
       },
     };
     try {
-      console.log(values);
-      const resp = await axios.post("trx/pkr-ptn/confirm", values, config);
+      console.log(JSON.stringify(values));
+      const resp = await axios.post(
+        "trx/pkr-ptn/confirm",
+        JSON.stringify(values),
+        config
+      );
       await console.log(resp);
       await alert("transaksi " + _id + "berhasil dikonfirmasi");
     } catch (err) {
