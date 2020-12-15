@@ -1,6 +1,7 @@
 import PtnAddTrxFields from "../../Form_Models/PtnAddTrxModels.js";
 const {
   formPtnFields: {
+    batchID,
     namaPenerima,
     alamatPengirim,
     alamatPenerima,
@@ -15,6 +16,8 @@ const {
 } = PtnAddTrxFields;
 
 export default {
+  [batchID.name]: "",
+
   [namaPenerima.name]: "",
   [alamatPengirim.name]: "",
   [alamatPenerima.name]: "",

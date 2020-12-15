@@ -59,27 +59,28 @@ function AddTrx(props) {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     };
+    const valueJSON = JSON.stringify(values);
     // alert(JSON.stringify(values), null, 2);
-    console.log(values);
+    console.log(valueJSON);
     if (props.user.memberType === "penangkar") {
       console.log("penangkar submit add");
       try {
-        const resp = await axios.post("trx/pkr-ptn", values, config);
+        const resp = await axios.post("trx/pkr-ptn", valueJSON, config);
         console.log("waiting for resp");
         console.log(resp);
         alert(resp.data.message);
-        alert(resp.data.data._id);
+        alert(resp.data.data.batchID);
       } catch (err) {
         console.log(err);
       }
     } else if (props.user.memberType === "petani") {
-      console.log("penangkar submit add");
+      console.log("petani submit add");
       try {
-        const resp = await axios.post("trx/ptn-ppl", values, config);
+        const resp = await axios.post("trx/ptn-ppl", valueJSON, config);
         console.log("waiting for resp");
         console.log(resp);
         alert(resp.data.message);
-        alert(resp.data.data._id);
+        alert(resp.data.data.batchID);
       } catch (err) {
         console.log(err);
       }
@@ -108,7 +109,7 @@ function AddTrx(props) {
             </p>
           </Grid>
         </Grid>
-        <Formik initialValues={{}} onSubmit={_handleSubmit}>
+        <Formik initialValues={{ namaPenerima: "" }} onSubmit={_handleSubmit}>
           {({ isSubmitting }) => (
             <Form>
               {_renderStepContent(props.user.memberType)}

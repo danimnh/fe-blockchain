@@ -5,6 +5,7 @@ import InputField from "../../Sign_Up/FormFields/InputField";
 export default function FormPtnAddTrx(props) {
   const {
     PtnAddTrxFields: {
+      batchID,
       namaPenerima,
       alamatPengirim,
       alamatPenerima,
@@ -23,6 +24,7 @@ export default function FormPtnAddTrx(props) {
       <Typography></Typography>
       <Grid container spacing={1}>
         <Grid item xs={12}>
+          <InputField name={batchID.name} label={batchID.label} fullWidth />
           <InputField
             name={namaPenerima.name}
             label={namaPenerima.label}

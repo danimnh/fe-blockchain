@@ -1,6 +1,11 @@
 export default {
   formId: "PtnAddTrx",
   PtnAddTrxFormFields: {
+    batchID: {
+      name: "batchID",
+      label: "Batch ID",
+      requiredErrorMsg: "Batch ID is required",
+    },
     namaPenerima: {
       name: "namaPenerima",
       label: "Nama Penerima",

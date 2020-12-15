@@ -59,6 +59,58 @@ function TransactionList() {
       console.log(err);
     }
   };
+
+  const confirmToIbp = async (trx) => {
+    const values = {
+      // penangkarId: "string",
+      // petaniId: "string",
+      // tanggalJual: trx.timestamp,
+      // tanggalKirim: "string",
+      // metodePengiriman: "string",
+      // brutoKg: 0,
+      // nettoKg: 0,
+      // hargaPerKg: 0,
+      // alamatPenangkar: trx.alamatPengirim,
+      // alamatPetani: trx.alamatPenerima,
+      // umurBenih: trx.umurBenih,
+      // varietasBawang: trx.varietas,
+      // lamaPenyimpanan: trx.lamaPenyimpanan,
+      // umurPanen: "string",
+      // batchState: "string",
+      penangkarId: "string",
+      petaniId: "string",
+      tanggalJual: "string",
+      tanggalKirim: "string",
+      metodePengiriman: "string",
+      brutoKg: "0",
+      nettoKg: "0",
+      hargaPerKg: "0",
+      alamatPenangkar: "string",
+      alamatPetani: "string",
+      umurBenih: "string",
+      varietasBawang: "string",
+      lamaPenyimpanan: "string",
+      umurPanen: "string",
+      batchState: "string",
+    };
+
+    console.log("values to send is", values);
+    const valueJSON = JSON.stringify(values);
+    console.log("json", valueJSON);
+    try {
+      console.log(JSON.stringify(values));
+      const resp = await axios({
+        method: "post",
+        url: "http://13.229.214.74:8080/jualBenih",
+        data: valueJSON,
+        headers: { "Content-Type": "application/json" },
+      });
+      await console.log(resp);
+      await alert("transaksi " + trx._id + "berhasil dikonfirmasi");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     fetchPendingTrx();
   }, []);
@@ -75,7 +127,12 @@ function TransactionList() {
         {pendingTrx.map((trx) => {
           return (
             <Card key={trx._id} style={{ marginBottom: "20px", width: "100%" }}>
-              <CardActionArea onClick={() => confirmByID(trx._id)}>
+              <CardActionArea
+                onClick={() => {
+                  confirmByID(trx._id);
+                  confirmToIbp(trx);
+                }}
+              >
                 <CardContent>
                   <Typography>{trx.usernamePengirim}</Typography>
                   <Typography>{trx.timestamp}</Typography>
