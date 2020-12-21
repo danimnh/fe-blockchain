@@ -1,10 +1,10 @@
 export default {
   formId: "PkrAddTrx",
   PkrAddTrxFormFields: {
-    namaPenerima: {
-      name: "namaPenerima",
-      label: "Nama Penerima",
-      requiredErrorMsg: "Nama Penerima is required",
+    usernamePenerima: {
+      name: "usernamePenerima",
+      label: "Username Penerima",
+      requiredErrorMsg: "Username Penerima is required",
     },
     alamatPengirim: {
       name: "alamatPengirim",

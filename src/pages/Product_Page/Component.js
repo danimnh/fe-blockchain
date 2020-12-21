@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
+
 import {
   Grid,
   Button,
@@ -8,6 +11,8 @@ import {
   Card,
   CardContent,
   CardActionArea,
+  Backdrop,
+  CircularProgress,
 } from "@material-ui/core";
 
 import Meta from "components/Meta";
@@ -16,7 +21,8 @@ import useStyles from "./styles";
 
 function ProductPage(props) {
   const classes = useStyles();
-  console.log(props);
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const [mockUpData] = React.useState({
     deskripsi: "Bawang Merah Brebes",
   });
@@ -84,8 +90,34 @@ function ProductPage(props) {
       sickUmbi: "false",
     },
   ]);
+  const [dataBlock, setDataBlock] = React.useState({});
+  const fetchWorldState = async (batchID) => {
+    setIsLoading(true);
+    try {
+      const resp = await axios({
+        method: "get",
+        url: "http://13.229.214.74:8080/worldstate/" + batchID,
+        headers: { "Content-Type": "application/json" },
+      });
+      await console.log(resp);
+      await setDataBlock(resp.data);
+      await setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchWorldState(props.match.params.batchId);
+  }, []);
   return (
     <>
+      {isLoading && (
+        <>
+          <Backdrop open>
+            <CircularProgress />
+          </Backdrop>
+        </>
+      )}
       <Meta title="Page 4" description="Page 4" />
       <Container maxWidth="sm" className={classes.root}>
         <Button onClick={() => props.history.goBack()}>{"<-"}</Button>
@@ -93,7 +125,7 @@ function ProductPage(props) {
           <Grid item xs={12}>
             <Typography variant="h6">Detail Produk</Typography>
 
-            <Grid container className={classes.rowDetail} xs={12}>
+            <Grid container className={classes.rowDetail} item xs={12}>
               <Grid xs={6}>
                 <Typography variant="body1">ID</Typography>
               </Grid>
@@ -102,30 +134,30 @@ function ProductPage(props) {
               </Grid>
             </Grid>
 
-            <Grid container className={classes.rowDetail} xs={12}>
+            <Grid container className={classes.rowDetail} item xs={12}>
               <Grid xs={6}>
-                <Typography variant="body1">Deskripsi</Typography>
+                <Typography variant="body1">Varietas</Typography>
               </Grid>
               <Grid xs={6}>
-                <p>{mockUpData.deskripsi}</p>
+                <p>{dataBlock.varietas}</p>
               </Grid>
             </Grid>
 
-            <Grid container className={classes.rowDetail} xs={12}>
+            <Grid container className={classes.rowDetail} item xs={12}>
               <Grid xs={6}>
                 <Typography variant="body1">Tanggal Masuk</Typography>
               </Grid>
               <Grid xs={6}>
-                <p>10/10/2020 10:10</p>
+                <p>{moment(dataBlock.timestamptoPetani).format("LL")}</p>
               </Grid>
             </Grid>
 
-            <Grid container className={classes.rowDetail} xs={12}>
+            <Grid container className={classes.rowDetail} item xs={12}>
               <Grid xs={6}>
                 <Typography variant="body1">Transaksi Terakhir</Typography>
               </Grid>
               <Grid xs={6}>
-                <p>10/16/2020 04:15</p>
+                <p>{moment(dataBlock.timestamptoPetani).format("LLL")}</p>
               </Grid>
             </Grid>
           </Grid>
@@ -133,7 +165,7 @@ function ProductPage(props) {
           {/* v grid closes */}
         </Grid>
         <Typography variant="h6">Transaksi</Typography>
-        {true && (
+        {/* {true && (
           <Button
             className={{ width: "300px", marginTop: 10 }}
             fullWidth
@@ -144,35 +176,33 @@ function ProductPage(props) {
           >
             Tambah Transaksi
           </Button>
+        )} */}
+
+        {dataBlock.timestamptoPetani && (
+          <Card className={classes.cardContainer}>
+            <CardActionArea
+            // component={RouterLink}
+            // to={{
+            //   pathname:
+            //     "/product/" +
+            //     props.match.params.batchId +
+            //     "/details/" +
+            //     dataBlock.batchID.toString(),
+            //   trxProps: dataBlock,
+            // }}
+            >
+              <CardContent>
+                <Typography>
+                  {moment(dataBlock.timestamptoPetani).format("LLL")}{" "}
+                </Typography>
+                <Typography gutterBottom>
+                  Aktor : {dataBlock.usernamePenangkar}
+                </Typography>
+                <Typography variant="body2">{dataBlock.batchID}</Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
         )}
-        {mockUpTrx.map((trxID) => {
-          return (
-            <Card className={classes.cardContainer}>
-              <CardActionArea
-                component={RouterLink}
-                to={{
-                  pathname:
-                    "/product/" +
-                    props.match.params.batchId +
-                    "/details/" +
-                    trxID.trxID.toString(),
-                  trxProps: trxID,
-                }}
-              >
-                <CardContent>
-                  <Typography>
-                    {trxID.trxDate} {trxID.trxTime} -{" "}
-                    <strong>{trxID.trxType}</strong>
-                  </Typography>
-                  <Typography gutterBottom>
-                    Aktor : {trxID.trxSender}
-                  </Typography>
-                  <Typography variant="body2">{trxID.trxDesc}</Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          );
-        })}
       </Container>
     </>
   );

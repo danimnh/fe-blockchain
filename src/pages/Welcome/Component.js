@@ -66,7 +66,14 @@ function Welcome(props) {
         >
           Telusuri
         </Button>
-        {props.isLoggedIn && <p>Halo, {props.user.nama}!</p>}
+        {props.isLoggedIn && (
+          <>
+            <p>Halo, {props.user.nama}!</p>
+            <p>
+              Anda terdaftar sebagai <strong>{props.user.memberType}</strong>
+            </p>
+          </>
+        )}
 
         {!props.isLoggedIn && (
           <Button

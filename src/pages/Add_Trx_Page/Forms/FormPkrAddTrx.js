@@ -5,7 +5,7 @@ import InputField from "../../Sign_Up/FormFields/InputField";
 export default function FormPkrAddTrx(props) {
   const {
     PkrAddTrxFields: {
-      namaPenerima,
+      usernamePenerima,
       alamatPengirim,
       alamatPenerima,
       kuantitas,
@@ -23,8 +23,8 @@ export default function FormPkrAddTrx(props) {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <InputField
-            name={namaPenerima.name}
-            label={namaPenerima.label}
+            name={usernamePenerima.name}
+            label={usernamePenerima.label}
             fullWidth
           />
         </Grid>
