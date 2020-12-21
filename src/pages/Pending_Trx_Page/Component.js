@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 // import { Link as RouterLink } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import moment from "moment";
 
@@ -12,11 +12,11 @@ import {
   Card,
   CardContent,
   CardActionArea,
-  Modal,
+  // Modal,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
+  // DialogContentText,
   DialogTitle,
   Table,
   TableBody,
@@ -60,9 +60,9 @@ function PendingList(props) {
   ];
 
   const inputTable = () => {};
-  const handleOpen = () => {
-    setVisible(true);
-  };
+  // const handleOpen = () => {
+  //   setVisible(true);
+  // };
 
   const handleClose = () => {
     setVisible(false);
@@ -158,17 +158,17 @@ function PendingList(props) {
     }
   };
 
-  const fetchByType = async () => {
-    console.log("useeffect");
-    if (listType == "Inbox") {
-      fetchPetaniInboxPending();
-    } else {
-      setPendingTrx([]);
-      fetchPenangkarSentPending();
-      console.log("sent anjing");
-    }
-  };
   useEffect(() => {
+    const fetchByType = async () => {
+      console.log("useeffect");
+      if (listType === "Inbox") {
+        fetchPetaniInboxPending();
+      } else {
+        setPendingTrx([]);
+        fetchPenangkarSentPending();
+        console.log("sent anjing");
+      }
+    };
     fetchByType();
   }, [listType]);
   return (

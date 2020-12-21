@@ -5,7 +5,7 @@ import SignUpPage from "pages/Sign_Up";
 import ProductPage from "pages/Product_Page";
 import ProductDetailPage from "pages/Product_Details_Page";
 import AddTrx from "pages/Add_Trx_Page";
-import TransactionList from "pages/TransactionList";
+// import TransactionList from "pages/TransactionList";
 import PendingList from "pages/Pending_Trx_Page";
 // import ConfirmedList from "pages/Confirmed_Trx_Page";
 
