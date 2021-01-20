@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 // import { Link as RouterLink } from "react-router-dom";
 // import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
+// import axios from "axios";
 import moment from "moment";
 
 import {
@@ -31,12 +31,13 @@ import Meta from "components/Meta";
 
 import useStyles from "./styles";
 
-function PendingList(props) {
+function ConfirmedList(props) {
   const classes = useStyles();
   const { listType } = props.match.params;
-  const [pendingTrx, setPendingTrx] = React.useState([]);
+  const [confirmTrx] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
   const [modalContent, setModalContent] = React.useState([]);
+  const refreshingLayout = props.refreshLayout;
   function createData(name, value) {
     return { name, value };
   }
@@ -67,122 +68,84 @@ function PendingList(props) {
   const handleClose = () => {
     setVisible(false);
   };
-  const fetchPetaniInboxPending = async () => {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    };
-    try {
-      console.log(config);
-      const resp = await axios.get("trx/ptn/unconfirmed/inbox", config);
-      await setPendingTrx(resp.data.data);
-      console.log(resp.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const fetchPetaniSentConfirmed = async () => {
+  //   const config = {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //   };
+  //   try {
+  //     console.log(config);
+  //     const resp = await axios.get("trx/ptn/confirmed/sent", config);
+  //     await setConfirmTrx(resp.data.data);
+  //     console.log(resp.data.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  const fetchPenangkarSentPending = async () => {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    };
-    try {
-      console.log(config);
-      const resp = await axios.get("trx/pkr/unconfirmed/sent", config);
-      await setPendingTrx(resp.data.data);
-      console.log(resp.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const confirmPetaniByID = async (_id) => {
-    const values = {
-      trxID: _id,
-    };
-    const config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    };
-    try {
-      console.log(JSON.stringify(values));
-      const resp = await axios.post(
-        "trx/pkr-ptn/confirm",
-        JSON.stringify(values),
-        config
-      );
-      await console.log(resp);
-      await alert("transaksi " + _id + "berhasil dikonfirmasi");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const fetchPenangkarSentConfirmed = async () => {
+  //   const config = {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //   };
+  //   try {
+  //     console.log(config);
+  //     const resp = await axios.get("trx/pkr/confirmed/sent", config);
+  //     await setConfirmTrx(resp.data.data);
+  //     console.log(resp.data.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  const confirmJualBenih = async (trx) => {
-    const values = {
-      usernamePengirim: trx.usernamePengirim,
-      usernamePenerima: trx.usernamePenerima,
-      alamatPengirim: trx.alamatPengirim,
-      alamatPenerima: trx.alamatPenerima,
-      kuantitas: trx.kuantitas.toString(),
-      harga: trx.harga.toString(),
-      timestamp: trx.timestamp,
-      umurBenih: trx.umurBenih,
-      umurPanen: "TIDAK TERSEDIA",
-      lamaPenyimpanan: trx.lamaPenyimpanan,
-      varietas: trx.varietas,
-      hargaBenih: trx.hargaBenih,
-      status: trx.status,
-      transaksiID: trx.transaksiID,
-      batchID: trx.batchID,
-    };
-
-    const valueJSON = JSON.stringify(values);
-    console.log("json", valueJSON);
-    try {
-      const resp = await axios({
-        method: "post",
-        url: "http://13.229.214.74:8080/jualBenih",
-        data: valueJSON,
-        headers: { "Content-Type": "application/json" },
-      });
-      await console.log(resp);
-      await alert("batchID " + trx.batchID + " berhasil dikonfirmasi");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const fetchPetaniInboxConfirmed = async () => {
+  //   console.log("fetch");
+  // };
 
   useEffect(() => {
-    const fetchByType = async () => {
-      console.log("useeffect");
-      if (listType === "Inbox") {
-        fetchPetaniInboxPending();
-      } else {
-        setPendingTrx([]);
-        fetchPenangkarSentPending();
-      }
+    refreshingLayout();
+
+    // if (props.match.params.listType !==)
+    const memberTypeFetch = localStorage.getItem("memberType");
+    const trxType = "confirmed";
+    const fetchTrx = async (memberType, trxType, mailType) => {
+      console.log("trx/" + memberType + "/" + trxType + "/" + mailType);
+      console.log(props.match);
     };
-    fetchByType();
+    fetchTrx(memberTypeFetch, trxType, props.match.params.listType);
+    // const fetchSentTrx = async (memberType) => {
+    //   console.log("fetchbytype");
+    //   if (memberType === "penangkar") fetchPenangkarSentConfirmed();
+    //   else if (memberType === "petani") fetchPetaniSentConfirmed();
+    //   else if (memberType === "pengumpul") fetchPengumpulSentConfirmed();
+    //   // else if (memberType === "pedagang") console.log("pdg");
+    // };
+    // const fetchInboxTrx = async (memberType) => {
+    //   console.log("fetchbytype");
+    //   // if (memberType === "penangkar") console.log("pkr");
+    //   if (memberType === "petani") fetchPetaniInboxConfirmed();
+    //   else if (memberType === "pengumpul") fetchPengumpulInboxConfirmed();
+    //   else if (memberType === "pedagang") fetchPedagangInboxConfirmed();
+    // };
+    // if (props.match.params.listType == "Sent") fetchSentTrx(memberTypeFetch);
+    // else fetchInboxTrx(memberTypeFetch);
+    // eslint-disable-next-line
   }, [listType]);
   return (
     <>
       <Meta title="TransactionList" description="TransactionList" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h6">Transaksi Pending</Typography>
+        <Typography variant="h6">Transaksi Terkonfirmasi</Typography>
         <Typography variant="h6">{props.match.params.listType}</Typography>
-
-        {pendingTrx.length === "0" ? (
-          <p>Tidak ada transaksi pending</p>
+        <p>{props.user.memberType}</p>
+        {confirmTrx.length === "0" ? (
+          <p>Kamu memiliki {confirmTrx.length} transaksi terkonfirmasi </p>
         ) : (
-          console.log(pendingTrx[0])
+          <p>Tidak ada transaksi terkonfirmasi {confirmTrx.length}</p>
         )}
-        {pendingTrx.map((trx) => {
+        {confirmTrx.map((trx) => {
           return (
             <>
               <Card
@@ -236,8 +199,7 @@ function PendingList(props) {
           <DialogActions>
             <Button
               onClick={() => {
-                confirmPetaniByID(modalContent._id);
-                confirmJualBenih(modalContent);
+                console.log("console log onClick");
               }}
               variant="outlined"
             >
@@ -250,4 +212,4 @@ function PendingList(props) {
   );
 }
 
-export default PendingList;
+export default ConfirmedList;

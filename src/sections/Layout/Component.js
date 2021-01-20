@@ -61,6 +61,7 @@ const Layout = () => {
     if (localStorage.getItem("token") == null) {
       setLoggedIn(false);
       setIsLoading(false);
+      return;
     }
     const config = {
       headers: {
@@ -70,12 +71,20 @@ const Layout = () => {
     try {
       console.log(config);
       const resp = await axios.get("user", config);
-      // localStorage.setItem("User", resp.data.nama);
+      console.log(resp.data.data.memberType);
+      localStorage.setItem("memberType", resp.data.data.memberType);
       await setIsLoading(false);
       await setLoggedIn(true);
+      await localStorage.setItem("isLoggedIn", true);
       await setUser(resp.data.data);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
+      setUser([]);
+      setLoggedIn(false);
+      localStorage.setItem("isLoggedIn", false);
+      localStorage.removeItem("memberType");
+      localStorage.removeItem("token");
     }
   };
 

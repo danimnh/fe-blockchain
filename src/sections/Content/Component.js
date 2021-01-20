@@ -7,7 +7,7 @@ import ProductDetailPage from "pages/Product_Details_Page";
 import AddTrx from "pages/Add_Trx_Page";
 // import TransactionList from "pages/TransactionList";
 import PendingList from "pages/Pending_Trx_Page";
-// import ConfirmedList from "pages/Confirmed_Trx_Page";
+import ConfirmedList from "pages/Confirmed_Trx_Page";
 
 import Page from "components/Page";
 
@@ -69,6 +69,17 @@ function Content({
           path="/transactions/pending/:listType"
           render={(props) => (
             <PendingList refreshLayout={refreshLayout} user={user} {...props} />
+          )}
+        />
+        <Route
+          exact
+          path="/transactions/confirmed/:listType"
+          render={(props) => (
+            <ConfirmedList
+              refreshLayout={refreshLayout}
+              user={user}
+              {...props}
+            />
           )}
         />
       </Switch>

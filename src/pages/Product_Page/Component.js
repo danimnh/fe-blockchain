@@ -24,12 +24,12 @@ function ProductPage(props) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const [dataBlock, setDataBlock] = React.useState({});
-  const fetchWorldState = async (batchID) => {
+  const fetchDataByID = async (batchID) => {
     setIsLoading(true);
     try {
       const resp = await axios({
         method: "get",
-        url: "http://13.229.214.74:8080/worldstate/" + batchID,
+        url: "http://54.169.65.119:8080/worldstate/" + batchID,
         headers: { "Content-Type": "application/json" },
       });
       await console.log(resp);
@@ -41,7 +41,7 @@ function ProductPage(props) {
   };
   useEffect(() => {
     const batchId = props.match.params.batchId;
-    fetchWorldState(batchId);
+    fetchDataByID(batchId);
   }, [props.match.params.batchId]);
   return (
     <>

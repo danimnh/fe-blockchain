@@ -82,7 +82,7 @@ function Menu({ isOpen, onClose, onOpen, props }) {
               button
               onClick={onClose}
               component={RouterLink}
-              to="/transactions/pending/Sent"
+              to="/transactions/pending/sent"
             >
               <ListItemText primary="Sent" />
             </ListItem>
@@ -94,10 +94,20 @@ function Menu({ isOpen, onClose, onOpen, props }) {
         </StyledMenuItem>
         <Collapse in={openConfirmed} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button>
+            <ListItem
+              button
+              onClick={onClose}
+              component={RouterLink}
+              to="/transactions/confirmed/inbox"
+            >
               <ListItemText primary="Inbox" />
             </ListItem>
-            <ListItem button>
+            <ListItem
+              button
+              onClick={onClose}
+              component={RouterLink}
+              to="/transactions/confirmed/Sent"
+            >
               <ListItemText primary="Sent" />
             </ListItem>
           </List>

@@ -5,7 +5,7 @@ const email = "muhammad_nurhidayat@apps.ipb.ac.id";
 const domain = "Blockchain IPB";
 /* ***************** */
 
-const repository = "https://github.com/suren-atoyan/react-pwa";
+const repository = "https://github.com/danimnh/fe-blockchain";
 
 const messages = {
   app: {
