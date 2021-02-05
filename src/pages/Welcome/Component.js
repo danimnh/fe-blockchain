@@ -10,9 +10,9 @@ import TextField from "@material-ui/core/TextField";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // import { FaReact as ReactIcon } from "react-icons/fa";
-import ipb_logo from "./ipb-logo.png";
-import kementan_logo from "./kementan-logo-horizontal.jpg";
-import arung_logo from "./arung-logo.png";
+// import ipb_logo from "./ipb-logo.png";
+// import kementan_logo from "./kementan-logo-horizontal.jpg";
+// import arung_logo from "./arung-logo.png";
 
 import Meta from "components/Meta";
 
@@ -103,12 +103,22 @@ function Welcome(props) {
         <Box className={classes.content}>
           <img
             className={classes.logoBigger}
-            src={kementan_logo}
+            src={
+              process.env.PUBLIC_URL + "/images/kementan-logo-horizontal.jpg"
+            }
             alt="Logo Kementrian Pertanian"
           />
           <Box className={classes.contentHorizontal}>
-            <img className={classes.logo} src={ipb_logo} alt="Logo IPB" />
-            <img className={classes.logo} src={arung_logo} alt="Logo Arung" />
+            <img
+              className={classes.logo}
+              src={process.env.PUBLIC_URL + "/images/ipb-logo.png"}
+              alt="Logo IPB"
+            />
+            <img
+              className={classes.logo}
+              src={process.env.PUBLIC_URL + "/images/arung-logo.png"}
+              alt="Logo Arung"
+            />
           </Box>
         </Box>
       </Box>
