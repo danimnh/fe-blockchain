@@ -4,12 +4,15 @@ import { Link as RouterLink } from "react-router-dom";
 import QrReader from "react-qr-reader";
 import Container from "@material-ui/core/Container";
 // import Typography from "@material-ui/core/Typography";
-// import Box from "@material-ui/core/Box";
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // import { FaReact as ReactIcon } from "react-icons/fa";
+import ipb_logo from "./ipb-logo.png";
+import kementan_logo from "./kementan-logo-horizontal.jpg";
+import arung_logo from "./arung-logo.png";
 
 import Meta from "components/Meta";
 
@@ -96,6 +99,17 @@ function Welcome(props) {
           </Button>
         )}
       </Container>
+      <Box className={classes.content}>
+        <img
+          className={classes.logoBigger}
+          src={kementan_logo}
+          alt="Logo Kementrian Pertanian"
+        />
+        <Box className={classes.contentHorizontal}>
+          <img className={classes.logo} src={ipb_logo} alt="Logo IPB" />
+          <img className={classes.logo} src={arung_logo} alt="Logo Arung" />
+        </Box>
+      </Box>
     </>
   );
 }
