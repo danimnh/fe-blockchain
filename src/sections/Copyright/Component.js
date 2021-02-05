@@ -12,7 +12,7 @@ function Copyright() {
   const classes = useStyles();
 
   return (
-    <Box pt={2} pb={2}>
+    <Box pb={2}>
       <Typography
         className={classes.copyright}
         variant="body2"

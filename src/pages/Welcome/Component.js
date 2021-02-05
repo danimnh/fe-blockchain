@@ -99,15 +99,17 @@ function Welcome(props) {
           </Button>
         )}
       </Container>
-      <Box className={classes.content}>
-        <img
-          className={classes.logoBigger}
-          src={kementan_logo}
-          alt="Logo Kementrian Pertanian"
-        />
-        <Box className={classes.contentHorizontal}>
-          <img className={classes.logo} src={ipb_logo} alt="Logo IPB" />
-          <img className={classes.logo} src={arung_logo} alt="Logo Arung" />
+      <Box pt={2} pb={2}>
+        <Box className={classes.content}>
+          <img
+            className={classes.logoBigger}
+            src={kementan_logo}
+            alt="Logo Kementrian Pertanian"
+          />
+          <Box className={classes.contentHorizontal}>
+            <img className={classes.logo} src={ipb_logo} alt="Logo IPB" />
+            <img className={classes.logo} src={arung_logo} alt="Logo Arung" />
+          </Box>
         </Box>
       </Box>
     </>

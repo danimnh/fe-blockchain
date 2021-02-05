@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(() => ({
   copyright: {
     "user-select": "none",
-    paddingTop: "10px",
   },
   content: {
     display: "flex",
