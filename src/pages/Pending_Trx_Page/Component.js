@@ -37,6 +37,7 @@ function PendingList(props) {
   const [pendingTrx, setPendingTrx] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
   const [modalContent, setModalContent] = React.useState([]);
+
   function createData(name, value) {
     return { name, value };
   }
@@ -67,37 +68,59 @@ function PendingList(props) {
   const handleClose = () => {
     setVisible(false);
   };
-  const fetchPetaniInboxPending = async () => {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    };
-    try {
-      console.log(config);
-      const resp = await axios.get("trx/ptn/unconfirmed/inbox", config);
-      await setPendingTrx(resp.data.data);
-      console.log(resp.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // pkr, ptn, ppl, pdg
+  // pending = unconfirmed, confirmed
+  // inbox, sent
 
-  const fetchPenangkarSentPending = async () => {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    };
-    try {
-      console.log(config);
-      const resp = await axios.get("trx/pkr/unconfirmed/sent", config);
-      await setPendingTrx(resp.data.data);
-      console.log(resp.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const fetchTrx = async (memberType, trxIsPending, trxType) => {
+  //   const config = {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //   };
+  //   try {
+  //     console.log("trx/" + memberType + "/" + trxIsPending + "/" + trxType);
+  //     // console.log(config);
+  //     // const resp = await axios.get("trx/ptn/unconfirmed/inbox", config);
+  //     // await setPendingTrx(resp.data.data);
+  //     // console.log(resp.data.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // const fetchPetaniInboxPending = async () => {
+  //   const config = {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //   };
+  //   try {
+  //     console.log(config);
+  //     const resp = await axios.get("trx/ptn/unconfirmed/inbox", config);
+  //     await setPendingTrx(resp.data.data);
+  //     console.log(resp.data.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // const fetchPenangkarSentPending = async () => {
+  //   const config = {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //   };
+  //   try {
+  //     console.log(config);
+  //     const resp = await axios.get("trx/pkr/unconfirmed/sent", config);
+  //     await setPendingTrx(resp.data.data);
+  //     console.log(resp.data.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   const confirmPetaniByID = async (_id) => {
     const values = {
       trxID: _id,
@@ -160,12 +183,11 @@ function PendingList(props) {
 
   useEffect(() => {
     const fetchByType = async () => {
-      console.log("useeffect");
       if (listType === "Inbox") {
-        fetchPetaniInboxPending();
+        // fetchPetaniInboxPending();
       } else {
         setPendingTrx([]);
-        fetchPenangkarSentPending();
+        // fetchPenangkarSentPending();
       }
     };
     fetchByType();
@@ -174,13 +196,13 @@ function PendingList(props) {
     <>
       <Meta title="TransactionList" description="TransactionList" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h6">Transaksi Pending</Typography>
         <Typography variant="h6">{props.match.params.listType}</Typography>
+        <Typography variant="h6">Transaksi Pending</Typography>
 
-        {pendingTrx.length === "0" ? (
-          <p>Tidak ada transaksi pending</p>
+        {pendingTrx.length === 0 ? (
+          <p>Tidak ada transaksi masuk</p>
         ) : (
-          console.log(pendingTrx[0])
+          console.log(pendingTrx.length)
         )}
         {pendingTrx.map((trx) => {
           return (
