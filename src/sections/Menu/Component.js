@@ -65,26 +65,28 @@ function Menu({ isOpen, onClose, onOpen, props }) {
           <ListItemText primary="Tambah Transaksi" />
         </StyledMenuItem>
         <StyledMenuItem onClick={handleClickPending}>
-          <ListItemText primary="Transaksi Pending" />
+          <ListItemText primary="Transaksi Tertunda" />
           {openPending ? <ExpandLess /> : <ExpandMore />}
         </StyledMenuItem>
         <Collapse in={openPending} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem
+              className={classes.nested}
               button
               onClick={onClose}
               component={RouterLink}
               to="/transactions/pending/Inbox"
             >
-              <ListItemText primary="Inbox" />
+              <ListItemText primary="Kotak Masuk" />
             </ListItem>
             <ListItem
+              className={classes.nested}
               button
               onClick={onClose}
               component={RouterLink}
-              to="/transactions/pending/sent"
+              to="/transactions/pending/Sent"
             >
-              <ListItemText primary="Sent" />
+              <ListItemText primary="Terkirim" />
             </ListItem>
           </List>
         </Collapse>
@@ -95,20 +97,22 @@ function Menu({ isOpen, onClose, onOpen, props }) {
         <Collapse in={openConfirmed} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem
+              className={classes.nested}
               button
               onClick={onClose}
               component={RouterLink}
-              to="/transactions/confirmed/inbox"
+              to="/transactions/confirmed/Inbox"
             >
-              <ListItemText primary="Inbox" />
+              <ListItemText primary="Kotak Masuk" />
             </ListItem>
             <ListItem
+              className={classes.nested}
               button
               onClick={onClose}
               component={RouterLink}
               to="/transactions/confirmed/Sent"
             >
-              <ListItemText primary="Sent" />
+              <ListItemText primary="Terkirim" />
             </ListItem>
           </List>
         </Collapse>

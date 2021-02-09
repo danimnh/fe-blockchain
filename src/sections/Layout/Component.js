@@ -56,7 +56,7 @@ const Layout = () => {
   };
 
   const getUser = async () => {
-    console.log("getuser is called");
+    // console.log("getuser is called");
     setIsLoading(true);
     if (localStorage.getItem("token") == null) {
       setLoggedIn(false);
@@ -69,9 +69,9 @@ const Layout = () => {
       },
     };
     try {
-      console.log(config);
+      // console.log(config);
       const resp = await axios.get("user", config);
-      console.log(resp.data.data.memberType);
+      console.log("Berhasil login sebagai " + resp.data.data.memberType);
       localStorage.setItem("memberType", resp.data.data.memberType);
       await setIsLoading(false);
       await setLoggedIn(true);
