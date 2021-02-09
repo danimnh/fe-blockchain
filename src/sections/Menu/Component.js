@@ -33,6 +33,12 @@ function Menu({ isOpen, onClose, onOpen, props }) {
   });
   const [openPending, setOpenPending] = React.useState(false);
   const [openConfirmed, setOpenConfirmed] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const handleListItemClick = (index) => {
+    onClose();
+    setSelectedIndex(index);
+  };
 
   const handleClickPending = () => {
     setOpenPending(!openPending);
@@ -51,14 +57,21 @@ function Menu({ isOpen, onClose, onOpen, props }) {
     >
       <List className={classes.list}>
         <div className={classes.toolbar} />
-        <StyledMenuItem onClick={onClose} component={RouterLink} to="/">
+        <StyledMenuItem
+          button
+          selected={selectedIndex === 0}
+          onClick={() => handleListItemClick(0)}
+          component={RouterLink}
+          to="/"
+        >
           {/* <ListItemIcon>
             <WelcomeIcon />
           </ListItemIcon> */}
           <ListItemText primary="Halaman Utama" />
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={onClose}
+          selected={selectedIndex === 1}
+          onClick={() => handleListItemClick(1)}
           component={RouterLink}
           to="/create_transaction"
         >
@@ -73,7 +86,8 @@ function Menu({ isOpen, onClose, onOpen, props }) {
             <ListItem
               className={classes.nested}
               button
-              onClick={onClose}
+              selected={selectedIndex === 2}
+              onClick={() => handleListItemClick(2)}
               component={RouterLink}
               to="/transactions/pending/Inbox"
             >
@@ -82,7 +96,8 @@ function Menu({ isOpen, onClose, onOpen, props }) {
             <ListItem
               className={classes.nested}
               button
-              onClick={onClose}
+              selected={selectedIndex === 3}
+              onClick={() => handleListItemClick(3)}
               component={RouterLink}
               to="/transactions/pending/Sent"
             >
@@ -99,7 +114,8 @@ function Menu({ isOpen, onClose, onOpen, props }) {
             <ListItem
               className={classes.nested}
               button
-              onClick={onClose}
+              selected={selectedIndex === 4}
+              onClick={() => handleListItemClick(4)}
               component={RouterLink}
               to="/transactions/confirmed/Inbox"
             >
@@ -108,7 +124,8 @@ function Menu({ isOpen, onClose, onOpen, props }) {
             <ListItem
               className={classes.nested}
               button
-              onClick={onClose}
+              selected={selectedIndex === 5}
+              onClick={() => handleListItemClick(5)}
               component={RouterLink}
               to="/transactions/confirmed/Sent"
             >
