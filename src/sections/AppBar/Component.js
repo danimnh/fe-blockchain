@@ -33,7 +33,7 @@ const Divider = withStyles({
   },
 })((props) => <DividerMU flexItem orientation="vertical" {...props} />);
 
-function AppBar_({ onMenuOpen }) {
+function AppBar_({ onMenuOpen, handleListItemClick }) {
   const classes = useStyles();
   // const [, themeActions] = useTheme();
   const [swState, swActions] = useSW();
@@ -59,7 +59,13 @@ function AppBar_({ onMenuOpen }) {
             <MenuIcon />
           </IconButton>
           <Link to="/">
-            <Button aria-label="go to home" className={classes.title}>
+            <Button
+              onClick={() => {
+                handleListItemClick(0);
+              }}
+              aria-label="go to home"
+              className={classes.title}
+            >
               {title}
             </Button>
           </Link>

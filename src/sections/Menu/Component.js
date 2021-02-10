@@ -26,19 +26,26 @@ const StyledMenuItem = withStyles({ root: { width: "100%" } })((props) => (
   <MenuItem {...props} />
 ));
 
-function Menu({ isOpen, onClose, onOpen, props }) {
+function Menu({
+  isOpen,
+  onClose,
+  onOpen,
+  props,
+  selectedIndex,
+  handleListItemClick,
+}) {
   const classes = useStyles({
     isOpen,
     isMobile,
   });
   const [openPending, setOpenPending] = React.useState(false);
   const [openConfirmed, setOpenConfirmed] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  // const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const handleListItemClick = (index) => {
-    onClose();
-    setSelectedIndex(index);
-  };
+  // const handleListItemClick = (index) => {
+  //   onClose();
+  //   setSelectedIndex(index);
+  // };
 
   const handleClickPending = () => {
     setOpenPending(!openPending);

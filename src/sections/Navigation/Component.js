@@ -7,6 +7,11 @@ import Notification from "sections/Notification";
 function Navigation(handleLogout) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const handleListItemClick = (index) => {
+    handleMenuClose();
+    setSelectedIndex(index);
+  };
   // const handleLogouts = props.handleLogout;
   // console.log(handleLogout);
   const handleMenuOpen = () => {
@@ -33,14 +38,18 @@ function Navigation(handleLogout) {
       />
       <Menu
         isOpen={isMenuOpen}
+        selectedIndex={selectedIndex}
+        handleListItemClick={handleListItemClick}
         onClose={handleMenuClose}
         onOpen={handleMenuOpen}
         props={handleLogout}
       />
       <AppBar
         isMenuOpen={isMenuOpen}
+        selectedIndex={selectedIndex}
         onMenuOpen={handleMenuOpen}
         onNotifOpen={handleNotifOpen}
+        handleListItemClick={handleListItemClick}
         props={handleLogout}
       />
     </>
