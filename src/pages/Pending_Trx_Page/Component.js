@@ -33,7 +33,9 @@ import useStyles from "./styles";
 
 function PendingList(props) {
   const classes = useStyles();
+  const refreshingLayout = props.refreshLayout;
   const { listType } = props.match.params;
+  const [memberCode, setMemberCode] = React.useState("");
   const [pendingTrx, setPendingTrx] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
   const [modalContent, setModalContent] = React.useState([]);
@@ -41,7 +43,7 @@ function PendingList(props) {
   function createData(name, value) {
     return { name, value };
   }
-
+  //To-Do : rows tiap aktor
   const rowsPetani = [
     createData("Username Pengirim", modalContent.usernamePengirim),
     createData("Username Penerima", modalContent.usernamePenerima),
@@ -72,167 +74,153 @@ function PendingList(props) {
   // pending = unconfirmed, confirmed
   // inbox, sent
 
-  // const fetchTrx = async (memberType, trxIsPending, trxType) => {
-  //   const config = {
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token"),
-  //     },
-  //   };
-  //   try {
-  //     console.log("trx/" + memberType + "/" + trxIsPending + "/" + trxType);
-  //     // console.log(config);
-  //     // const resp = await axios.get("trx/ptn/unconfirmed/inbox", config);
-  //     // await setPendingTrx(resp.data.data);
-  //     // console.log(resp.data.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // const fetchPetaniInboxPending = async () => {
-  //   const config = {
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token"),
-  //     },
-  //   };
-  //   try {
-  //     console.log(config);
-  //     const resp = await axios.get("trx/ptn/unconfirmed/inbox", config);
-  //     await setPendingTrx(resp.data.data);
-  //     console.log(resp.data.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // const fetchPenangkarSentPending = async () => {
-  //   const config = {
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token"),
-  //     },
-  //   };
-  //   try {
-  //     console.log(config);
-  //     const resp = await axios.get("trx/pkr/unconfirmed/sent", config);
-  //     await setPendingTrx(resp.data.data);
-  //     console.log(resp.data.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  const confirmPetaniByID = async (_id) => {
-    const values = {
-      trxID: _id,
-    };
+  const fetchTrx = async (memberType, trxIsPending, trxType) => {
     const config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
     };
     try {
-      console.log(JSON.stringify(values));
-      const resp = await axios.post(
-        "trx/pkr-ptn/confirm",
-        JSON.stringify(values),
+      // console.log("trx/" + memberCode + "/" + trxIsPending + "/" + trxType);
+      console.log(config);
+      console.log("trx/" + memberCode + "/" + trxIsPending + "/" + trxType);
+      const resp = await axios.get(
+        "trx/" + memberCode + "/" + trxIsPending + "/" + trxType,
         config
       );
-      await console.log(resp);
-      await alert("transaksi " + _id + "berhasil dikonfirmasi");
+      await setPendingTrx(resp.data.data);
+      console.log(resp.data.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const confirmJualBenih = async (trx) => {
-    const values = {
-      usernamePengirim: trx.usernamePengirim,
-      usernamePenerima: trx.usernamePenerima,
-      alamatPengirim: trx.alamatPengirim,
-      alamatPenerima: trx.alamatPenerima,
-      kuantitas: trx.kuantitas.toString(),
-      harga: trx.harga.toString(),
-      timestamp: trx.timestamp,
-      umurBenih: trx.umurBenih,
-      umurPanen: "TIDAK TERSEDIA",
-      lamaPenyimpanan: trx.lamaPenyimpanan,
-      varietas: trx.varietas,
-      hargaBenih: trx.hargaBenih,
-      status: trx.status,
-      transaksiID: trx.transaksiID,
-      batchID: trx.batchID,
-    };
+  // const confirmPetaniByID = async (_id) => {
+  //   const values = {
+  //     trxID: _id,
+  //   };
+  //   const config = {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token"),
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //   };
+  //   try {
+  //     console.log(JSON.stringify(values));
+  //     const resp = await axios.post(
+  //       "trx/pkr-ptn/confirm",
+  //       JSON.stringify(values),
+  //       config
+  //     );
+  //     await console.log(resp);
+  //     await alert("transaksi " + _id + "berhasil dikonfirmasi");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-    const valueJSON = JSON.stringify(values);
-    console.log("json", valueJSON);
-    try {
-      const resp = await axios({
-        method: "post",
-        url: "http://13.229.214.74:8080/jualBenih",
-        data: valueJSON,
-        headers: { "Content-Type": "application/json" },
-      });
-      await console.log(resp);
-      await alert("batchID " + trx.batchID + " berhasil dikonfirmasi");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const confirmJualBenih = async (trx) => {
+  //   const values = {
+  //     usernamePengirim: trx.usernamePengirim,
+  //     usernamePenerima: trx.usernamePenerima,
+  //     alamatPengirim: trx.alamatPengirim,
+  //     alamatPenerima: trx.alamatPenerima,
+  //     kuantitas: trx.kuantitas.toString(),
+  //     harga: trx.harga.toString(),
+  //     timestamp: trx.timestamp,
+  //     umurBenih: trx.umurBenih,
+  //     umurPanen: "TIDAK TERSEDIA",
+  //     lamaPenyimpanan: trx.lamaPenyimpanan,
+  //     varietas: trx.varietas,
+  //     hargaBenih: trx.hargaBenih,
+  //     status: trx.status,
+  //     transaksiID: trx.transaksiID,
+  //     batchID: trx.batchID,
+  //   };
+
+  //   const valueJSON = JSON.stringify(values);
+  //   console.log("json", valueJSON);
+  //   try {
+  //     const resp = await axios({
+  //       method: "post",
+  //       url: "http://13.229.214.74:8080/jualBenih",
+  //       data: valueJSON,
+  //       headers: { "Content-Type": "application/json" },
+  //     });
+  //     await console.log(resp);
+  //     await alert("batchID " + trx.batchID + " berhasil dikonfirmasi");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   useEffect(() => {
     const fetchByType = async () => {
       if (listType === "Inbox") {
-        // fetchPetaniInboxPending();
-      } else {
+        fetchTrx(memberCode, "unconfirmed", "inbox");
+      } else if (listType === "Sent") {
         setPendingTrx([]);
-        // fetchPenangkarSentPending();
+        fetchTrx(memberCode, "unconfirmed", "sent");
       }
     };
-    fetchByType();
-  }, [listType]);
+    if (props.user.memberType === undefined) {
+      refreshingLayout();
+    } else if (memberCode.length === 0) {
+      if (props.user.memberType === "penangkar") setMemberCode("pkr");
+      else if (props.user.memberType === "petani") setMemberCode("ptn");
+      else if (props.user.memberType === "pengumpul") setMemberCode("ppl");
+      else if (props.user.memberType === "pedagang") setMemberCode("pdg");
+    } else if (memberCode.length === 3) {
+      fetchByType();
+    }
+    // eslint-disable-next-line
+  }, [listType, props.user.memberType, memberCode]);
   return (
     <>
       <Meta title="TransactionList" description="TransactionList" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h6">{props.match.params.listType}</Typography>
-        <Typography variant="h6">Transaksi Pending</Typography>
-
-        {pendingTrx.length === 0 ? (
-          <p>Tidak ada transaksi masuk</p>
+        {props.match.params.listType === "Inbox" ? (
+          <Typography variant="h6">Kotak Masuk</Typography>
         ) : (
-          console.log(pendingTrx.length)
+          <Typography variant="h6">Terkirim</Typography>
         )}
+
+        <Typography variant="h6">Transaksi Tertunda</Typography>
+
+        {pendingTrx.length !== 0 ? (
+          <p>Kamu memiliki {pendingTrx.length} transaksi yang tertunda</p>
+        ) : (
+          <p>Tidak ada transaksi masuk</p>
+        )}
+
         {pendingTrx.map((trx) => {
           return (
-            <>
-              <Card
-                key={trx._id}
-                style={{ marginBottom: "20px", width: "100%" }}
+            <Card
+              id={trx._id}
+              key={trx._id}
+              style={{ marginBottom: "20px", width: "100%" }}
+            >
+              <CardActionArea
+                onClick={() => {
+                  setModalContent(trx);
+                  setVisible(true);
+                  inputTable(trx);
+                }}
               >
-                <CardActionArea
-                  onClick={() => {
-                    setModalContent(trx);
-                    setVisible(true);
-                    inputTable(trx);
-                  }}
-                >
-                  <CardContent>
-                    <Typography>
-                      Pengiriman dari {trx.usernamePengirim}
-                    </Typography>
-                    <Typography>
-                      {moment(trx.timestamp).format("LL")}
-                    </Typography>
-                    <Typography>batch id : {trx.batchID}</Typography>
-                    <Typography>transaction id : {trx.transaksiID}</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </>
+                <CardContent>
+                  <Typography>
+                    Pengiriman dari {trx.usernamePengirim}
+                  </Typography>
+                  <Typography>{moment(trx.timestamp).format("LL")}</Typography>
+                  <Typography>batch id : {trx.batchID}</Typography>
+                  <Typography>transaction id : {trx.transaksiID}</Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
           );
         })}
+
         <Dialog open={visible} onClose={handleClose}>
           <DialogTitle>Konfirmasi Transaksi</DialogTitle>
           <DialogContent>
@@ -258,10 +246,19 @@ function PendingList(props) {
           <DialogActions>
             <Button
               onClick={() => {
-                confirmPetaniByID(modalContent._id);
-                confirmJualBenih(modalContent);
+                handleClose();
               }}
               variant="outlined"
+            >
+              Tutup
+            </Button>
+            <Button
+              onClick={() => {
+                // confirmPetaniByID(modalContent._id);
+                // confirmJualBenih(modalContent);
+              }}
+              variant="contained"
+              color="primary"
             >
               Konfirmasi
             </Button>
