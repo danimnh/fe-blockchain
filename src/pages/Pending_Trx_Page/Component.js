@@ -36,6 +36,7 @@ function PendingList(props) {
   const refreshingLayout = props.refreshLayout;
   const { listType } = props.match.params;
   const [memberCode, setMemberCode] = React.useState("");
+  const [confirmCode, setConfirmCode] = React.useState("");
   const [pendingTrx, setPendingTrx] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
   const [modalContent, setModalContent] = React.useState([]);
@@ -44,6 +45,24 @@ function PendingList(props) {
     return { name, value };
   }
   //To-Do : rows tiap aktor
+  // const rowsPenangkar = [
+  //   createData("Username Pengirim", modalContent.usernamePengirim),
+  //   createData("Username Penerima", modalContent.usernamePenerima),
+  //   createData("Alamat Pengirim", modalContent.alamatPengirim),
+  //   createData("Alamat Penerima", modalContent.alamatPenerima),
+  //   createData("Kuantitas", modalContent.kuantitas),
+  //   createData("Harga", modalContent.harga),
+  //   createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+  //   createData("Umur Benih", modalContent.umurBenih),
+  //   createData("Umur Panen", modalContent.umurPanen),
+  //   createData("Lama Penyimpanan", modalContent.lamaPenyimpanan),
+  //   createData("Varietas", modalContent.varietas),
+  //   createData("Harga Benih", modalContent.hargaBenih),
+  //   createData("Status", modalContent.status),
+  //   createData("Transaksi ID", modalContent.transaksiID),
+  //   createData("Batch ID", modalContent.batchID),
+  // ];
+
   const rowsPetani = [
     createData("Username Pengirim", modalContent.usernamePengirim),
     createData("Username Penerima", modalContent.usernamePenerima),
@@ -62,6 +81,39 @@ function PendingList(props) {
     createData("Batch ID", modalContent.batchID),
   ];
 
+  const rowsPengumpul = [
+    createData("Username Pengirim", modalContent.usernamePengirim),
+    createData("Username Penerima", modalContent.usernamePenerima),
+    createData("Alamat Pengirim", modalContent.alamatPengirim),
+    createData("Alamat Penerima", modalContent.alamatPenerima),
+    createData("Kuantitas", modalContent.kuantitas),
+    createData("Harga", modalContent.harga),
+    createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+    createData("Kadar Air", modalContent.kadarAir),
+    createData("Pupuk", modalContent.pupuk),
+    createData("Pestisida", modalContent.pestisida),
+    createData("Perlakuan", modalContent.perlakuan),
+    createData("Status", modalContent.status),
+    createData("Transaksi ID", modalContent.transaksiID),
+    createData("Batch ID", modalContent.batchID),
+  ];
+  // const rowsPedagang = [
+  //   createData("Username Pengirim", modalContent.usernamePengirim),
+  //   createData("Username Penerima", modalContent.usernamePenerima),
+  //   createData("Alamat Pengirim", modalContent.alamatPengirim),
+  //   createData("Alamat Penerima", modalContent.alamatPenerima),
+  //   createData("Kuantitas", modalContent.kuantitas),
+  //   createData("Harga", modalContent.harga),
+  //   createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+  //   createData("Umur Benih", modalContent.umurBenih),
+  //   createData("Umur Panen", modalContent.umurPanen),
+  //   createData("Lama Penyimpanan", modalContent.lamaPenyimpanan),
+  //   createData("Varietas", modalContent.varietas),
+  //   createData("Harga Benih", modalContent.hargaBenih),
+  //   createData("Status", modalContent.status),
+  //   createData("Transaksi ID", modalContent.transaksiID),
+  //   createData("Batch ID", modalContent.batchID),
+  // ];
   const inputTable = () => {};
   // const handleOpen = () => {
   //   setVisible(true);
@@ -70,6 +122,7 @@ function PendingList(props) {
   const handleClose = () => {
     setVisible(false);
   };
+
   // pkr, ptn, ppl, pdg
   // pending = unconfirmed, confirmed
   // inbox, sent
@@ -95,30 +148,32 @@ function PendingList(props) {
     }
   };
 
-  // const confirmPetaniByID = async (_id) => {
-  //   const values = {
-  //     trxID: _id,
-  //   };
-  //   const config = {
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token"),
-  //       "Content-Type": "application/json",
-  //       "Access-Control-Allow-Origin": "*",
-  //     },
-  //   };
-  //   try {
-  //     console.log(JSON.stringify(values));
-  //     const resp = await axios.post(
-  //       "trx/pkr-ptn/confirm",
-  //       JSON.stringify(values),
-  //       config
-  //     );
-  //     await console.log(resp);
-  //     await alert("transaksi " + _id + "berhasil dikonfirmasi");
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const confirmTrxByID = async (_id) => {
+    const values = {
+      trxID: _id,
+    };
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    try {
+      console.log(JSON.stringify(values));
+      console.log("confirm to trx/" + confirmCode + "/confirm");
+      const resp = await axios.post(
+        "trx/" + confirmCode + "/confirm",
+        JSON.stringify(values),
+        config
+      );
+      await console.log(resp);
+      await alert("transaksi " + _id + "berhasil dikonfirmasi");
+      //todo : erase specific from array
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // const confirmJualBenih = async (trx) => {
   //   const values = {
@@ -168,9 +223,16 @@ function PendingList(props) {
       refreshingLayout();
     } else if (memberCode.length === 0) {
       if (props.user.memberType === "penangkar") setMemberCode("pkr");
-      else if (props.user.memberType === "petani") setMemberCode("ptn");
-      else if (props.user.memberType === "pengumpul") setMemberCode("ppl");
-      else if (props.user.memberType === "pedagang") setMemberCode("pdg");
+      else if (props.user.memberType === "petani") {
+        setMemberCode("ptn");
+        setConfirmCode("pkr-ptn");
+      } else if (props.user.memberType === "pengumpul") {
+        setMemberCode("ppl");
+        setConfirmCode("ptn-ppl");
+      } else if (props.user.memberType === "pedagang") {
+        setMemberCode("pdg");
+        setConfirmCode("ppl-pdg");
+      }
     } else if (memberCode.length === 3) {
       fetchByType();
     }
@@ -233,12 +295,23 @@ function PendingList(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rowsPetani.map((row) => (
-                    <TableRow key={row.name}>
-                      <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="right">{row.value}</TableCell>
-                    </TableRow>
-                  ))}
+                  {memberCode === "ptn"
+                    ? rowsPetani.map((row) => (
+                        <TableRow key={row.name}>
+                          <TableCell align="left">{row.name}</TableCell>
+                          <TableCell align="right">{row.value}</TableCell>
+                        </TableRow>
+                      ))
+                    : memberCode === "ppl"
+                    ? rowsPengumpul.map((row) => (
+                        <TableRow key={row.name}>
+                          <TableCell align="left">{row.name}</TableCell>
+                          <TableCell align="right">{row.value}</TableCell>
+                        </TableRow>
+                      ))
+                    : memberCode === "pdg"
+                    ? console.log("pedagang")
+                    : console.log("penangkar")}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -254,7 +327,7 @@ function PendingList(props) {
             </Button>
             <Button
               onClick={() => {
-                // confirmPetaniByID(modalContent._id);
+                confirmTrxByID(modalContent._id);
                 // confirmJualBenih(modalContent);
               }}
               variant="contained"
