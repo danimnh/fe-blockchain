@@ -33,7 +33,7 @@ export default function InputRadioField(props) {
         value={value}
         {...field}
         {...rest}
-        helperText={_renderHelperText()}
+        helpertext={_renderHelperText()}
       >
         <FormControlLabel
           value={props.values[0]}

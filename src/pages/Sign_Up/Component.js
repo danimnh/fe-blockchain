@@ -47,6 +47,7 @@ function SignUpPage() {
   //nextStep
   const nextStep = () => {
     setActiveStep(activeStep + 1);
+    console.log(formField);
   };
 
   const prevStep = () => {

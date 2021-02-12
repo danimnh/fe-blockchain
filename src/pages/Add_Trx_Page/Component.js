@@ -23,7 +23,7 @@ import FormPtnAddTrx from "./Forms/FormPtnAddTrx";
 
 const { PkrAddTrxFormFields } = PkrAddTrxFields;
 const { PtnAddTrxFormFields } = PtnAddTrxFields;
-
+// todo : username penerima checks out
 function _renderStepContent(memberType) {
   switch (memberType) {
     case "penangkar":
@@ -60,7 +60,6 @@ function AddTrx(props) {
       },
     };
     // alert(JSON.stringify(values), null, 2);
-    console.log(values);
     if (props.user.memberType === "penangkar") {
       console.log("json" + values);
       try {
@@ -74,12 +73,13 @@ function AddTrx(props) {
       }
     } else if (props.user.memberType === "petani") {
       console.log("petani submit add");
+      console.log(values);
       try {
-        const resp = await axios.post("trx/ptn-ppl", values, config);
-        console.log("waiting for resp");
-        console.log(resp);
-        alert(resp.data.message);
-        alert(resp.data.data.batchID);
+        // const resp = await axios.post("trx/ptn-ppl", values, config);
+        // console.log("waiting for resp");
+        // console.log(resp);
+        // alert(resp.data.message);
+        // alert(resp.data.data.batchID);
       } catch (err) {
         console.log(err);
       }
@@ -108,7 +108,7 @@ function AddTrx(props) {
             </p>
           </Grid>
         </Grid>
-        <Formik initialValues={{}} onSubmit={_handleSubmit}>
+        <Formik initialValues={{ batchID: "" }} onSubmit={_handleSubmit}>
           {({ isSubmitting }) => (
             <Form>
               {_renderStepContent(props.user.memberType)}

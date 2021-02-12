@@ -1,6 +1,8 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import InputField from "../../Sign_Up/FormFields/InputField";
+import InputKilogram from "../../Sign_Up/FormFields/InputKilogram";
+import InputRupiah from "../../Sign_Up/FormFields/InputRupiah";
 
 export default function FormPtnAddTrx(props) {
   const {
@@ -46,10 +48,10 @@ export default function FormPtnAddTrx(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <InputField name={kuantitas.name} label={kuantitas.label} fullWidth />
+          <InputKilogram name={kuantitas.name} label={kuantitas.label} />
         </Grid>
         <Grid item xs={12}>
-          <InputField name={harga.name} label={harga.label} fullWidth />
+          <InputRupiah name={harga.name} label={harga.label} />
         </Grid>
         <Grid item xs={12}>
           <InputField
