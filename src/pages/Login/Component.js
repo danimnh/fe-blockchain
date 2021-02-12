@@ -63,7 +63,9 @@ function LoginPage(props) {
               <br />
               <Button
                 className={classes.button}
-                disabled={values.password.length < 6}
+                disabled={
+                  values.password.length < 6 || values.username.length < 6
+                }
                 variant="contained"
                 color="primary"
                 onClick={submitForm}
