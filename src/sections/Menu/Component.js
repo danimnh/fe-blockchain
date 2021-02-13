@@ -141,9 +141,8 @@ function Menu({
           </List>
         </Collapse>
         <StyledMenuItem
-          onClick={(onClose, props.handleLogout)}
-          component={RouterLink}
-          to="/"
+          onClick={(onClose, props.dialogLogout)}
+          // component={RouterLink}
         >
           <ListItemText primary="Logout" />
         </StyledMenuItem>

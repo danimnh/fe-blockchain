@@ -2,6 +2,13 @@ import React, { useEffect } from "react";
 import axios from "axios";
 
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+
+import DialogTitle from "@material-ui/core/DialogTitle";
+
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useHistory } from "react-router-dom";
@@ -15,6 +22,7 @@ import useStyles from "./styles";
 const Layout = () => {
   const localLoggedIn = localStorage.getItem("isLoggedIn");
   const classes = useStyles();
+  const [logoutVisible, setLogoutVisible] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLoggedIn, setLoggedIn] = React.useState(localLoggedIn);
   const [user, setUser] = React.useState([]);
@@ -39,6 +47,10 @@ const Layout = () => {
     }
   };
 
+  const dialogLogout = async () => {
+    setLogoutVisible(true);
+  };
+
   const handleLogout = async (user) => {
     try {
       const resp = await axios.get("logout", user);
@@ -49,9 +61,11 @@ const Layout = () => {
       localStorage.setItem("isLoggedIn", false);
       await alert(JSON.stringify(resp.data.message));
       await history.replace("/");
+      setLogoutVisible(false);
     } catch (err) {
       alert(err);
       history.replace("/");
+      setLogoutVisible(false);
     }
   };
 
@@ -102,7 +116,9 @@ const Layout = () => {
         </>
       )}
       <Notifications />
-      {isLoggedIn && <Navigation handleLogout={handleLogout} />}
+      {isLoggedIn && (
+        <Navigation handleLogout={handleLogout} dialogLogout={dialogLogout} />
+      )}
       <Box component="main" className={classes.wrapper}>
         <Box className={classes.spacer} />
         <Box className={classes.content}>
@@ -118,6 +134,30 @@ const Layout = () => {
           <Copyright />
         </Box>
       </Box>
+
+      <Dialog
+        open={logoutVisible}
+        onClose={() => setLogoutVisible(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Keluar dari Sistem Rantai Pasok?"}
+        </DialogTitle>
+        {/* <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Keluar dari Sistem Rantai Pasok?
+          </DialogContentText>
+        </DialogContent> */}
+        <DialogActions>
+          <Button variant="outlined" onClick={() => setLogoutVisible(false)}>
+            Batal
+          </Button>
+          <Button variant="outlined" onClick={() => handleLogout()} autoFocus>
+            Keluar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
