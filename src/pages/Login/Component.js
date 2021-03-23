@@ -21,7 +21,12 @@ function LoginPage(props) {
     <>
       <Meta title="Login Page" description="Login Page" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h4">Masuk Aktor Rantai Pasok</Typography>
+        <Typography variant="h4" align="center">
+          Halaman Login
+        </Typography>
+        <Typography variant="h4" align="center">
+          Sistem Rantai Pasok
+        </Typography>
         <Formik
           initialValues={{ username: "", password: "" }}
           validate={(values) => {
