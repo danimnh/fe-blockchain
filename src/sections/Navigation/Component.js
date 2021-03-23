@@ -4,7 +4,7 @@ import AppBar from "sections/AppBar";
 import Menu from "sections/Menu";
 import Notification from "sections/Notification";
 
-function Navigation(handleLogout, dialogLogout) {
+function Navigation(handleLogout, dialogLogout, user) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -39,6 +39,7 @@ function Navigation(handleLogout, dialogLogout) {
         isOpen={isMenuOpen}
         selectedIndex={selectedIndex}
         handleListItemClick={handleListItemClick}
+        user={user}
         dialogLogout={dialogLogout}
         onClose={handleMenuClose}
         onOpen={handleMenuOpen}

@@ -106,25 +106,34 @@ function AddTrx(props) {
             <p>
               Anda terdaftar sebagai <strong>{props.user.memberType}</strong>
             </p>
+            {props.user.memberType === "penangkar" && (
+              <Button
+                variant="contained"
+                // component={RouterLink}
+                color="primary"
+                to="/"
+                className={classes.button}
+              >
+                Tambahkan Asset Benih
+              </Button>
+            )}
           </Grid>
         </Grid>
         <Formik initialValues={{ batchID: "" }} onSubmit={_handleSubmit}>
           {({ isSubmitting }) => (
             <Form>
               {_renderStepContent(props.user.memberType)}
-
+              {/* TO-DO : Confirmation Popup */}
               <div className={classes.center}>
-                <div>
-                  <Button
-                    className={classes.button}
-                    disabled={isSubmitting}
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                  >
-                    Konfirmasi
-                  </Button>
-                </div>
+                <Button
+                  className={classes.confirm}
+                  disabled={isSubmitting}
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
+                  Konfirmasi
+                </Button>
               </div>
             </Form>
           )}

@@ -7,6 +7,13 @@ const useStyles = makeStyles(() => ({
     "align-items": "start",
     flexDirection: "column",
   },
+  button: {
+    width: "300px",
+    marginBottom: 10,
+  },
+  confirm: {
+    marginTop: 20,
+  },
 }));
 
 export default useStyles;

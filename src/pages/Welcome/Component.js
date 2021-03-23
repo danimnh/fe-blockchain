@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import QrReader from "react-qr-reader";
 import Container from "@material-ui/core/Container";
-// import Typography from "@material-ui/core/Typography";
+import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -71,10 +71,23 @@ function Welcome(props) {
         </Button>
         {props.isLoggedIn && (
           <>
-            <p>Halo, {props.user.nama}!</p>
-            <p>
+            <Typography style={{ marginTop: 20 }}>
+              Halo, {props.user.nama}!
+            </Typography>
+            <Typography>
               Anda terdaftar sebagai <strong>{props.user.memberType}</strong>
-            </p>
+            </Typography>
+            {props.user.memberType === "penangkar" && (
+              <Button
+                variant="contained"
+                color="primary"
+                component={RouterLink}
+                to="/"
+                className={classes.button}
+              >
+                Tambahkan Asset Benih
+              </Button>
+            )}
           </>
         )}
 

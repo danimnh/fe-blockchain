@@ -117,7 +117,11 @@ const Layout = () => {
       )}
       <Notifications />
       {isLoggedIn && (
-        <Navigation handleLogout={handleLogout} dialogLogout={dialogLogout} />
+        <Navigation
+          handleLogout={handleLogout}
+          dialogLogout={dialogLogout}
+          user={user}
+        />
       )}
       <Box component="main" className={classes.wrapper}>
         <Box className={classes.spacer} />
