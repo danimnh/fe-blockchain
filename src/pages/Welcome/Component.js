@@ -82,7 +82,7 @@ function Welcome(props) {
                 variant="contained"
                 color="primary"
                 component={RouterLink}
-                to="/"
+                to="/add_genesis"
                 className={classes.button}
               >
                 Tambahkan Asset Benih

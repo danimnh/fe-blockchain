@@ -21,11 +21,15 @@ export default function InputField(props) {
   return (
     <>
       <TextField
-        type="text"
+        type="number"
+        variant="outlined"
+        autoComplete="off"
         error={meta.touched && meta.error && true}
         helperText={_renderHelperText()}
         InputProps={{
-          endAdornment: <InputAdornment position="end">Ton</InputAdornment>,
+          endAdornment: (
+            <InputAdornment position="end">Kilogram</InputAdornment>
+          ),
         }}
         {...field}
         {...rest}

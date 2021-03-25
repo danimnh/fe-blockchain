@@ -4,6 +4,8 @@ import { useField } from "formik";
 import { TextField } from "@material-ui/core";
 import NumberFormat from "react-number-format";
 
+import InputAdornment from "@material-ui/core/InputAdornment";
+
 export default function InputField(props) {
   const [field] = useField(props);
   // console.log("field");
@@ -15,10 +17,14 @@ export default function InputField(props) {
       <NumberFormat
         {...props}
         value={field.value}
+        variant="outlined"
         customInput={TextField}
-        prefix={"Rp."}
+        autoComplete="off"
         // format={format || null}
         thousandSeparator
+        InputProps={{
+          startAdornment: <InputAdornment position="start">Rp.</InputAdornment>,
+        }}
         {...field}
       />
     </>

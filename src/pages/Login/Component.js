@@ -21,12 +21,15 @@ function LoginPage(props) {
     <>
       <Meta title="Login Page" description="Login Page" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h4" align="center">
-          Halaman Login
-        </Typography>
-        <Typography variant="h4" align="center">
-          Sistem Rantai Pasok
-        </Typography>
+        <div className={classes.headline}>
+          <Typography variant="h4" align="center">
+            Halaman Login
+          </Typography>
+          <Typography variant="h4" align="center">
+            Sistem Rantai Pasok
+          </Typography>
+        </div>
+
         <Formik
           initialValues={{ username: "", password: "" }}
           validate={(values) => {
@@ -52,6 +55,7 @@ function LoginPage(props) {
               <Field
                 className={classes.button}
                 component={TextField}
+                variant="outlined"
                 name="username"
                 type="username"
                 label="Username"
@@ -60,6 +64,7 @@ function LoginPage(props) {
               <Field
                 className={classes.button}
                 component={TextField}
+                variant="outlined"
                 type="password"
                 label="Password"
                 name="password"
