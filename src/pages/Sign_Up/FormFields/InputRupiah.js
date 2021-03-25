@@ -22,6 +22,8 @@ export default function InputField(props) {
         autoComplete="off"
         // format={format || null}
         thousandSeparator
+        type="tel"
+        allowNegative={false}
         InputProps={{
           startAdornment: <InputAdornment position="start">Rp.</InputAdornment>,
         }}
