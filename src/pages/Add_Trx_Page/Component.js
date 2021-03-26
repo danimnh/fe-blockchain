@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
+
 import axios from "axios";
 
 import {
@@ -109,7 +111,7 @@ function AddTrx(props) {
             {props.user.memberType === "penangkar" && (
               <Button
                 variant="contained"
-                // component={RouterLink}
+                component={RouterLink}
                 color="primary"
                 to="/add_genesis"
                 className={classes.button}
