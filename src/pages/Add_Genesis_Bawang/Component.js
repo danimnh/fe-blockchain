@@ -17,8 +17,10 @@ import { Formik, Form } from "formik";
 import Meta from "components/Meta";
 
 import useStyles from "./styles";
+import DialogConfirmation from "../../sections/Dialog_Confirmation";
 import PkrAddTrxFields from "./Form_Models/PkrAddTrxModels";
 import FormPkrAddTrx from "./Forms/FormPkrAddTrx";
+// import FetchApi from "../../constants/FetchApi";
 
 const { PkrAddTrxFormFields } = PkrAddTrxFields;
 // todo : username penerima checks out
@@ -28,57 +30,21 @@ function _renderStepContent() {
 
 function Add_Genesis(props) {
   const classes = useStyles();
-  // eslint-disable-next-line
-  const args = {
-    usernamePengirim: "ajiPkr",
-    usernamePenerima: "baduPtn",
-    alamatPengirim: "Brebes1",
-    alamatPenerima: "Brebes2",
-    kuantitasKg: 4.2,
-    harga: "5000000",
-    umurBenih: "2 bulan",
-    umurPanen: "2 hari",
-    varietas: "Bima Brebes",
-    hargaBenih: 1500,
-  };
+  const [modalContent, setModalContent] = React.useState([]);
+  const [visible, setVisible] = React.useState(false);
+
+  function createData(name, value) {
+    return { name, value };
+  }
+
+  const rowsGenesis = [
+    createData("Varietas", modalContent.varietas),
+    createData("Kuantitas (Kilogram)", modalContent.kuantitas),
+    createData("Harga (Rupiah)", modalContent.harga),
+    createData("Harga Benih (Rupiah)", modalContent.hargaBenih),
+  ];
+
   const refreshingLayout = props.refreshLayout;
-
-  const FetchApi = async (values) => {
-    // eslint-disable-next-line
-    const config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    };
-    console.log(values);
-    let body = {
-      fcn: "CreateBawang",
-      peers: [
-        "peer0.penangkar.example.com",
-        "peer0.petani.example.com",
-        "peer0.pengumpul.example.com",
-        "peer0.pedagang.example.com",
-      ],
-      chaincodeName: "bawangmerah_cc",
-      channelName: "mychannel",
-      args: values,
-    };
-    console.log(body);
-    // API not ready
-
-    // axios({
-    //   method: "post",
-    //   url: "/channel/" + body.channelName + "/chaincodes/" + body.chaincodeName,
-    //   data: {
-    //     args,
-    //   },
-    //   config: {
-    //     headers: {
-    //       Authorization: "Bearer " + localStorage.getItem("token"),
-    //     },
-    //   },
-    // });
-  };
 
   function _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -86,10 +52,8 @@ function Add_Genesis(props) {
 
   async function _submitForm(values, actions) {
     await _sleep(1000);
-
-    // console.log(args);
-    // console.log(JSON.parse(values));
-    FetchApi(values);
+    setModalContent(values);
+    setVisible(true);
     actions.setSubmitting(false);
   }
   function _handleSubmit(values, actions) {
@@ -145,9 +109,20 @@ function Add_Genesis(props) {
                   color="primary"
                   type="submit"
                 >
-                  Konfirmasi
+                  Tambah Asset
                 </Button>
               </div>
+              <DialogConfirmation
+                rows={rowsGenesis}
+                isVisible={visible}
+                modalContent={modalContent}
+                handleClose={() => {
+                  setVisible(false);
+                }}
+                dialogTitle="Tambah Asset"
+                fcnName="CreateBawang"
+                // values={values}
+              />
             </Form>
           )}
         </Formik>

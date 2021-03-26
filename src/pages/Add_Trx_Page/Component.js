@@ -111,7 +111,7 @@ function AddTrx(props) {
                 variant="contained"
                 // component={RouterLink}
                 color="primary"
-                to="/"
+                to="/add_genesis"
                 className={classes.button}
               >
                 Tambahkan Asset Benih
