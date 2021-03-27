@@ -1,12 +1,12 @@
 import React from "react";
-import { Grid, Typography, } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import InputRadioField from "../FormFields/InputRadioField";
 
 export default function FormUserJob(props) {
   const {
     formField: { memberType },
   } = props;
-  
+
   return (
     <>
       <Typography></Typography>

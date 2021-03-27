@@ -2,9 +2,11 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import { Grid, Typography } from "@material-ui/core";
 
 import { TextField } from "formik-material-ui";
+import InputRadioField from "../Sign_Up/FormFields/InputRadioField";
+
 import Meta from "components/Meta";
 
 import { Link as RouterLink } from "react-router-dom";
@@ -31,7 +33,7 @@ function LoginPage(props) {
         </div>
 
         <Formik
-          initialValues={{ username: "", password: "" }}
+          initialValues={{ username: "", password: "", orgName: "" }}
           validate={(values) => {
             const errors = {};
             if (!values.username) {
@@ -44,6 +46,7 @@ function LoginPage(props) {
           onSubmit={(values) => {
             setTimeout(() => {
               // alert(JSON.stringify(values, null, 2));
+              console.log(values);
               props.handleLogin(values);
               // setIsLoading(false);
               // localStorage.setItem("user", values.username);
@@ -52,25 +55,37 @@ function LoginPage(props) {
         >
           {({ submitForm, values }) => (
             <Form>
-              <Field
-                className={classes.button}
-                component={TextField}
-                variant="outlined"
-                name="username"
-                type="username"
-                label="Username"
-              />
-              <br />
-              <Field
-                className={classes.button}
-                component={TextField}
-                variant="outlined"
-                type="password"
-                label="Password"
-                name="password"
-              />
-              <br />
-              <br />
+              <Grid>
+                <Grid item xs={12}>
+                  <Field
+                    className={classes.button}
+                    component={TextField}
+                    variant="outlined"
+                    name="username"
+                    type="username"
+                    label="Username"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field
+                    className={classes.button}
+                    component={TextField}
+                    variant="outlined"
+                    type="password"
+                    label="Password"
+                    name="password"
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <InputRadioField
+                    name="orgName"
+                    label="orgName"
+                    values={["Penangkar", "Petani", "Pengumpul", "Pedagang"]}
+                  />
+                </Grid>
+              </Grid>
+
               <Button
                 className={classes.button}
                 disabled={
