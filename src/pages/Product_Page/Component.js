@@ -23,17 +23,42 @@ function ProductPage(props) {
   const classes = useStyles();
   const [isLoading, setIsLoading] = React.useState(false);
 
+  // eslint-disable-next-line
   const [dataBlock, setDataBlock] = React.useState({});
+  // eslint-disable-next-line
   const fetchDataByID = async (batchID) => {
+    // eslint-disable-next-line
+    const config = {
+      headers: {
+        Authorization:
+          "Bearer " +
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZDIyYzA1NDI2NDM5MWQyMmJmNjRjMCIsImlhdCI6MTYwNzk2OTAzNiwiZXhwIjoxNjA4MTQxODM2fQ.bScY6Z45n6_2effUzKZMNK2uJ1zju0IjVR2-MfFsGJU",
+      },
+    };
     setIsLoading(true);
     try {
-      const resp = await axios({
-        method: "get",
-        url: "http://54.169.65.119:8080/worldstate/" + batchID,
-        headers: { "Content-Type": "application/json" },
-      });
+      let config = {
+        headers: {
+          Authorization:
+            `Bearer ` +
+            `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTY4NzQ3NzYsInVzZXJuYW1lIjoiYW50b1BrciIsIm9yZ05hbWUiOiJQZW5hbmdrYXIiLCJpYXQiOjE2MTY4Mzg3NzZ9.k11yX6Y3OCNoVXBDBv_1BG7YAXmI_7k3h4MKFQaBIGk`,
+        },
+        params: {
+          peer: "peer0.penangkar.example.com",
+          fcn: "GetHistoryForAssetByID",
+          args:
+            '["' +
+            "01ce8e9b7f6a4f0a6de4399f3608aa31e9a995b2f996602451e9ed0086709ad4" +
+            '"]',
+        },
+      };
+
+      const resp = await axios.get(
+        "http://35.240.236.209:4000/channels/mychannel/chaincodes/bawangmerah_cc",
+        config
+      );
       await console.log(resp);
-      await setDataBlock(resp.data);
+      // await setDataBlock(resp.data);
       await setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -41,6 +66,7 @@ function ProductPage(props) {
   };
   useEffect(() => {
     const batchId = props.match.params.batchId;
+
     fetchDataByID(batchId);
   }, [props.match.params.batchId]);
   return (
