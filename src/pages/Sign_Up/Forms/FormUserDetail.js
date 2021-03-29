@@ -20,6 +20,7 @@ export default function FormUserDetail(props) {
         <Grid item xs={12}>
           <InputField name={contact.name} label={contact.label} fullWidth />
         </Grid>
+        {/* Username is generated */}
         <Grid item xs={12}>
           <InputField name={username.name} label={username.label} fullWidth />
         </Grid>

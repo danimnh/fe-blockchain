@@ -6,6 +6,7 @@ import { Grid, Typography } from "@material-ui/core";
 
 import { TextField } from "formik-material-ui";
 import InputRadioField from "../Sign_Up/FormFields/InputRadioField";
+import InputPasswordField from "../Sign_Up/FormFields/InputPasswordField";
 
 import Meta from "components/Meta";
 
@@ -13,7 +14,8 @@ import { Link as RouterLink } from "react-router-dom";
 
 import useStyles from "./styles";
 
-function LoginPage(props) {
+function LoginPage() {
+// props
   const classes = useStyles();
   // const handleLogin = () => {
   //   setLoggedIn(!isLoggedIn);
@@ -47,7 +49,7 @@ function LoginPage(props) {
             setTimeout(() => {
               // alert(JSON.stringify(values, null, 2));
               console.log(values);
-              props.handleLogin(values);
+              // props.handleLogin(values);
               // setIsLoading(false);
               // localStorage.setItem("user", values.username);
             }, 500);
@@ -67,13 +69,10 @@ function LoginPage(props) {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Field
+                  <InputPasswordField
                     className={classes.button}
-                    component={TextField}
-                    variant="outlined"
-                    type="password"
-                    label="Password"
                     name="password"
+                    label="Password"
                   />
                 </Grid>
 
@@ -89,7 +88,9 @@ function LoginPage(props) {
               <Button
                 className={classes.button}
                 disabled={
-                  values.password.length < 6 || values.username.length < 6
+                  values.password.length < 6 ||
+                  values.username.length < 6 ||
+                  values.orgName < 6
                 }
                 variant="contained"
                 color="primary"
