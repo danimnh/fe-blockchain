@@ -4,68 +4,71 @@ export default {
     name: {
       name: "name",
       label: "Nama",
-      requiredErrorMsg: "Name is required",
+      requiredErrorMsg: "Masukkan Nama Lengkap.",
     },
     username: {
       name: "username",
       label: "Username",
-      requiredErrorMsg: "username is required",
+      requiredErrorMsg: "Masukkan Username.",
     },
     password: {
       name: "password",
       label: "Password",
-      requiredErrorMsg: "password is required",
+      requiredErrorMsg: "Password harus lebih dari 6 karakter.",
     },
-    contact: {
-      name: "contact",
+    noHP: {
+      name: "noHP",
       label: "Nomor Handphone",
-      requiredErrorMsg: "Nomor Handphone is required",
+      requiredErrorMsg: "Masukkan Nomor HP Lengkap.",
+      invalidErrorMsg: "Masukkan Nomor HP yang valid.",
     },
-    dateOfBirth: {
-      name: "dateOfBirth",
+    ttl: {
+      name: "ttl",
       label: "Tanggal Lahir (Hari/Bulan/Tahun)",
-      requiredErrorMsg: "date of birth is required",
+      requiredErrorMsg: "Masukkan Tanggal yang valid (DD/MM/YY).",
     },
     noKK: {
       name: "noKK",
       label: "Nomor Kartu Keluarga",
-      requiredErrorMsg: "Nomor Kartu Keluarga is required",
-      invalidErrorMsg: "Nomor Kartu Keluarga is not valid (e.g. 70000)",
+      requiredErrorMsg: "Masukkan Nomor Kartu Keluarga.",
+      invalidErrorMsg: "Nomor Kartu Keluarga umumnya terdiri dari 10-16 digit.",
     },
     noNPWP: {
       name: "noNPWP",
       label: "Nomor NPWP",
-      requiredErrorMsg: "Nomor NPWP is required",
+      requiredErrorMsg: "Masukkan Nomor NPWP.",
+      invalidErrorMsg: "Nomor NPWP umumnya terdiri dari 15 digit.",
     },
-    noNIK: {
-      name: "noNIK",
-      label: "Nomor Induk Kependudukan (NIK)",
+    nik: {
+      name: "nik",
+      label: "Nomor Induk Kependudukan",
+      requiredErrorMsg: "Masukkan NIK.",
+      invalidErrorMsg: "NIK umumnya terdiri dari 16 digit.",
     },
-    memberType: {
-      name: "memberType",
-      label: "memberType*",
-      requiredErrorMsg: "memberType is required",
+    orgName: {
+      name: "orgName",
+      label: "orgName",
+      requiredErrorMsg: "orgName is required",
     },
-    memberInfo: {
-      luasLahan: {
-        name: "luasLahan",
-        label: "Luas Lahan (dalam hektar)",
-      },
-      alamatToko: {
-        name: "alamatToko",
-        label: "Alamat Toko",
-      },
-      alamatLahan: {
-        name: "alamatLahan",
-        label: "Alamat Lahan",
-      },
-      kelompokTani: {
-        name: "kelompokTani",
-        label: "Kelompok Tani",
-      },
-      name: "memberInfo",
-      label: "memberInfo*",
-      requiredErrorMsg: "memberInfo required",
+    luasLahanHa: {
+      name: "luasLahanHa",
+      label: "Luas Lahan (dalam Hektar)",
+      requiredErrorMsg: "Masukkan Luas Lahan (dalam Hektar)",
+    },
+    alamatToko: {
+      name: "alamatToko",
+      label: "Alamat Toko",
+      requiredErrorMsg: "Masukkan Alamat Toko",
+    },
+    alamatLahan: {
+      name: "alamatLahan",
+      label: "Alamat Lahan",
+      requiredErrorMsg: "Masukkan Alamat Lahan",
+    },
+    kelompokTani: {
+      name: "kelompokTani",
+      label: "Kelompok Tani",
+      requiredErrorMsg: "Masukkan Nama Kelompok Tani",
     },
   },
 };

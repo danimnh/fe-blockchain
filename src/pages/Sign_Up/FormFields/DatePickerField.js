@@ -42,6 +42,7 @@ export default function DatePickerField(props) {
         <KeyboardDatePicker
           {...field}
           {...props}
+          inputVariant="outlined"
           value={selectedDate}
           onChange={_onChange}
           error={isError}

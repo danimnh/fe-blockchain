@@ -5,70 +5,88 @@ import InputField from "../FormFields/InputField";
 
 export default function FormUserTypeDetail(props) {
   const {
-    formField: { memberInfo },
+    formField: { luasLahanHa, alamatToko, alamatLahan, kelompokTani },
   } = props;
   const { values: formValues } = useFormikContext();
   return (
     <>
-      <Typography></Typography>
+      <Typography style={{ marginBottom: 20 }}>
+        Input Informasi Pekerjaan
+      </Typography>
+
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <p>Info {formValues.memberType}</p>
-          {formValues.memberType === "Petani" && (
+          <p>Info {formValues.orgName}</p>
+          {formValues.orgName === "Petani" && (
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <InputField
+                  name={luasLahanHa.name}
+                  label={luasLahanHa.label}
+                  type="number"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField
+                  name={alamatLahan.name}
+                  label={alamatLahan.label}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField
+                  name={kelompokTani.name}
+                  label={kelompokTani.label}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+          )}
+
+          {formValues.orgName === "Penangkar" && (
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <InputField
+                  name={luasLahanHa.name}
+                  label={luasLahanHa.label}
+                  type="number"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField
+                  name={alamatLahan.name}
+                  label={alamatLahan.label}
+                  fullWidth
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <InputField
+                  name={kelompokTani.name}
+                  label={kelompokTani.label}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+          )}
+
+          {formValues.orgName === "Pengumpul" && (
             <>
               <InputField
-                name={memberInfo.luasLahan.name}
-                label={memberInfo.luasLahan.label}
-                fullWidth
-              />
-              <InputField
-                name={memberInfo.alamatLahan.name}
-                label={memberInfo.alamatLahan.label}
-                fullWidth
-              />
-              <InputField
-                name={memberInfo.kelompokTani.name}
-                label={memberInfo.kelompokTani.label}
+                name={alamatToko.name}
+                label={alamatToko.label}
                 fullWidth
               />
             </>
           )}
 
-          {formValues.memberType === "Penangkar" && (
+          {formValues.orgName === "Pedagang" && (
             <>
               <InputField
-                name={memberInfo.luasLahan.name}
-                label={memberInfo.luasLahan.label}
-                fullWidth
-              />
-              <InputField
-                name={memberInfo.alamatLahan.name}
-                label={memberInfo.alamatLahan.label}
-                fullWidth
-              />
-              <InputField
-                name={memberInfo.kelompokTani.name}
-                label={memberInfo.kelompokTani.label}
-                fullWidth
-              />
-            </>
-          )}
-
-          {formValues.memberType === "Pengumpul" && (
-            <>
-              <InputField
-                name={memberInfo.alamatToko.name}
-                label={memberInfo.alamatToko.label}
-                fullWidth
-              />
-            </>
-          )}
-
-          {formValues.memberType === "Pedagang" && (
-            <>
-              <InputField
-                name={memberInfo.alamatToko.name}
-                label={memberInfo.alamatToko.label}
+                name={alamatToko.name}
+                label={alamatToko.label}
                 fullWidth
               />
             </>

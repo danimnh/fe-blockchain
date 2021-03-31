@@ -4,21 +4,37 @@ import InputField from "../FormFields/InputField";
 
 export default function FormUserValid(props) {
   const {
-    formField: { noKK, noNPWP, noNIK },
+    formField: { noKK, noNPWP, nik },
   } = props;
 
   return (
     <>
-      <Typography></Typography>
-      <Grid container spacing={1}>
+      <Typography style={{ marginBottom: 20 }}>Input Data Identitas</Typography>
+
+      <Grid container spacing={2}>
         <Grid item xs={12}>
-          <InputField name={noKK.name} label={noKK.label} fullWidth />
+          <InputField
+            name={noKK.name}
+            label={noKK.label}
+            type="number"
+            fullWidth
+          />
         </Grid>
         <Grid item xs={12}>
-          <InputField name={noNPWP.name} label={noNPWP.label} fullWidth />
+          <InputField
+            name={noNPWP.name}
+            label={noNPWP.label}
+            type="number"
+            fullWidth
+          />
         </Grid>
         <Grid item xs={12}>
-          <InputField name={noNIK.name} label={noNIK.label} fullWidth />
+          <InputField
+            name={nik.name}
+            label={nik.label}
+            type="number"
+            fullWidth
+          />
         </Grid>
       </Grid>
     </>

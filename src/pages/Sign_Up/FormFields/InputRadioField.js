@@ -26,7 +26,7 @@ export default function InputRadioField(props) {
 
   return (
     <FormControl component="fieldset">
-      <FormLabel component="legend">Pekerjaan</FormLabel>
+      <FormLabel component="legend">{props.title}</FormLabel>
       <RadioGroup
         aria-label="memberType"
         name="memberType"

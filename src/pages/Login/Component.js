@@ -15,7 +15,7 @@ import { Link as RouterLink } from "react-router-dom";
 import useStyles from "./styles";
 
 function LoginPage() {
-// props
+  // props
   const classes = useStyles();
   // const handleLogin = () => {
   //   setLoggedIn(!isLoggedIn);
@@ -80,6 +80,7 @@ function LoginPage() {
                   <InputRadioField
                     name="orgName"
                     label="orgName"
+                    title="Login sebagai :"
                     values={["Penangkar", "Petani", "Pengumpul", "Pedagang"]}
                   />
                 </Grid>

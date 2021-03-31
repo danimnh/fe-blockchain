@@ -18,6 +18,9 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     justifyContent: "center",
   },
+  containerStep: {
+    backgroundColor: "#fafafa",
+  },
 }));
 
 export default useStyles;

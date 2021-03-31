@@ -7,18 +7,23 @@ import DatePickerField from "../FormFields/DatePickerField";
 
 export default function FormUserDetail(props) {
   const {
-    formField: { name, contact, dateOfBirth, username, password },
+    formField: { name, username, password, noHP, ttl },
   } = props;
 
   return (
     <>
-      <Typography></Typography>
-      <Grid container spacing={1}>
+      <Typography style={{ marginBottom: 20 }}>Input Data Pribadi</Typography>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <InputField name={name.name} label={name.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
-          <InputField name={contact.name} label={contact.label} fullWidth />
+          <InputField
+            type="number"
+            name={noHP.name}
+            label={noHP.label}
+            fullWidth
+          />
         </Grid>
         {/* Username is generated */}
         <Grid item xs={12}>
@@ -33,14 +38,12 @@ export default function FormUserDetail(props) {
         </Grid>
         <Grid item xs={12} md={12}>
           <DatePickerField
-            name={dateOfBirth.name}
-            label={dateOfBirth.label}
-            format="dd/mm/yy"
+            name={ttl.name}
+            label={ttl.label}
+            format="dd/MM/yy"
             openTo="year"
-            views={["date", "month", "year"]}
+            views={["year", "month", "date"]}
             disableFuture={true}
-            minDate={new Date("1945/8/17")}
-            maxDate={new Date("2050/12/31")}
             fullWidth
           />
         </Grid>

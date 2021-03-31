@@ -4,19 +4,22 @@ import InputRadioField from "../FormFields/InputRadioField";
 
 export default function FormUserJob(props) {
   const {
-    formField: { memberType },
+    formField: { orgName },
   } = props;
 
   return (
     <>
-      <Typography></Typography>
+      <Typography style={{ marginBottom: 20, marginLeft: -10 }}>
+        Informasi Pekerjaan
+      </Typography>
+
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <InputRadioField
-            name={memberType.name}
-            label={memberType.label}
+            name={orgName.name}
+            label={orgName.label}
+            title=""
             values={["Penangkar", "Petani", "Pengumpul", "Pedagang"]}
-            fullWidth
           />
         </Grid>
       </Grid>
