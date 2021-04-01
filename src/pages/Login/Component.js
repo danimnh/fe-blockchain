@@ -14,13 +14,9 @@ import { Link as RouterLink } from "react-router-dom";
 
 import useStyles from "./styles";
 
-function LoginPage() {
-  // props
+function LoginPage(props) {
   const classes = useStyles();
-  // const handleLogin = () => {
-  //   setLoggedIn(!isLoggedIn);
-  //   console.log(isLoggedIn);
-  // };
+
   return (
     <>
       <Meta title="Login Page" description="Login Page" />
@@ -47,11 +43,10 @@ function LoginPage() {
           }}
           onSubmit={(values) => {
             setTimeout(() => {
-              // alert(JSON.stringify(values, null, 2));
+              alert(JSON.stringify(values, null, 2));
               console.log(values);
-              // props.handleLogin(values);
-              // setIsLoading(false);
-              // localStorage.setItem("user", values.username);
+              props.handleLogin(values);
+              localStorage.setItem("username", values.username);
             }, 500);
           }}
         >

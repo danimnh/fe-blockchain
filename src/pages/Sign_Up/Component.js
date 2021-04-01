@@ -39,17 +39,14 @@ function _renderStepContent(step) {
   }
 }
 
-function SignUpPage() {
+function SignUpPage(props) {
   const history = useHistory();
   const classes = useStyles();
-  // const [ memberType, setMemberType ] = useState('')
   const [activeStep, setActiveStep] = useState(0);
   const [validationController, setValidationController] = useState(0);
   const isLastStep = activeStep === steps.length - 1;
-  //nextStep
   const nextStep = (values) => {
     setActiveStep(activeStep + 1);
-    console.log("active Step : " + activeStep);
     if (values.orgName === "Penangkar" || values.orgName === "Petani") {
       if (validationController === 2) {
         setValidationController(3);
@@ -68,8 +65,6 @@ function SignUpPage() {
     } else {
       setValidationController(validationController + 1);
     }
-
-    console.log(values.orgName);
   };
 
   const prevStep = () => {
@@ -91,21 +86,19 @@ function SignUpPage() {
   // eslint-disable-next-line
   async function _submitForm(values, actions) {
     await _sleep(1000);
-    alert(JSON.stringify(values), null, 2);
+    props.handleSignUp(values);
     actions.setSubmitting(false);
     history.push("/login");
-    nextStep();
   }
 
   function _handleSubmit(values, actions) {
     if (isLastStep) {
-      console.log();
       let stringValue = values;
       stringValue.noHP = values.noHP.toString();
-      stringValue.luasLahanHa = values.luasLahanHa.toString();
-      stringValue.noKK = values.noKK.toString();
-      stringValue.noNPWP = values.noNPWP.toString();
-      stringValue.nik = values.nik.toString();
+      // stringValue.luasLahanHa = values.luasLahanHa.toString();
+      // stringValue.noKK = values.noKK.toString();
+      // stringValue.noNPWP = values.noNPWP.toString();
+      // stringValue.nik = values.nik.toString();
       if (values.orgName === "Petani" || values.orgName === "Penangkar") {
         delete stringValue.alamatToko;
       } else if (
@@ -117,7 +110,7 @@ function SignUpPage() {
         delete stringValue.kelompokTani;
       }
       console.log(stringValue);
-      // _submitForm(stringValue, actions);
+      _submitForm(stringValue, actions);
     } else {
       actions.setSubmitting(false);
       nextStep(values);

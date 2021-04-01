@@ -63,6 +63,8 @@ function Welcome(props) {
         />
         <Button
           variant="contained"
+          color="primary"
+          disabled={qrRead === ""}
           component={RouterLink}
           to={"/product/" + qrRead}
           className={classes.button}
@@ -75,7 +77,7 @@ function Welcome(props) {
               Halo, {props.user.nama}!
             </Typography>
             <Typography>
-              Anda terdaftar sebagai <strong>{props.user.memberType}</strong>
+              Anda terdaftar sebagai <strong>{props.user.orgName}</strong>
             </Typography>
             {props.user.memberType === "penangkar" && (
               <Button

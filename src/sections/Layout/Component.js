@@ -30,9 +30,9 @@ const Layout = () => {
 
   const handleLogin = async (user) => {
     setIsLoading(true);
+    console.log(user);
     try {
       const resp = await axios.post("login", user);
-      // localStorage.setItem("User", resp.data.nama);
       await console.log(resp);
       await setIsLoading(false);
       await setLoggedIn(true);
@@ -44,6 +44,20 @@ const Layout = () => {
       console.log(err);
       setIsLoading(false);
       history.replace("/");
+    }
+  };
+
+  const handleSignUp = async (value) => {
+    setIsLoading(true);
+    try {
+      const resp = await axios.post("register", value);
+      await console.log(resp);
+      await setIsLoading(false);
+
+      localStorage.setItem("token", resp.message.token);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -60,7 +74,6 @@ const Layout = () => {
       setUser([]);
       localStorage.setItem("isLoggedIn", false);
       await alert(JSON.stringify(resp.data.message));
-      await history.replace("/");
       setLogoutVisible(false);
     } catch (err) {
       alert(err);
@@ -70,7 +83,6 @@ const Layout = () => {
   };
 
   const getUser = async () => {
-    // console.log("getuser is called");
     setIsLoading(true);
     if (localStorage.getItem("token") == null) {
       setLoggedIn(false);
@@ -83,10 +95,9 @@ const Layout = () => {
       },
     };
     try {
-      // console.log(config);
       const resp = await axios.get("user", config);
-      console.log("Berhasil login sebagai " + resp.data.data.memberType);
-      localStorage.setItem("memberType", resp.data.data.memberType);
+      console.log("Berhasil login sebagai " + resp.data.data.orgName);
+      localStorage.setItem("orgName", resp.data.data.orgName);
       await setIsLoading(false);
       await setLoggedIn(true);
       await localStorage.setItem("isLoggedIn", true);
@@ -97,7 +108,7 @@ const Layout = () => {
       setUser([]);
       setLoggedIn(false);
       localStorage.setItem("isLoggedIn", false);
-      localStorage.removeItem("memberType");
+      localStorage.removeItem("orgName");
       localStorage.removeItem("token");
     }
   };
@@ -131,9 +142,7 @@ const Layout = () => {
             isLoggedIn={isLoggedIn}
             refreshLayout={refreshLayout}
             handleLogin={handleLogin}
-            handleSignUp={() => {
-              console.log("handleSignUp is called");
-            }}
+            handleSignUp={handleSignUp}
           />
           <Copyright />
         </Box>

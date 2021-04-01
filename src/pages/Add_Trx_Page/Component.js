@@ -28,15 +28,15 @@ const { PtnAddTrxFormFields } = PtnAddTrxFields;
 // todo : username penerima checks out
 function _renderStepContent(memberType) {
   switch (memberType) {
-    case "penangkar":
+    case "Penangkar":
       return <FormPkrAddTrx PkrAddTrxFields={PkrAddTrxFormFields} />;
     // return <h1>penangkar</h1>;
-    case "petani":
+    case "Petani":
       return <FormPtnAddTrx PtnAddTrxFields={PtnAddTrxFormFields} />;
     // return <h1>petani</h1>;
-    case "pengumpul":
+    case "Pengumpul":
       return <h1>Pengumpul</h1>;
-    case "pedagang":
+    case "Pedagang":
       return <h1>Pedagang</h1>;
     // return <FormUserTypeDetail formField={formField} />;
     case "admin":
@@ -47,7 +47,7 @@ function _renderStepContent(memberType) {
 
 function AddTrx(props) {
   const classes = useStyles();
-
+  console.log(props);
   const refreshingLayout = props.refreshLayout;
 
   function _sleep(ms) {
@@ -106,9 +106,9 @@ function AddTrx(props) {
         <Grid container className={classes.rowDetail} item xs={12}>
           <Grid item xs={12}>
             <p>
-              Anda terdaftar sebagai <strong>{props.user.memberType}</strong>
+              Anda terdaftar sebagai <strong>{props.user.orgName}</strong>
             </p>
-            {props.user.memberType === "penangkar" && (
+            {props.user.orgName === "Penangkar" && (
               <Button
                 variant="contained"
                 component={RouterLink}
@@ -124,7 +124,7 @@ function AddTrx(props) {
         <Formik initialValues={{ batchID: "" }} onSubmit={_handleSubmit}>
           {({ isSubmitting }) => (
             <Form>
-              {_renderStepContent(props.user.memberType)}
+              {_renderStepContent(props.user.orgName)}
               {/* TO-DO : Confirmation Popup */}
               <div className={classes.center}>
                 <Button

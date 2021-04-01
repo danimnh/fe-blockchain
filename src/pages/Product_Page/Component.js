@@ -28,13 +28,7 @@ function ProductPage(props) {
   // eslint-disable-next-line
   const fetchDataByID = async (batchID) => {
     // eslint-disable-next-line
-    const config = {
-      headers: {
-        Authorization:
-          "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZDIyYzA1NDI2NDM5MWQyMmJmNjRjMCIsImlhdCI6MTYwNzk2OTAzNiwiZXhwIjoxNjA4MTQxODM2fQ.bScY6Z45n6_2effUzKZMNK2uJ1zju0IjVR2-MfFsGJU",
-      },
-    };
+
     setIsLoading(true);
     try {
       let config = {

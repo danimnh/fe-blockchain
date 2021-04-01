@@ -5,7 +5,7 @@ import { getActions as getSWActions } from "store/sw";
 
 import "./global.css";
 
-// axios.defaults.baseURL = "http://13.229.214.74:3001/";
+axios.defaults.baseURL = "http://35.240.236.209:4000/";
 // TO-DO : updated defaults
 // axios.defaults.baseURL = "https://be-blockchain.herokuapp.com/";
 
