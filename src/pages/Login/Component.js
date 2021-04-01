@@ -43,10 +43,8 @@ function LoginPage(props) {
           }}
           onSubmit={(values) => {
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
               console.log(values);
               props.handleLogin(values);
-              localStorage.setItem("username", values.username);
             }, 500);
           }}
         >

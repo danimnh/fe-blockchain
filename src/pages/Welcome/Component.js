@@ -79,7 +79,7 @@ function Welcome(props) {
             <Typography>
               Anda terdaftar sebagai <strong>{props.user.orgName}</strong>
             </Typography>
-            {props.user.memberType === "penangkar" && (
+            {props.user.orgName === "Penangkar" && (
               <Button
                 variant="contained"
                 color="primary"

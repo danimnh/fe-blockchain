@@ -36,10 +36,11 @@ const Layout = () => {
       await console.log(resp);
       await setIsLoading(false);
       await setLoggedIn(true);
-      await alert("Berhasil Login!");
-      await history.push("/");
-      localStorage.setItem("token", resp.data.token);
-      localStorage.setItem("isLoggedIn", true);
+      await alert(resp.data.message);
+      await localStorage.setItem("token", resp.data.token);
+      await localStorage.setItem("username", resp.data.user.username);
+      await localStorage.setItem("isLoggedIn", true);
+      await history.replace("/");
     } catch (err) {
       console.log(err);
       setIsLoading(false);
@@ -65,15 +66,20 @@ const Layout = () => {
     setLogoutVisible(true);
   };
 
-  const handleLogout = async (user) => {
+  const handleLogout = async () => {
+    //props:user
     try {
-      const resp = await axios.get("logout", user);
-      await console.log(resp);
+      // const resp = await axios.get("logout", user);
+      // await console.log(resp);
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("username");
+      localStorage.removeItem("orgName");
+
       setLoggedIn(false);
       setUser([]);
       localStorage.setItem("isLoggedIn", false);
-      await alert(JSON.stringify(resp.data.message));
+      // await alert(JSON.stringify(resp.data.message));
       setLogoutVisible(false);
     } catch (err) {
       alert(err);
