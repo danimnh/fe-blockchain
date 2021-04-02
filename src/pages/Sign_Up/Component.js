@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { Container, Stepper, Step, StepLabel, Button } from "@material-ui/core";
 
 import Meta from "components/Meta";
@@ -40,8 +39,8 @@ function _renderStepContent(step) {
 }
 
 function SignUpPage(props) {
-  const history = useHistory();
   const classes = useStyles();
+  const refreshingLayout = props.refreshLayout;
   const [activeStep, setActiveStep] = useState(0);
   const [validationController, setValidationController] = useState(0);
   const isLastStep = activeStep === steps.length - 1;
@@ -88,14 +87,14 @@ function SignUpPage(props) {
     await _sleep(1000);
     props.handleSignUp(values);
     actions.setSubmitting(false);
-    history.push("/login");
+    // history.push("/login");
   }
 
   function _handleSubmit(values, actions) {
     if (isLastStep) {
       let stringValue = values;
       stringValue.noHP = values.noHP.toString();
-      // stringValue.luasLahanHa = values.luasLahanHa.toString();
+      stringValue.luasLahanHa = parseFloat(values.luasLahanHa);
       // stringValue.noKK = values.noKK.toString();
       // stringValue.noNPWP = values.noNPWP.toString();
       // stringValue.nik = values.nik.toString();
@@ -109,7 +108,6 @@ function SignUpPage(props) {
         delete stringValue.alamatLahan;
         delete stringValue.kelompokTani;
       }
-      console.log(stringValue);
       _submitForm(stringValue, actions);
     } else {
       actions.setSubmitting(false);
@@ -120,7 +118,10 @@ function SignUpPage(props) {
   function _handleBack() {
     prevStep();
   }
-
+  useEffect(() => {
+    refreshingLayout();
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       <Meta title="Signup Page" description="Signup Page" />
@@ -138,7 +139,7 @@ function SignUpPage(props) {
           ) : (
             <Formik
               initialValues={{
-                name: "",
+                nama: "",
                 username: "",
                 password: "",
                 noHP: "",

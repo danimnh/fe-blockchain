@@ -31,6 +31,8 @@ export default function FormUserTypeDetail(props) {
                 <InputField
                   name={alamatLahan.name}
                   label={alamatLahan.label}
+                  multiline
+                  rows={4}
                   fullWidth
                 />
               </Grid>
@@ -58,6 +60,8 @@ export default function FormUserTypeDetail(props) {
                 <InputField
                   name={alamatLahan.name}
                   label={alamatLahan.label}
+                  multiline
+                  rows={4}
                   fullWidth
                 />
               </Grid>
@@ -77,6 +81,8 @@ export default function FormUserTypeDetail(props) {
               <InputField
                 name={alamatToko.name}
                 label={alamatToko.label}
+                multiline
+                rows={4}
                 fullWidth
               />
             </>
@@ -87,6 +93,8 @@ export default function FormUserTypeDetail(props) {
               <InputField
                 name={alamatToko.name}
                 label={alamatToko.label}
+                multiline
+                rows={4}
                 fullWidth
               />
             </>

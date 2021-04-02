@@ -1,10 +1,10 @@
-import React from "react";
-import { Formik, Form, Field } from "formik";
+import React, { useEffect } from "react";
+import { Formik, Form } from "formik";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import { Grid, Typography } from "@material-ui/core";
+import InputField from "../Sign_Up/FormFields/InputField";
 
-import { TextField } from "formik-material-ui";
 import InputRadioField from "../Sign_Up/FormFields/InputRadioField";
 import InputPasswordField from "../Sign_Up/FormFields/InputPasswordField";
 
@@ -16,7 +16,12 @@ import useStyles from "./styles";
 
 function LoginPage(props) {
   const classes = useStyles();
+  const refreshingLayout = props.refreshLayout;
 
+  useEffect(() => {
+    refreshingLayout();
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       <Meta title="Login Page" description="Login Page" />
@@ -52,10 +57,8 @@ function LoginPage(props) {
             <Form>
               <Grid>
                 <Grid item xs={12}>
-                  <Field
+                  <InputField
                     className={classes.button}
-                    component={TextField}
-                    variant="outlined"
                     name="username"
                     type="username"
                     label="Username"

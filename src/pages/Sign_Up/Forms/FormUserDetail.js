@@ -7,7 +7,7 @@ import DatePickerField from "../FormFields/DatePickerField";
 
 export default function FormUserDetail(props) {
   const {
-    formField: { name, username, password, noHP, ttl },
+    formField: { nama, username, password, noHP, ttl },
   } = props;
 
   return (
@@ -15,7 +15,7 @@ export default function FormUserDetail(props) {
       <Typography style={{ marginBottom: 20 }}>Input Data Pribadi</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <InputField name={name.name} label={name.label} fullWidth />
+          <InputField name={nama.name} label={nama.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
           <InputField

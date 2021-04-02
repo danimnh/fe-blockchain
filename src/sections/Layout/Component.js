@@ -30,21 +30,24 @@ const Layout = () => {
 
   const handleLogin = async (user) => {
     setIsLoading(true);
-    console.log(user);
     try {
       const resp = await axios.post("login", user);
       await console.log(resp);
       await setIsLoading(false);
       await setLoggedIn(true);
       await alert(resp.data.message);
+      if (resp.data.user.username === undefined) {
+        return;
+      }
       await localStorage.setItem("token", resp.data.token);
       await localStorage.setItem("username", resp.data.user.username);
       await localStorage.setItem("isLoggedIn", true);
       await history.replace("/");
     } catch (err) {
-      console.log(err);
+      alert(err.response.data.message);
+      history.push("/login");
       setIsLoading(false);
-      history.replace("/");
+      setLoggedIn(false);
     }
   };
 
@@ -54,8 +57,36 @@ const Layout = () => {
       const resp = await axios.post("register", value);
       await console.log(resp);
       await setIsLoading(false);
+      await localStorage.setItem("token", resp.data.message.token);
+      await alert(resp.data.message.message);
+      let config = {
+        headers: {
+          Authorization: `Bearer ` + localStorage.getItem("token"),
+        },
+      };
 
-      localStorage.setItem("token", resp.message.token);
+      let arrayValue = [JSON.stringify(value)];
+
+      let body = {
+        fcn: "CreateUser",
+        peers: [
+          "peer0.penangkar.example.com",
+          "peer0.petani.example.com",
+          "peer0.pengumpul.example.com",
+          "peer0.pedagang.example.com",
+        ],
+        chaincodeName: "bawangmerah_cc",
+        channelName: "mychannel",
+        args: arrayValue,
+      };
+      const respBM = await axios.post(
+        "sc/channels/mychannel/chaincodes/bawangmerah_cc/",
+        body,
+        config
+      );
+      await console.log(respBM);
+      await history.replace("/login");
+      await localStorage.removeItem("token");
     } catch (err) {
       console.log(err);
       setIsLoading(false);

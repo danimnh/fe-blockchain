@@ -1,8 +1,8 @@
 export default {
   formId: "SignUpForm",
   formField: {
-    name: {
-      name: "name",
+    nama: {
+      name: "nama",
       label: "Nama",
       requiredErrorMsg: "Masukkan Nama Lengkap.",
     },

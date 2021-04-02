@@ -43,12 +43,22 @@ function Content({
         <Route
           exact
           path="/login"
-          render={() => <LoginPage handleLogin={handleLogin} />}
+          render={() => (
+            <LoginPage
+              handleLogin={handleLogin}
+              refreshLayout={refreshLayout}
+            />
+          )}
         />
         <Route
           exact
           path="/daftar"
-          render={() => <SignUpPage handleSignUp={handleSignUp} />}
+          render={() => (
+            <SignUpPage
+              handleSignUp={handleSignUp}
+              refreshLayout={refreshLayout}
+            />
+          )}
         />
         <Route
           exact

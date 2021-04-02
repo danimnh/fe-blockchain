@@ -47,7 +47,6 @@ function _renderStepContent(memberType) {
 
 function AddTrx(props) {
   const classes = useStyles();
-  console.log(props);
   const refreshingLayout = props.refreshLayout;
 
   function _sleep(ms) {

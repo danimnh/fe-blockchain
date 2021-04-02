@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import checkoutFormModel from "./checkoutFormModel";
 const {
   formField: {
-    name,
+    nama,
     username,
     password,
     noHP,
@@ -21,9 +21,9 @@ const {
 
 export default [
   Yup.object().shape({
-    [name.name]: Yup.string()
-      .min(5, `${name.requiredErrorMsg}`)
-      .required(`${name.requiredErrorMsg}`),
+    [nama.name]: Yup.string()
+      .min(5, `${nama.requiredErrorMsg}`)
+      .required(`${nama.requiredErrorMsg}`),
     [username.name]: Yup.string().required(`${username.requiredErrorMsg}`),
     [password.name]: Yup.string()
       .required(`${password.requiredErrorMsg}`)
