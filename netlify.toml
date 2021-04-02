@@ -1,5 +1,0 @@
-[[redirects]]
-  from = "http://35.240.236.209:4000/*"
-  to = "http://35.240.236.209:4000/:splat"
-  status = 200
-  force = true
