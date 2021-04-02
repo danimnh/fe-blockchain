@@ -111,6 +111,8 @@ const Layout = () => {
       setUser([]);
       localStorage.setItem("isLoggedIn", false);
       // await alert(JSON.stringify(resp.data.message));
+      history.replace("/");
+
       setLogoutVisible(false);
     } catch (err) {
       alert(err);

@@ -39,6 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "start-prod": "yarn build && yarn serve",
     "serve": "node hoster/server.js",
     "lint": "npx eslint src",

@@ -23,7 +23,7 @@ import FormPkrAddTrx from "./Forms/FormPkrAddTrx";
 // import FetchApi from "../../constants/FetchApi";
 
 const { PkrAddTrxFormFields } = PkrAddTrxFields;
-// todo : username penerima checks out
+// todo : do this next
 function _renderStepContent() {
   return <FormPkrAddTrx PkrAddTrxFields={PkrAddTrxFormFields} />;
 }
