@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/fe-blockchain/static/css/main.b86f500f.chunk.css",
+    "main.js": "/fe-blockchain/static/js/main.292bc147.chunk.js",
+    "runtime-main.js": "/fe-blockchain/static/js/runtime-main.ca204a63.js",
+    "static/js/2.1d72e83a.chunk.js": "/fe-blockchain/static/js/2.1d72e83a.chunk.js",
+    "static/js/3.99891e53.chunk.js": "/fe-blockchain/static/js/3.99891e53.chunk.js",
+    "static/js/4.e84e5214.chunk.js": "/fe-blockchain/static/js/4.e84e5214.chunk.js",
+    "index.html": "/fe-blockchain/index.html",
+    "precache-manifest.8788ff5fb5641aa352bdce4bdc9146b8.js": "/fe-blockchain/precache-manifest.8788ff5fb5641aa352bdce4bdc9146b8.js",
+    "service-worker.js": "/fe-blockchain/service-worker.js",
+    "static/js/2.1d72e83a.chunk.js.LICENSE.txt": "/fe-blockchain/static/js/2.1d72e83a.chunk.js.LICENSE.txt",
+    "static/js/3.99891e53.chunk.js.LICENSE.txt": "/fe-blockchain/static/js/3.99891e53.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ca204a63.js",
+    "static/js/3.99891e53.chunk.js",
+    "static/css/main.b86f500f.chunk.css",
+    "static/js/main.292bc147.chunk.js"
+  ]
+}
