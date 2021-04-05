@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 // import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-
+import QRCode from "qrcode.react";
+import ReactJson from "react-json-view";
 import {
   Grid,
-  Button,
+  // Button,
   Typography,
   Container,
   Card,
@@ -24,35 +25,35 @@ function ProductPage(props) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   // eslint-disable-next-line
-  const [dataBlock, setDataBlock] = React.useState({});
+  const [dataBlock1, setDataBlock1] = React.useState({});
+  // const [dataBlock2, setDataBlock2] = React.useState({});
+  // const [dataBlock3, setDataBlock3] = React.useState({});
+  // const [dataBlock4, setDataBlock4] = React.useState({});
+
   // eslint-disable-next-line
   const fetchDataByID = async (batchID) => {
-    // eslint-disable-next-line
-
     setIsLoading(true);
     try {
       let config = {
         headers: {
-          Authorization:
-            `Bearer ` +
-            `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTY4NzQ3NzYsInVzZXJuYW1lIjoiYW50b1BrciIsIm9yZ05hbWUiOiJQZW5hbmdrYXIiLCJpYXQiOjE2MTY4Mzg3NzZ9.k11yX6Y3OCNoVXBDBv_1BG7YAXmI_7k3h4MKFQaBIGk`,
+          Authorization: `Bearer ` + localStorage.getItem("token"),
         },
         params: {
           peer: "peer0.penangkar.example.com",
           fcn: "GetHistoryForAssetByID",
-          args:
-            '["' +
-            "01ce8e9b7f6a4f0a6de4399f3608aa31e9a995b2f996602451e9ed0086709ad4" +
-            '"]',
+          args: '["' + batchID + '"]',
         },
       };
-
+      console.log(config);
       const resp = await axios.get(
-        "http://35.240.236.209:4000/channels/mychannel/chaincodes/bawangmerah_cc",
+        "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
         config
       );
       await console.log(resp);
-      // await setDataBlock(resp.data);
+
+      await console.log(resp.data.result[0].Value);
+      await setDataBlock1(resp.data.result[0].Value);
+      // await console.log(dataBlock1);
       await setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -74,26 +75,26 @@ function ProductPage(props) {
       )}
       <Meta title="Page 4" description="Page 4" />
       <Container maxWidth="sm" className={classes.root}>
-        <Button onClick={() => props.history.goBack()}>{"<-"}</Button>
         <Grid direction="column" container spacing={1}>
           <Grid item xs={12}>
-            <Typography variant="h6">Detail Produk</Typography>
+            <Typography variant="h6">Detail Transaksi</Typography>
 
             <Grid container className={classes.rowDetail} item xs={12}>
               <Grid item xs={6}>
-                <Typography variant="body1">ID</Typography>
+                <Typography variant="body1">QR Code</Typography>
+                {dataBlock1.id !== undefined && (
+                  <QRCode value={dataBlock1.id} />
+                )}
               </Grid>
-              <Grid item xs={6}>
-                <p>{props.match.params.batchId}</p>
-              </Grid>
+              <Grid item xs={6}></Grid>
             </Grid>
 
             <Grid container className={classes.rowDetail} item xs={12}>
               <Grid item xs={6}>
-                <Typography variant="body1">Varietas</Typography>
+                <Typography variant="body1">Pelaku Transaksi</Typography>
               </Grid>
               <Grid item xs={6}>
-                <p>{dataBlock.varietas}</p>
+                <p>{dataBlock1.usernamePengirim}</p>
               </Grid>
             </Grid>
 
@@ -102,23 +103,29 @@ function ProductPage(props) {
                 <Typography variant="body1">Tanggal Masuk</Typography>
               </Grid>
               <Grid item xs={6}>
-                <p>{moment(dataBlock.timestamptoPetani).format("LL")}</p>
+                <p>{moment.unix(dataBlock1.createdAt).format("LLL")}</p>
               </Grid>
             </Grid>
 
             <Grid container className={classes.rowDetail} item xs={12}>
-              <Grid item xs={6}>
-                <Typography variant="body1">Transaksi Terakhir</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <p>{moment(dataBlock.timestamptoPetani).format("LLL")}</p>
-              </Grid>
+              {dataBlock1.isGenesis && (
+                <>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">Varietas</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <p>{dataBlock1.varietas}</p>
+                  </Grid>
+                </>
+              )}
             </Grid>
           </Grid>
 
           {/* v grid closes */}
         </Grid>
         <Typography variant="h6">Transaksi</Typography>
+
+        <ReactJson src={dataBlock1} theme="monokai" />
         {/* {true && (
           <Button
             className={{ width: "300px", marginTop: 10 }}
@@ -132,7 +139,7 @@ function ProductPage(props) {
           </Button>
         )} */}
 
-        {dataBlock.timestamptoPetani && (
+        {dataBlock1.timestamptoPetani && (
           <Card className={classes.cardContainer}>
             <CardActionArea
             // component={RouterLink}
@@ -147,12 +154,12 @@ function ProductPage(props) {
             >
               <CardContent>
                 <Typography>
-                  {moment(dataBlock.timestamptoPetani).format("LLL")}{" "}
+                  {moment(dataBlock1.timestamptoPetani).format("LLL")}{" "}
                 </Typography>
                 <Typography gutterBottom>
-                  Aktor : {dataBlock.usernamePenangkar}
+                  Aktor : {dataBlock1.usernamePenangkar}
                 </Typography>
-                <Typography variant="body2">{dataBlock.batchID}</Typography>
+                <Typography variant="body2">{dataBlock1.batchID}</Typography>
               </CardContent>
             </CardActionArea>
           </Card>

@@ -1,7 +1,6 @@
-// import React from "react";
-// import axios from "axios";
+import axios from "axios";
 
-const FetchApi = async (values, fcnName) => {
+const FetchApi = async (values, fcnName, username) => {
   // eslint-disable-next-line
   const config = {
     headers: {
@@ -9,6 +8,8 @@ const FetchApi = async (values, fcnName) => {
     },
   };
   console.log("fetchapi " + fcnName);
+  values.usernamePengirim = username;
+  let arrayValue = [JSON.stringify(values)];
   let body = {
     fcn: fcnName,
     peers: [
@@ -19,27 +20,26 @@ const FetchApi = async (values, fcnName) => {
     ],
     chaincodeName: "bawangmerah_cc",
     channelName: "mychannel",
-    args: values,
+    args: arrayValue,
   };
   console.log(body);
   console.log("send to");
   console.log(
     "/channel/" + body.channelName + "/chaincodes/" + body.chaincodeName
   );
-  // API not ready
-
-  //   axios({
-  //     method: "post",
-  //     url: "/channel/" + body.channelName + "/chaincodes/" + body.chaincodeName,
-  //     data: {
-  //       args,
-  //     },
-  //     config: {
-  //       headers: {
-  //         Authorization: "Bearer " + localStorage.getItem("token"),
-  //       },
-  //     },
-  //   });
+  try {
+    const respBM = await axios.post(
+      "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
+      body,
+      config
+    );
+    if (respBM.data.result.result.txid !== "") {
+      return respBM.data.result.result.txid;
+    }
+  } catch (err) {
+    alert(err);
+    console.log(err);
+  }
 };
 
 export default FetchApi;

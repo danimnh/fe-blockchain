@@ -71,7 +71,7 @@ function Add_Genesis(props) {
         <Grid container className={classes.rowDetail} item xs={12}>
           <Grid item xs={12}>
             <p>
-              Anda terdaftar sebagai <strong>{props.user.memberType}</strong>
+              Anda terdaftar sebagai <strong>{props.user.orgName}</strong>
             </p>
           </Grid>
         </Grid>
@@ -121,7 +121,7 @@ function Add_Genesis(props) {
                 }}
                 dialogTitle="Tambah Asset"
                 fcnName="CreateBawang"
-                // values={values}
+                user={props.user}
               />
             </Form>
           )}
