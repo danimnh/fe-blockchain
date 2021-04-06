@@ -84,10 +84,10 @@ function Welcome(props) {
                 variant="contained"
                 color="primary"
                 component={RouterLink}
-                to="/add_genesis"
+                to="/update_genesis"
                 className={classes.button}
               >
-                Tambahkan Asset Benih
+                Atur Asset Penangkar
               </Button>
             )}
           </>

@@ -6,6 +6,8 @@ import ProductPage from "pages/Product_Page";
 import ProductDetailPage from "pages/Product_Details_Page";
 import AddTrx from "pages/Add_Trx_Page";
 import AddGenesis from "pages/Add_Genesis_Bawang";
+import UpdateGenesis from "pages/Update_Genesis";
+
 // import TransactionList from "pages/TransactionList";
 import PendingList from "pages/Pending_Trx_Page";
 import ConfirmedList from "pages/Confirmed_Trx_Page";
@@ -80,6 +82,13 @@ function Content({
           path="/add_genesis"
           render={() => (
             <AddGenesis refreshLayout={refreshLayout} user={user} />
+          )}
+        />
+        <Route
+          exact
+          path="/update_genesis"
+          render={() => (
+            <UpdateGenesis refreshLayout={refreshLayout} user={user} />
           )}
         />
         <Route

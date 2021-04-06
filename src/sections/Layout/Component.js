@@ -155,6 +155,7 @@ const Layout = () => {
   const refreshLayout = () => {
     getUser();
   };
+
   useEffect(() => {}, []);
   return (
     <>
