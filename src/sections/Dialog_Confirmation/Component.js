@@ -103,9 +103,10 @@ function DialogConfirmation({
 
         <DialogActions>
           <Button
-            onClick={() => {
-              setQrVisible(false);
-              history.push("/product/" + txid);
+            onClick={async () => {
+              await setQrVisible(false);
+              await alert("Redirecting to product page");
+              await history.push("/product/" + txid);
             }}
             variant="outlined"
           >

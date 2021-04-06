@@ -11,40 +11,30 @@ export default {
       label: "Alamat Pengirim",
       requiredErrorMsg: "Alamat Pengirim is required",
     },
-    alamatPenerima: {
-      name: "alamatPenerima",
-      label: "Alamat Penerima",
-      requiredErrorMsg: "Alamat Penerima is required",
-    },
-    kuantitas: {
-      name: "kuantitas",
+    kuantitasBenihKg: {
+      name: "kuantitasBenihKg",
       label: "Kuantitas",
       requiredErrorMsg: "Kuantitas is required",
-    },
-    harga: {
-      name: "harga",
-      label: "Harga",
-      requiredErrorMsg: "Harga is required",
-    },
-    umurBenih: {
-      name: "umurBenih",
-      label: "Umur Benih",
-      requiredErrorMsg: "Umur Benih is required",
-    },
-    lamaPenyimpanan: {
-      name: "lamaPenyimpanan",
-      label: "Lama Penyimpanan",
-      requiredErrorMsg: "Lama Penyimpanan is required",
     },
     varietas: {
       name: "varietas",
       label: "Varietas",
       requiredErrorMsg: "Varietas is required",
     },
-    hargaBenih: {
-      name: "hargaBenih",
-      label: "Harga Benih",
-      requiredErrorMsg: "Harga Benih is required",
+    hargaBenihPerKg: {
+      name: "hargaBenihPerKg",
+      label: "Harga (Per Kilogram)",
+      requiredErrorMsg: "Harga is require d",
+    },
+    umurBenih: {
+      name: "umurBenih",
+      label: "Umur Benih (Hari)",
+      requiredErrorMsg: "Umur Benih is required",
+    },
+    umurPanen: {
+      name: "umurPanen",
+      label: "Umur Panen (Hari)",
+      requiredErrorMsg: "Lama Penyimpanan is required",
     },
   },
 };

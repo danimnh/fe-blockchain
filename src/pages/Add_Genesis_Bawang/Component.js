@@ -39,9 +39,10 @@ function Add_Genesis(props) {
 
   const rowsGenesis = [
     createData("Varietas", modalContent.varietas),
-    createData("Kuantitas (Kilogram)", modalContent.kuantitas),
-    createData("Harga (Rupiah)", modalContent.harga),
-    createData("Harga Benih (Rupiah)", modalContent.hargaBenih),
+    createData("Kuantitas (Kilogram)", modalContent.kuantitasBenihKg),
+    createData("Harga Benih (Rupiah)", modalContent.hargaBenihPerKg),
+    createData("Umur Benih (Hari)", modalContent.umurBenih),
+    createData("Umur Panen (Hari)", modalContent.umurPanen),
   ];
 
   const refreshingLayout = props.refreshLayout;
@@ -57,6 +58,8 @@ function Add_Genesis(props) {
     actions.setSubmitting(false);
   }
   function _handleSubmit(values, actions) {
+    values.hargaBenihPerKg = parseInt(values.hargaBenihPerKg);
+    console.log(values);
     _submitForm(values, actions);
   }
   useEffect(() => {
@@ -78,20 +81,25 @@ function Add_Genesis(props) {
         <Formik
           initialValues={{
             varietas: "",
-            kuantitas: "",
-            harga: "",
-            hargaBenih: "",
+            kuantitasBenihKg: "",
+            hargaBenihPerKg: "",
+            umurBenih: "",
+            umurPanen: "",
           }}
           validate={(values) => {
             const errors = {};
             if (!values.varietas) {
               errors.varietas = "Varietas tidak boleh kosong";
-            } else if (!values.kuantitas) {
-              errors.kuantitas = "Kuantitas tidak boleh kosong";
-            } else if (!values.harga) {
-              errors.harga = "Harga tidak boleh kosong";
-            } else if (!values.hargaBenih) {
-              errors.hargaBenih = "Harga Benih tidak boleh kosong";
+            } else if (!values.kuantitasBenihKg) {
+              errors.kuantitasBenihKg = "Kuantitas tidak boleh kosong";
+            } else if (!values.hargaBenihPerKg) {
+              errors.hargaBenihPerKg = "Harga Benih tidak boleh kosong";
+            } else if (Number(values.hargaBenihPerKg) === 0) {
+              errors.hargaBenihPerKg = "Harga Benih tidak boleh kosong";
+            } else if (!values.umurBenih) {
+              errors.umurBenih = "Umur Benih tidak boleh kosong";
+            } else if (!values.umurPanen) {
+              errors.umurPanen = "Umur Panen tidak boleh kosong";
             }
             return errors;
           }}

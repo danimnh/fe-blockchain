@@ -1,11 +1,18 @@
 import PkrAddTrxFields from "../../Form_Models/PkrAddTrxModels.js";
 const {
-  formPkrFields: { kuantitas, harga, varietas, hargaBenih },
+  formPkrFields: {
+    varietas,
+    kuantitasBenihKg,
+    hargaBenihPerKg,
+    umurBenih,
+    umurPanen,
+  },
 } = PkrAddTrxFields;
 
 export default {
-  [kuantitas.name]: "",
-  [harga.name]: "",
   [varietas.name]: "",
-  [hargaBenih.name]: "",
+  [kuantitasBenihKg.name]: "",
+  [hargaBenihPerKg.name]: Number,
+  [umurBenih.name]: "",
+  [umurPanen.name]: "",
 };

@@ -7,12 +7,11 @@ import InputKilogram from "../../Sign_Up/FormFields/InputKilogram";
 export default function FormPkrAddTrx(props) {
   const {
     PkrAddTrxFields: {
-      kuantitas,
-      harga,
-      // umurBenih,
-      // lamaPenyimpanan,
       varietas,
-      hargaBenih,
+      kuantitasBenihKg,
+      hargaBenihPerKg,
+      umurBenih,
+      umurPanen,
     },
   } = props;
 
@@ -25,31 +24,24 @@ export default function FormPkrAddTrx(props) {
         </Grid>
         <Grid item xs={12}>
           <InputKilogram
-            name={kuantitas.name}
-            label={kuantitas.label}
+            name={kuantitasBenihKg.name}
+            label={kuantitasBenihKg.label}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12}>
-          <InputRupiah name={harga.name} label={harga.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
           <InputRupiah
-            name={hargaBenih.name}
-            label={hargaBenih.label}
+            name={hargaBenihPerKg.name}
+            label={hargaBenihPerKg.label}
             fullWidth
           />
         </Grid>
-        {/* <Grid item xs={12}>
+        <Grid item xs={12}>
           <InputField name={umurBenih.name} label={umurBenih.label} fullWidth />
-        </Grid> */}
-        {/* <Grid item xs={12}>
-          <InputField
-            name={lamaPenyimpanan.name}
-            label={lamaPenyimpanan.label}
-            fullWidth
-          />
-        </Grid> */}
+        </Grid>
+        <Grid item xs={12}>
+          <InputField name={umurPanen.name} label={umurPanen.label} fullWidth />
+        </Grid>
       </Grid>
     </>
   );

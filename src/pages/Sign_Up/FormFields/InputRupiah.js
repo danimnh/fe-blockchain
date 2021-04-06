@@ -1,32 +1,63 @@
 import React from "react";
-// import { at } from "lodash";
+import { at } from "lodash";
 import { useField } from "formik";
 import { TextField } from "@material-ui/core";
 import NumberFormat from "react-number-format";
 
-import InputAdornment from "@material-ui/core/InputAdornment";
-
-export default function InputField(props) {
-  const [field] = useField(props);
-  // console.log("field");
-
-  // console.log(field);
+function NumberFormatCustom(props) {
+  const { inputRef, onChange, ...other } = props;
 
   return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      thousandSeparator={"."}
+      decimalSeparator={","}
+      // isNumericString
+      prefix="Rp."
+    />
+  );
+}
+
+export default function InputField(props) {
+  const [field, meta] = useField(props);
+  const [values, setValues] = React.useState({
+    numberformat: "",
+  });
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
+  function _renderHelperText() {
+    const [touched, error] = at(meta, "touched", "error");
+    if (touched && error) {
+      return error;
+    }
+  }
+  return (
     <>
-      <NumberFormat
+      <TextField
         {...props}
-        value={field.value}
         variant="outlined"
-        customInput={TextField}
         autoComplete="off"
-        // format={format || null}
-        thousandSeparator
-        type="tel"
-        allowNegative={false}
+        value={values.numberformat}
+        onChange={handleChange}
         InputProps={{
-          startAdornment: <InputAdornment position="start">Rp.</InputAdornment>,
+          inputComponent: NumberFormatCustom,
         }}
+        fullWidth
+        error={meta.touched && meta.error && true}
+        helperText={_renderHelperText()}
         {...field}
       />
     </>
