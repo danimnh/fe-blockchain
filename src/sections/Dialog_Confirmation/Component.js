@@ -6,9 +6,6 @@ import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   Button,
-  // Card,
-  // CardContent,
-  // CardActionArea,
   Dialog,
   DialogActions,
   DialogContent,
@@ -23,6 +20,7 @@ import {
   DialogContentText,
 } from "@material-ui/core";
 import FetchApi from "constants/FetchApi";
+import AddBawangKuantitasByID from "constants/AddBawangKuantitasByID";
 import { useHistory } from "react-router-dom";
 
 function DialogConfirmation({
@@ -60,7 +58,7 @@ function DialogConfirmation({
               <TableBody>
                 <TableRow>
                   <TableCell align="left">Pengirim</TableCell>
-                  <TableCell align="right">{user.username}</TableCell>
+                  <TableCell align="right">{user}</TableCell>
                 </TableRow>
                 {rows.map((row) => (
                   <TableRow key={row.name}>
@@ -73,24 +71,44 @@ function DialogConfirmation({
           </TableContainer>
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={() => {
-              setIsLoading(true);
-              handleClose();
-              FetchApi(modalContent, fcnName, user.username)
-                .then((result) => {
-                  setTxid(result);
-                  console.log(result);
-                })
-                .finally(() => {
-                  setQrVisible(true);
-                  setIsLoading(false);
-                });
-            }}
-            variant="outlined"
-          >
-            Konfirmasi
-          </Button>
+          {fcnName === "AddBawangKuantitasByID" ? (
+            <Button
+              onClick={() => {
+                setIsLoading(true);
+                handleClose();
+                AddBawangKuantitasByID(modalContent, fcnName)
+                  .then((result) => {
+                    console.log(result);
+                  })
+                  .finally(() => {
+                    setIsLoading(false);
+                    history.replace("/create_transaction");
+                  });
+              }}
+              variant="outlined"
+            >
+              Konfirmasi
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setIsLoading(true);
+                handleClose();
+                FetchApi(modalContent, fcnName, user)
+                  .then((result) => {
+                    setTxid(result);
+                    console.log(result);
+                  })
+                  .finally(() => {
+                    setQrVisible(true);
+                    setIsLoading(false);
+                  });
+              }}
+              variant="outlined"
+            >
+              Konfirmasi
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
 

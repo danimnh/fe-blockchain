@@ -39,10 +39,10 @@ function Add_Genesis(props) {
 
   const rowsGenesis = [
     createData("Varietas", modalContent.varietas),
-    createData("Kuantitas (Kilogram)", modalContent.kuantitasBenihKg),
-    createData("Harga Benih (Rupiah)", modalContent.hargaBenihPerKg),
-    createData("Umur Benih (Hari)", modalContent.umurBenih),
-    createData("Umur Panen (Hari)", modalContent.umurPanen),
+    createData("Kuantitas", modalContent.kuantitasBenihKg + " Kg"),
+    createData("Harga Benih", "Rp. " + modalContent.hargaBenihPerKg),
+    createData("Umur Benih", modalContent.umurBenih + " Hari"),
+    createData("Umur Panen", modalContent.umurPanen + " Hari"),
   ];
 
   const refreshingLayout = props.refreshLayout;
@@ -127,9 +127,9 @@ function Add_Genesis(props) {
                 handleClose={() => {
                   setVisible(false);
                 }}
-                dialogTitle="Tambah Asset"
+                dialogTitle="Tambah Benih Baru"
                 fcnName="CreateBawang"
-                user={props.user}
+                user={props.user.username}
               />
             </Form>
           )}

@@ -108,15 +108,26 @@ function AddTrx(props) {
               Anda terdaftar sebagai <strong>{props.user.orgName}</strong>
             </p>
             {props.user.orgName === "Penangkar" && (
-              <Button
-                variant="contained"
-                component={RouterLink}
-                color="primary"
-                to="/add_genesis"
-                className={classes.button}
-              >
-                Tambahkan Asset Benih
-              </Button>
+              <>
+                <Button
+                  variant="contained"
+                  component={RouterLink}
+                  color="primary"
+                  to="/add_genesis"
+                  className={classes.button}
+                >
+                  Tambahkan Benih Baru
+                </Button>
+                <Button
+                  variant="contained"
+                  component={RouterLink}
+                  color="primary"
+                  to="/update_genesis"
+                  className={classes.button}
+                >
+                  Atur Aset Benih
+                </Button>
+              </>
             )}
           </Grid>
         </Grid>

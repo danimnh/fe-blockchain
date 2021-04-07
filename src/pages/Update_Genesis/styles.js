@@ -14,6 +14,22 @@ const useStyles = makeStyles(() => ({
   confirm: {
     marginTop: 20,
   },
+  title: {
+    fontWeight: "bold",
+  },
+  card: {
+    marginTop: 20,
+    width: "100%",
+    // borderColor: "red",
+    // background: "blue",
+  },
+  selected: {
+    marginTop: 20,
+    width: "100%",
+    background: "#3f51b5",
+    color: "white",
+    // borderTopColor: "red",
+  },
 }));
 
 export default useStyles;

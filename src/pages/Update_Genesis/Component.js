@@ -2,13 +2,9 @@ import React, { useEffect } from "react";
 import axios from "axios";
 
 import {
-  // Grid,
   Typography,
   Container,
   Button,
-  // Card,
-  // CardContent,
-  // CardActionArea,
   Backdrop,
   CircularProgress,
 } from "@material-ui/core";
@@ -24,12 +20,9 @@ import FormUpdateGenesis from "./Forms/FormUpdateGenesis";
 
 const { UpdateGenesisFormFields } = UpdateGenesisFields;
 
-function _renderStepContent() {
-  return <FormUpdateGenesis UpdateGenesisFields={UpdateGenesisFormFields} />;
-}
-
-function Update_Genesis(props) {
+function Update_Genesis() {
   const classes = useStyles();
+  const [user, setUser] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
   const [modalContent, setModalContent] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
@@ -40,11 +33,10 @@ function Update_Genesis(props) {
   }
 
   const rowsGenesis = [
-    createData("Varietas", modalContent.genesisID),
-    createData("Kuantitas (Kilogram)", modalContent.kuantitasBenihKg),
+    createData("Varietas", modalContent[2]),
+    createData("Kuantitas", modalContent[1] + " kg"),
   ];
 
-  const refreshingLayout = props.refreshLayout;
   function _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -57,8 +49,8 @@ function Update_Genesis(props) {
   }
 
   function _handleSubmit(values, actions) {
-    console.log(values);
-    _submitForm(values, actions);
+    let args = [values.genesisID, values.kuantitasBenihKg, values.varietas];
+    _submitForm(args, actions);
   }
 
   const fetchAllGenesis = async (props) => {
@@ -84,26 +76,16 @@ function Update_Genesis(props) {
         "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
         config
       );
-      // await console.log(config.params.args);
-      // await console.log(props);
 
-      await console.log(resp.data.result);
-
-      // await console.log(resp.data.result[0].Value);
       await setGenesisList(resp.data.result);
-      // await console.log(dataBlock1);
       await setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
-  // if (user.length === undefined) {
-  //   fetchAllGenesis(user);
-  //   console.log("aazz");
-  // }
   useEffect(() => {
-    refreshingLayout();
     getUsername().then((result) => {
+      setUser(result);
       fetchAllGenesis(result);
     });
 
@@ -123,19 +105,11 @@ function Update_Genesis(props) {
       <Meta title="Add_Transaction" description="Add_Transaction" />
       <Container maxWidth="sm" className={classes.root}>
         <Typography variant="h6">Update Asset Bawang</Typography>
-        <Typography variant="h6">{props.user.username}</Typography>
-        {genesisList.map((genesis) => {
-          return (
-            <>
-              <p>{genesis.Record.varietas}</p>
-            </>
-          );
-        })}
-
         <Formik
           initialValues={{
             genesisID: "",
             kuantitasBenihKg: "",
+            varietas: "",
           }}
           validate={(values) => {
             const errors = {};
@@ -148,9 +122,13 @@ function Update_Genesis(props) {
           }}
           onSubmit={_handleSubmit}
         >
-          {({ isSubmitting, dirty, isValid }) => (
+          {({ isSubmitting, dirty, isValid, setFieldValue }) => (
             <Form>
-              {_renderStepContent(props.user.memberType)}
+              <FormUpdateGenesis
+                UpdateGenesisFields={UpdateGenesisFormFields}
+                genesisList={genesisList}
+                setFieldValue={setFieldValue}
+              />
               {/* TO-DO : Confirmation Popup */}
               <div className={classes.center}>
                 <Button
@@ -171,8 +149,8 @@ function Update_Genesis(props) {
                   setVisible(false);
                 }}
                 dialogTitle="Tambah Asset"
-                fcnName="CreateBawang"
-                user={props.user}
+                fcnName="AddBawangKuantitasByID"
+                user={user}
               />
             </Form>
           )}
