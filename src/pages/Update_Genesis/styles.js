@@ -20,15 +20,12 @@ const useStyles = makeStyles(() => ({
   card: {
     marginTop: 20,
     width: "100%",
-    // borderColor: "red",
-    // background: "blue",
   },
   selected: {
     marginTop: 20,
     width: "100%",
     background: "#3f51b5",
     color: "white",
-    // borderTopColor: "red",
   },
 }));
 

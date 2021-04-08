@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 
 import {
   Typography,
@@ -12,7 +11,8 @@ import {
 import { Formik, Form } from "formik";
 
 import Meta from "components/Meta";
-import getUsername from "../../constants/GetUser";
+import getUsername from "../../constants/GetUsername";
+import fetchAllGenesis from "../../constants/fetchAllGenesis";
 import useStyles from "./styles";
 import DialogConfirmation from "../../sections/Dialog_Confirmation";
 import UpdateGenesisFields from "./Form_Models/UpdateGenesisModels";
@@ -53,40 +53,16 @@ function Update_Genesis() {
     _submitForm(args, actions);
   }
 
-  const fetchAllGenesis = async (props) => {
-    setIsLoading(true);
-    console.log(props);
-    try {
-      let config = {
-        headers: {
-          Authorization: `Bearer ` + localStorage.getItem("token"),
-        },
-        params: {
-          peer: "peer0.penangkar.example.com",
-          fcn: "GetBawangForQuery",
-          args:
-            '["' +
-            '{\\"selector\\":{\\"usernamePengirim\\":\\"' +
-            props +
-            '\\", \\"isGenesis\\":true}}' +
-            '"]',
-        },
-      };
-      const resp = await axios.get(
-        "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
-        config
-      );
-
-      await setGenesisList(resp.data.result);
-      await setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   useEffect(() => {
     getUsername().then((result) => {
+      setIsLoading(true);
       setUser(result);
-      fetchAllGenesis(result);
+      fetchAllGenesis(result)
+        .then((result) => {
+          setGenesisList(result);
+          setIsLoading(false);
+        })
+        .finally();
     });
 
     // eslint-disable-next-line

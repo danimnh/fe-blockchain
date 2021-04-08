@@ -6,13 +6,9 @@ export default function FormPkrAddTrx(props) {
   const {
     PkrAddTrxFields: {
       usernamePenerima,
-      alamatPengirim,
-      alamatPenerima,
       kuantitas,
-      harga,
       umurBenih,
       lamaPenyimpanan,
-      varietas,
       hargaBenih,
     },
   } = props;
@@ -29,24 +25,7 @@ export default function FormPkrAddTrx(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <InputField
-            name={alamatPengirim.name}
-            label={alamatPengirim.label}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <InputField
-            name={alamatPenerima.name}
-            label={alamatPenerima.label}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
           <InputField name={kuantitas.name} label={kuantitas.label} fullWidth />
-        </Grid>
-        <Grid item xs={12}>
-          <InputField name={harga.name} label={harga.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
           <InputField name={umurBenih.name} label={umurBenih.label} fullWidth />
@@ -57,9 +36,6 @@ export default function FormPkrAddTrx(props) {
             label={lamaPenyimpanan.label}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12}>
-          <InputField name={varietas.name} label={varietas.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
           <InputField

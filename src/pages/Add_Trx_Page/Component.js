@@ -1,23 +1,29 @@
 import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import axios from "axios";
-
 import {
   Grid,
   Typography,
   Container,
   Button,
-  // Card,
-  // CardContent,
-  // CardActionArea,
+  Backdrop,
+  CircularProgress,
+  Card,
+  CardContent,
+  CardActionArea,
 } from "@material-ui/core";
+// import ReactJson from "react-json-view";
 
 import { Formik, Form } from "formik";
 
 import Meta from "components/Meta";
 
 import useStyles from "./styles";
+import getUsername from "../../constants/GetUsername";
+import getUserOrgName from "../../constants/GetUserOrgName";
+import fetchAllGenesis from "../../constants/fetchAllGenesis";
+import fetchAllAssets from "../../constants/fetchAllAssets";
+
 import PkrAddTrxFields from "./Form_Models/PkrAddTrxModels";
 import PtnAddTrxFields from "./Form_Models/PtnAddTrxModels";
 import FormPkrAddTrx from "./Forms/FormPkrAddTrx";
@@ -25,6 +31,7 @@ import FormPtnAddTrx from "./Forms/FormPtnAddTrx";
 
 const { PkrAddTrxFormFields } = PkrAddTrxFields;
 const { PtnAddTrxFormFields } = PtnAddTrxFields;
+
 // todo : username penerima checks out
 function _renderStepContent(memberType) {
   switch (memberType) {
@@ -45,9 +52,14 @@ function _renderStepContent(memberType) {
   }
 }
 
-function AddTrx(props) {
+function AddTrx() {
   const classes = useStyles();
-  const refreshingLayout = props.refreshLayout;
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isSelected, setIsSelected] = React.useState(0);
+
+  const [user, setUser] = React.useState({ username: "", orgName: "" });
+  const [asset, setAsset] = React.useState([]);
+  const [prevID, setPrevID] = React.useState("");
 
   function _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -55,97 +67,163 @@ function AddTrx(props) {
 
   async function _submitForm(values, actions) {
     await _sleep(1000);
-    const config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    };
-    // alert(JSON.stringify(values), null, 2);
-    if (props.user.memberType === "penangkar") {
-      console.log("json" + values);
-      try {
-        const resp = await axios.post("trx/pkr-ptn", values, config);
-        console.log("waiting for resp");
-        console.log(resp);
-        alert(resp.data.message);
-        alert(resp.data.data.batchID);
-      } catch (err) {
-        console.log(err);
-      }
-    } else if (props.user.memberType === "petani") {
-      console.log("petani submit add");
-      console.log(values);
-      try {
-        // const resp = await axios.post("trx/ptn-ppl", values, config);
-        // console.log("waiting for resp");
-        // console.log(resp);
-        // alert(resp.data.message);
-        // alert(resp.data.data.batchID);
-      } catch (err) {
-        console.log(err);
-      }
-    } else if (props.user.memberType === "pengumpul") {
-      console.log("pengumpul");
-    }
-    actions.setSubmitting(false);
+    console.log(values, actions);
   }
   function _handleSubmit(values, actions) {
     _submitForm(values, actions);
   }
+
   useEffect(() => {
-    refreshingLayout();
+    setIsLoading(true);
+    getUsername()
+      .then((result) => {
+        let stateCopy = user;
+        stateCopy.username = result;
+        setUser(stateCopy);
+      })
+      .finally(() => {
+        getUserOrgName()
+          .then((result) => {
+            let stateCopy = user;
+            stateCopy.orgName = result;
+            setUser(stateCopy);
+          })
+          .finally(() => {
+            if (user.orgName === "Penangkar") {
+              fetchAllGenesis(user.username).then((result) => {
+                setAsset(result);
+                setIsLoading(false);
+              });
+            } else {
+              fetchAllAssets(user.username, true).then((result) => {
+                setAsset(result);
+                setIsLoading(false);
+              });
+            }
+          });
+      });
     // eslint-disable-next-line
   }, []);
   return (
     <>
+      {isLoading && (
+        <>
+          <Backdrop open>
+            <CircularProgress />
+          </Backdrop>
+        </>
+      )}
+
       <Meta title="Add_Transaction" description="Add_Transaction" />
       <Container maxWidth="sm" className={classes.root}>
-        {" "}
         <Typography variant="h6">Tambah Transaksi</Typography>
         <Grid container className={classes.rowDetail} item xs={12}>
           <Grid item xs={12}>
             <p>
-              Anda terdaftar sebagai <strong>{props.user.orgName}</strong>
+              Anda terdaftar sebagai <strong>{user.orgName}</strong>
             </p>
-            {props.user.orgName === "Penangkar" && (
-              <>
-                <Button
-                  variant="contained"
-                  component={RouterLink}
-                  color="primary"
-                  to="/add_genesis"
-                  className={classes.button}
-                >
-                  Tambahkan Benih Baru
-                </Button>
-                <Button
-                  variant="contained"
-                  component={RouterLink}
-                  color="primary"
-                  to="/update_genesis"
-                  className={classes.button}
-                >
-                  Atur Aset Benih
-                </Button>
-              </>
-            )}
           </Grid>
         </Grid>
-        <Formik initialValues={{ batchID: "" }} onSubmit={_handleSubmit}>
-          {({ isSubmitting }) => (
+        <Formik initialValues={{ prevID: "" }} onSubmit={_handleSubmit}>
+          {({ isSubmitting, values, setFieldValue }) => (
             <Form>
-              {_renderStepContent(props.user.orgName)}
+              {values.prevID === "" &&
+                asset.map((asset) => {
+                  return (
+                    <Card
+                      key={asset.Key}
+                      className={
+                        isSelected === asset.Key
+                          ? classes.selected
+                          : classes.card
+                      }
+                    >
+                      <CardActionArea
+                        onClick={() => {
+                          setPrevID(asset.Key);
+                          setIsSelected(asset.Key);
+                        }}
+                      >
+                        <CardContent>
+                          <Typography className={classes.title}>
+                            {asset.Record.varietas}
+                          </Typography>
+                          <Typography>
+                            Aset saat ini : {asset.Record.kuantitasBenihKg} Kg
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  );
+                })}
+              {values.prevID !== "" && _renderStepContent(user.orgName)}
+
               {/* TO-DO : Confirmation Popup */}
+              {/* <ReactJson src={asset} /> */}
               <div className={classes.center}>
-                <Button
-                  className={classes.confirm}
-                  disabled={isSubmitting}
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
-                  Konfirmasi
-                </Button>
+                {asset.length === 0 ? (
+                  <>
+                    <p>Anda tidak memiliki aset</p>
+                    <Button
+                      className={classes.confirm}
+                      component={RouterLink}
+                      to="/"
+                      variant="contained"
+                      color="primary"
+                    >
+                      Kembali ke halaman awal
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    {values.prevID === "" ? (
+                      <Button
+                        onClick={() => {
+                          setFieldValue("prevID", prevID);
+                        }}
+                        className={classes.confirm}
+                        variant="contained"
+                        color="primary"
+                        // type="submit"
+                      >
+                        Pilih Aset
+                      </Button>
+                    ) : (
+                      <Button
+                        className={classes.confirm}
+                        disabled={isSubmitting}
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                      >
+                        Konfirmasi
+                      </Button>
+                    )}
+                  </>
+                )}
+
+                {/* {user.orgName === "Penangkar" && (
+                  <>
+                    <Button
+                      variant="outlined"
+                      component={RouterLink}
+                      color="primary"
+                      to="/add_genesis"
+                      className={classes.button}
+                    >
+                      Tambahkan Benih Baru
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      component={RouterLink}
+                      color="primary"
+                      to="/update_genesis"
+                      className={classes.button}
+                    >
+                      Atur Aset Benih
+                    </Button>
+                  </>
+                )} */}
               </div>
             </Form>
           )}
