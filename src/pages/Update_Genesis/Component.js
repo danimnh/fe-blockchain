@@ -105,7 +105,6 @@ function Update_Genesis() {
                 genesisList={genesisList}
                 setFieldValue={setFieldValue}
               />
-              {/* TO-DO : Confirmation Popup */}
               <div className={classes.center}>
                 <Button
                   className={classes.confirm}

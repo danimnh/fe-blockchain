@@ -81,10 +81,10 @@ function DialogConfirmation({
                 AddBawangKuantitasByID(modalContent, fcnName)
                   .then((result) => {
                     console.log(result);
+                    history.go(0);
                   })
                   .finally(() => {
                     setIsLoading(false);
-                    history.replace("/create_transaction");
                   });
               }}
               variant="outlined"

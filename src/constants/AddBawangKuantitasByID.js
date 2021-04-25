@@ -31,7 +31,7 @@ const AddBawangKuantitasByID = async (values, fcnName) => {
       body,
       config
     );
-    alert("Transaksi berhasil disimpan");
+    await alert("Transaksi berhasil disimpan");
     return respBM;
   } catch (err) {
     alert(err);
