@@ -20,6 +20,8 @@ import {
   DialogContentText,
 } from "@material-ui/core";
 import FetchApi from "constants/FetchApi";
+import InvokeTrxPkr from "constants/InvokeTrxPkr";
+
 import AddBawangKuantitasByID from "constants/AddBawangKuantitasByID";
 import { useHistory } from "react-router-dom";
 
@@ -83,6 +85,63 @@ function DialogConfirmation({
                   .finally(() => {
                     setIsLoading(false);
                     history.replace("/create_transaction");
+                  });
+              }}
+              variant="outlined"
+            >
+              Konfirmasi
+            </Button>
+          ) : fcnName === "CreateTrxBawangByPenangkar" ? (
+            <Button
+              onClick={() => {
+                setIsLoading(true);
+                handleClose();
+                InvokeTrxPkr(modalContent, fcnName, user)
+                  .then((result) => {
+                    setTxid(result);
+                    console.log(result);
+                  })
+                  .finally(() => {
+                    setQrVisible(true);
+                    setIsLoading(false);
+                  });
+              }}
+              variant="outlined"
+            >
+              Konfirmasi
+            </Button>
+          ) : fcnName === "CreateTrxBawangByPetani" ? (
+            <Button
+              onClick={() => {
+                setIsLoading(true);
+                handleClose();
+                FetchApi(modalContent, fcnName, user)
+                  .then((result) => {
+                    setTxid(result);
+                    console.log(result);
+                  })
+                  .finally(() => {
+                    setQrVisible(true);
+                    setIsLoading(false);
+                  });
+              }}
+              variant="outlined"
+            >
+              Konfirmasi
+            </Button>
+          ) : fcnName === "CreateTrxBawangByPetani" ? (
+            <Button
+              onClick={() => {
+                setIsLoading(true);
+                handleClose();
+                FetchApi(modalContent, fcnName, user)
+                  .then((result) => {
+                    setTxid(result);
+                    console.log(result);
+                  })
+                  .finally(() => {
+                    setQrVisible(true);
+                    setIsLoading(false);
                   });
               }}
               variant="outlined"

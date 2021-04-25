@@ -16,13 +16,13 @@ export default {
       label: "Alamat Penerima",
       requiredErrorMsg: "Alamat Penerima is required",
     },
-    kuantitas: {
-      name: "kuantitas",
+    kuantitasBenihKg: {
+      name: "kuantitasBenihKg",
       label: "Kuantitas",
       requiredErrorMsg: "Kuantitas is required",
     },
-    harga: {
-      name: "harga",
+    hargaBenihPerKg: {
+      name: "hargaBenihPerKg",
       label: "Harga",
       requiredErrorMsg: "Harga is required",
     },
@@ -40,11 +40,6 @@ export default {
       name: "varietas",
       label: "Varietas",
       requiredErrorMsg: "Varietas is required",
-    },
-    hargaBenih: {
-      name: "hargaBenih",
-      label: "Harga Benih",
-      requiredErrorMsg: "Harga Benih is required",
     },
   },
 };

@@ -80,15 +80,26 @@ function Welcome(props) {
               Anda terdaftar sebagai <strong>{props.user.orgName}</strong>
             </Typography>
             {props.user.orgName === "Penangkar" && (
-              <Button
-                variant="contained"
-                color="primary"
-                component={RouterLink}
-                to="/update_genesis"
-                className={classes.button}
-              >
-                Atur Asset Penangkar
-              </Button>
+              <>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  component={RouterLink}
+                  to="/update_genesis"
+                  className={classes.button}
+                >
+                  Atur Asset Penangkar
+                </Button>
+                <Button
+                  variant="outlined"
+                  component={RouterLink}
+                  color="primary"
+                  to="/add_genesis"
+                  className={classes.button}
+                >
+                  Tambahkan Benih Baru
+                </Button>
+              </>
             )}
           </>
         )}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import InputField from "../../Sign_Up/FormFields/InputField";
 import InputRupiah from "../../Sign_Up/FormFields/InputRupiah";
 import InputKilogram from "../../Sign_Up/FormFields/InputKilogram";
@@ -17,7 +17,6 @@ export default function FormPkrAddTrx(props) {
 
   return (
     <>
-      <Typography></Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <InputField name={varietas.name} label={varietas.label} fullWidth />

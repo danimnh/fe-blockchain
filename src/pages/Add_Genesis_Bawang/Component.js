@@ -128,7 +128,7 @@ function Add_Genesis(props) {
                   setVisible(false);
                 }}
                 dialogTitle="Tambah Benih Baru"
-                fcnName="CreateBawang"
+                fcnName="CreateBenih"
                 user={props.user.username}
               />
             </Form>

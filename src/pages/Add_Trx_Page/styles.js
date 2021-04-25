@@ -11,16 +11,17 @@ const useStyles = makeStyles(() => ({
     width: "300px",
     marginBottom: 10,
   },
+  title: {
+    fontWeight: "bold",
+  },
   confirm: {
     marginTop: 20,
   },
   card: {
     marginTop: 20,
-    width: "100%",
   },
   selected: {
     marginTop: 20,
-    width: "100%",
     background: "#3f51b5",
     color: "white",
   },
