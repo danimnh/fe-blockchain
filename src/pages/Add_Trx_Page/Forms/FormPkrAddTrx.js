@@ -19,13 +19,6 @@ export default function FormPkrAddTrx(props) {
     <div style={{ paddingTop: 20 }}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <InputField
-            name={usernamePenerima.name}
-            label={usernamePenerima.label}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
           <InputKilogram
             name={kuantitasBenihKg.name}
             label={kuantitasBenihKg.label}
@@ -46,6 +39,13 @@ export default function FormPkrAddTrx(props) {
           <InputField
             name={lamaPenyimpanan.name}
             label={lamaPenyimpanan.label}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <InputField
+            name={usernamePenerima.name}
+            label={usernamePenerima.label}
             fullWidth
           />
         </Grid>

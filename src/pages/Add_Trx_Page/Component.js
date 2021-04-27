@@ -92,8 +92,6 @@ function AddTrx() {
   const [user, setUser] = React.useState({ username: "", orgName: "" });
   const [modalContent, setModalContent] = React.useState([]);
 
-  // const [userInitialValue, setUserInitialValue] = React.useState({});
-
   const [asset, setAsset] = React.useState([]);
   const [selectedAsset, setSelectedAsset] = React.useState([]);
 
@@ -118,25 +116,24 @@ function AddTrx() {
 
   async function _submitForm(values, actions) {
     await _sleep(1000);
-    values.varietas = asset[0].Record.varietas;
-    values.usernamePengirim = user.username;
+
     console.log(values, actions);
     setModalContent(values);
     setVisible(true);
   }
   function _handleSubmit(values, actions) {
-    values.hargaBenihPerKg = parseInt(values.hargaBenihPerKg);
+    console.log(user);
+    if (user.orgName === "Penangkar") {
+      values.hargaBenihPerKg = parseInt(values.hargaBenihPerKg);
+      values.varietas = asset[0].Record.varietas;
+      values.usernamePengirim = user.username;
+    }
+    //todo: aktor lain
     _submitForm(values, actions);
   }
   const initialValue = {
     prevID: "",
-    varietas: "",
-    usernamePengirim: "",
     usernamePenerima: "",
-    kuantitasBenihKg: "",
-    umurBenih: "",
-    lamaPenyimpanan: "",
-    hargaBenihPerKg: "",
   };
   useEffect(() => {
     setIsLoading(true);
@@ -151,9 +148,6 @@ function AddTrx() {
           .then((result) => {
             let stateCopy = user;
             stateCopy.orgName = result;
-            // let initialValuessss = _determineInitialValue(result);
-            // console.log(initialValuessss);
-            // setUserInitialValue(initialValuessss);
             setUser(stateCopy);
           })
           .finally(() => {
@@ -288,7 +282,11 @@ function AddTrx() {
 
                       <Button
                         className={classes.confirm}
-                        disabled={isSubmitting}
+                        disabled={
+                          values.usernamePenerima === "" ||
+                          values.kuantitasBenihKg === "" ||
+                          isSubmitting
+                        }
                         variant="contained"
                         color="primary"
                         type="submit"

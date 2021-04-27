@@ -20,6 +20,7 @@ import {
   DialogContentText,
 } from "@material-ui/core";
 import FetchApi from "constants/FetchApi";
+import GetUsernameByID from "constants/GetUsernameByID";
 import InvokeTrxPkr from "constants/InvokeTrxPkr";
 
 import AddBawangKuantitasByID from "constants/AddBawangKuantitasByID";
@@ -96,15 +97,36 @@ function DialogConfirmation({
               onClick={() => {
                 setIsLoading(true);
                 handleClose();
-                InvokeTrxPkr(modalContent, fcnName, user)
-                  .then((result) => {
-                    setTxid(result);
-                    console.log(result);
-                  })
-                  .finally(() => {
-                    setQrVisible(true);
-                    setIsLoading(false);
-                  });
+                console.log(modalContent);
+                GetUsernameByID(modalContent.usernamePenerima, "Petani").then(
+                  (result) => {
+                    if (result === undefined) {
+                      setIsLoading(false);
+                      alert(
+                        "Username Penerima " +
+                          modalContent.usernamePenerima +
+                          " tidak ditemukan"
+                      );
+                      history.go(0);
+                    } else {
+                      InvokeTrxPkr(modalContent, fcnName, user)
+                        .then((result) => {
+                          if (result !== undefined) {
+                            setTxid(result);
+                            setQrVisible(true);
+                            console.log(result);
+                          } else {
+                            alert("Kuantitas tidak mencukupi");
+                            setIsLoading(false);
+                            history.go(0);
+                          }
+                        })
+                        .finally(() => {
+                          setIsLoading(false);
+                        });
+                    }
+                  }
+                );
               }}
               variant="outlined"
             >

@@ -80,7 +80,7 @@ function Update_Genesis() {
 
       <Meta title="Add_Transaction" description="Add_Transaction" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h6">Update Asset Bawang</Typography>
+        <Typography variant="h6">Update Asset Benih</Typography>
         <Formik
           initialValues={{
             genesisID: "",
