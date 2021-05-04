@@ -26,22 +26,22 @@ import {
 } from "@material-ui/core";
 import QRCode from "qrcode.react";
 import Meta from "components/Meta";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import getUsername from "../../constants/GetUsername";
 import getUserOrgName from "../../constants/GetUserOrgName";
 
 import useStyles from "./styles";
 
-function PendingList(props) {
+function SentTrx(props) {
   const classes = useStyles();
   const { listType } = props.match.params;
   const [memberCode, setMemberCode] = React.useState("");
   const [user, setUser] = React.useState({ username: "", orgName: "" });
-  const [pendingTrx, setPendingTrx] = React.useState([]);
+  const [inboxTrx, setInboxTrx] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
   const [modalContent, setModalContent] = React.useState([]);
-  const history = useHistory();
+  // const history = useHistory();
 
   function createData(name, value) {
     return { name, value };
@@ -117,10 +117,6 @@ function PendingList(props) {
     createData("Batch ID", modalContent.batchID),
   ];
 
-  // const handleOpen = () => {
-  //   setVisible(true);
-  // };
-
   const handleClose = () => {
     setVisible(false);
   };
@@ -129,7 +125,7 @@ function PendingList(props) {
   // pending = unconfirmed, confirmed
   // inbox, sent
 
-  const fetchAllPendingTrx = async (trxType, username, isConfirmed) => {
+  const fetchAllSentTrx = async (trxType, username, isConfirmed) => {
     try {
       let config = {
         headers: {
@@ -163,39 +159,6 @@ function PendingList(props) {
     }
   };
 
-  const confirmTrxByID = async (trxId) => {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    };
-    console.log("confirmTrxById");
-
-    let body = {
-      fcn: "ConfirmTrxByID",
-      peers: [
-        "peer0.penangkar.example.com",
-        "peer0.petani.example.com",
-        "peer0.pengumpul.example.com",
-        "peer0.pedagang.example.com",
-      ],
-      chaincodeName: "bawangmerah_cc",
-      channelName: "mychannel",
-      args: [trxId],
-    };
-    try {
-      const resp = await axios.post(
-        "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
-        body,
-        config
-      );
-      console.log(resp);
-      await alert("Transaksi berhasil dikonfirmasi");
-      history.go(0);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   useEffect(() => {
     getUsername()
       .then((result) => {
@@ -213,35 +176,34 @@ function PendingList(props) {
           })
           .finally(() => {
             setMemberCode(user.orgName);
-            if (listType === "Inbox") {
-              fetchAllPendingTrx("Penerima", user.username, "false").then(
-                (result) => {
-                  let sorted = result;
-                  console.log("INBOX PENDING");
-                  const after = sorted.sort((a, b) =>
-                    a.Record.createdAt > b.Record.createdAt ? -1 : 1
-                  );
-                  setPendingTrx([]);
-                  setPendingTrx(after);
-                }
-              );
-            } else if (listType === "Sent") {
-              fetchAllPendingTrx("Pengirim", user.username, "false").then(
+            if (listType === "pending") {
+              fetchAllSentTrx("Pengirim", user.username, "false").then(
                 (result) => {
                   let sorted = result;
                   console.log("SENT PENDING");
                   const after = sorted.sort((a, b) =>
                     a.Record.createdAt > b.Record.createdAt ? -1 : 1
                   );
+                  setInboxTrx([]);
+                  setInboxTrx(after);
+                }
+              );
+            } else if (listType === "confirmed") {
+              fetchAllSentTrx("Pengirim", user.username, "true").then(
+                (result) => {
+                  let sorted = result;
+                  console.log("SENT CONFIRMED");
+                  const after = sorted.sort((a, b) =>
+                    a.Record.createdAt > b.Record.createdAt ? -1 : 1
+                  );
 
-                  setPendingTrx([]);
-                  setPendingTrx(after);
+                  setInboxTrx([]);
+                  setInboxTrx(after);
                 }
               );
             }
           });
       });
-
     // eslint-disable-next-line
   }, [listType]);
   return (
@@ -254,19 +216,19 @@ function PendingList(props) {
           <Typography variant="h6">Terkirim</Typography>
         )}
 
-        <Typography variant="h6">Transaksi Tertunda</Typography>
+        <Typography variant="h6">Transaksi Masuk</Typography>
 
-        {pendingTrx.length !== 0 ? (
+        {inboxTrx.length !== 0 ? (
           <p>Kamu memiliki transaksi yang tertunda</p>
         ) : (
           <p>Tidak ada transaksi masuk</p>
         )}
 
-        {pendingTrx.map((trx) => {
+        {inboxTrx.map((trx) => {
           return (
             <Card
-              id={trx.id}
-              key={trx.Key}
+              id={trx.Key}
+              key={trx.Record.id}
               style={{ marginBottom: "20px", width: "100%" }}
             >
               <CardActionArea
@@ -351,18 +313,6 @@ function PendingList(props) {
             >
               Tutup
             </Button>
-            {listType === "Inbox" && (
-              <Button
-                onClick={() => {
-                  console.log(modalContent.id);
-                  confirmTrxByID(modalContent.id);
-                }}
-                variant="contained"
-                color="primary"
-              >
-                Konfirmasi
-              </Button>
-            )}
           </DialogActions>
         </Dialog>
       </Container>
@@ -370,4 +320,4 @@ function PendingList(props) {
   );
 }
 
-export default PendingList;
+export default SentTrx;

@@ -85,7 +85,7 @@ function Menu({
           <ListItemText primary="Tambah Transaksi" />
         </StyledMenuItem>
         <StyledMenuItem onClick={handleClickPending}>
-          <ListItemText primary="Transaksi Tertunda" />
+          <ListItemText primary="Transaksi Masuk" />
           {openPending ? <ExpandLess /> : <ExpandMore />}
         </StyledMenuItem>
         <Collapse in={openPending} timeout="auto" unmountOnExit>
@@ -96,9 +96,9 @@ function Menu({
               selected={selectedIndex === 2}
               onClick={() => handleListItemClick(2)}
               component={RouterLink}
-              to="/transactions/pending/Inbox"
+              to="/transactions/inbox/pending"
             >
-              <ListItemText primary="Kotak Masuk" />
+              <ListItemText primary="Transaksi Tertunda" />
             </ListItem>
             <ListItem
               className={classes.nested}
@@ -106,14 +106,14 @@ function Menu({
               selected={selectedIndex === 3}
               onClick={() => handleListItemClick(3)}
               component={RouterLink}
-              to="/transactions/pending/Sent"
+              to="/transactions/inbox/confirmed"
             >
-              <ListItemText primary="Terkirim" />
+              <ListItemText primary="Transaksi Terkonfirmasi" />
             </ListItem>
           </List>
         </Collapse>
         <StyledMenuItem onClick={handleClickConfirmed}>
-          <ListItemText primary="Transaksi Terkonfirmasi" />
+          <ListItemText primary="Transaksi Keluar" />
           {openConfirmed ? <ExpandLess /> : <ExpandMore />}
         </StyledMenuItem>
         <Collapse in={openConfirmed} timeout="auto" unmountOnExit>
@@ -124,9 +124,9 @@ function Menu({
               selected={selectedIndex === 4}
               onClick={() => handleListItemClick(4)}
               component={RouterLink}
-              to="/transactions/confirmed/Inbox"
+              to="/transactions/sent/pending"
             >
-              <ListItemText primary="Kotak Masuk" />
+              <ListItemText primary="Transaksi Tertunda" />
             </ListItem>
             <ListItem
               className={classes.nested}
@@ -134,9 +134,9 @@ function Menu({
               selected={selectedIndex === 5}
               onClick={() => handleListItemClick(5)}
               component={RouterLink}
-              to="/transactions/confirmed/Sent"
+              to="/transactions/sent/confirmed"
             >
-              <ListItemText primary="Terkirim" />
+              <ListItemText primary="Transaksi Terkonfirmasi" />
             </ListItem>
           </List>
         </Collapse>

@@ -9,8 +9,8 @@ import AddGenesis from "pages/Add_Genesis_Bawang";
 import UpdateGenesis from "pages/Update_Genesis";
 
 // import TransactionList from "pages/TransactionList";
-import PendingList from "pages/Pending_Trx_Page";
-import ConfirmedList from "pages/Confirmed_Trx_Page";
+import SentTrx from "pages/Sent_Trx_Page";
+import InboxTrx from "pages/Inbox_Trx_Page";
 
 import Page from "components/Page";
 
@@ -93,21 +93,13 @@ function Content({
         />
         <Route
           exact
-          path="/transactions/pending/:listType"
-          render={(props) => (
-            <PendingList refreshLayout={refreshLayout} user={user} {...props} />
-          )}
+          path="/transactions/inbox/:listType"
+          render={(props) => <InboxTrx user={user} {...props} />}
         />
         <Route
           exact
-          path="/transactions/confirmed/:listType"
-          render={(props) => (
-            <ConfirmedList
-              refreshLayout={refreshLayout}
-              user={user}
-              {...props}
-            />
-          )}
+          path="/transactions/sent/:listType"
+          render={(props) => <SentTrx user={user} {...props} />}
         />
       </Switch>
     </Page>
