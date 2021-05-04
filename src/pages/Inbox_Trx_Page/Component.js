@@ -250,7 +250,7 @@ function InboxTrx(props) {
         )}
 
         {inboxTrx.length !== 0 ? (
-          <p>Kamu memiliki {inboxTrx.length} transaksi tertunda </p>
+          <p>Menampilkan {inboxTrx.length} transaksi</p>
         ) : (
           <p>Tidak ada transaksi masuk</p>
         )}

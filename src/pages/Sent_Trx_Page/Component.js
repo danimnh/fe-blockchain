@@ -38,7 +38,7 @@ function SentTrx(props) {
   const { listType } = props.match.params;
   const [memberCode, setMemberCode] = React.useState("");
   const [user, setUser] = React.useState({ username: "", orgName: "" });
-  const [inboxTrx, setInboxTrx] = React.useState([]);
+  const [sentTrx, setSentTrx] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
   const [modalContent, setModalContent] = React.useState([]);
   // const history = useHistory();
@@ -184,8 +184,8 @@ function SentTrx(props) {
                   const after = sorted.sort((a, b) =>
                     a.Record.createdAt > b.Record.createdAt ? -1 : 1
                   );
-                  setInboxTrx([]);
-                  setInboxTrx(after);
+                  setSentTrx([]);
+                  setSentTrx(after);
                 }
               );
             } else if (listType === "confirmed") {
@@ -197,8 +197,8 @@ function SentTrx(props) {
                     a.Record.createdAt > b.Record.createdAt ? -1 : 1
                   );
 
-                  setInboxTrx([]);
-                  setInboxTrx(after);
+                  setSentTrx([]);
+                  setSentTrx(after);
                 }
               );
             }
@@ -210,21 +210,21 @@ function SentTrx(props) {
     <>
       <Meta title="TransactionList" description="TransactionList" />
       <Container maxWidth="sm" className={classes.root}>
-        {props.match.params.listType === "Inbox" ? (
-          <Typography variant="h6">Kotak Masuk</Typography>
+        <Typography variant="h6">Transaksi Keluar</Typography>
+
+        {props.match.params.listType === "pending" ? (
+          <Typography variant="h6">Tertunda</Typography>
         ) : (
-          <Typography variant="h6">Terkirim</Typography>
+          <Typography variant="h6">Terkonfirmasi</Typography>
         )}
 
-        <Typography variant="h6">Transaksi Masuk</Typography>
-
-        {inboxTrx.length !== 0 ? (
-          <p>Kamu memiliki transaksi yang tertunda</p>
+        {sentTrx.length !== 0 ? (
+          <p>Menampilkan {sentTrx.length} transaksi tertunda </p>
         ) : (
-          <p>Tidak ada transaksi masuk</p>
+          <p>Tidak ada transaksi keluar</p>
         )}
 
-        {inboxTrx.map((trx) => {
+        {sentTrx.map((trx) => {
           return (
             <Card
               id={trx.Key}
