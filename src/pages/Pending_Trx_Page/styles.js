@@ -7,6 +7,9 @@ const useStyles = makeStyles(() => ({
     "align-items": "start",
     flexDirection: "column",
   },
+  title: {
+    fontWeight: "bold",
+  },
 }));
 
 export default useStyles;
