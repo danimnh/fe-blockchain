@@ -52,7 +52,7 @@ function SentTrx(props) {
     createData("Username Penerima", modalContent.usernamePenerima),
     createData("Alamat Pengirim", modalContent.alamatPengirim),
     createData("Alamat Penerima", modalContent.alamatPenerima),
-    createData("Kuantitas", modalContent.kuantitas),
+    createData("Kuantitas", modalContent.kuantitasBenihKg),
     createData("Harga", modalContent.harga),
     createData("Timestamp", moment(modalContent.timestamp).format("LL")),
     createData("Umur Benih", modalContent.umurBenih),
@@ -70,13 +70,15 @@ function SentTrx(props) {
     createData("Username Penerima", modalContent.usernamePenerima),
     createData("Alamat Pengirim", modalContent.alamatPengirim),
     createData("Alamat Penerima", modalContent.alamatPenerima),
-    createData("Kuantitas", modalContent.kuantitas),
+    createData("Kuantitas", modalContent.kuantitasBenihKg),
     createData("Harga", modalContent.harga),
     createData("Timestamp", moment(modalContent.timestamp).format("LL")),
-    createData("Umur Benih", modalContent.umurBenih),
-    createData("Umur Panen", modalContent.umurPanen),
-    createData("Lama Penyimpanan", modalContent.lamaPenyimpanan),
-    createData("Varietas", modalContent.varietas),
+    createData("Ukuran Umbi", modalContent.umurBenih),
+    createData("Kadar Air Persen", modalContent.umurPanen),
+    createData("Pupuk", modalContent.lamaPenyimpanan),
+    createData("Pestisida", modalContent.varietas),
+    createData("Perlakuan", modalContent.Perlakuan),
+    createData("Produktivitas", modalContent.varietas),
     createData("Harga Benih", modalContent.hargaBenih),
     createData("Status", modalContent.status),
     createData("Transaksi ID", modalContent.transaksiID),
@@ -269,7 +271,7 @@ function SentTrx(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Atribut</TableCell>
-                    <TableCell align="right">Informasi</TableCell>
+                    <TableCell align="left">Informasi</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -277,27 +279,27 @@ function SentTrx(props) {
                     ? rowsPetani.map((row) => (
                         <TableRow key={row.name}>
                           <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="right">{row.value}</TableCell>
+                          <TableCell align="left">{row.value}</TableCell>
                         </TableRow>
                       ))
                     : memberCode === "Pengumpul"
                     ? rowsPengumpul.map((row) => (
                         <TableRow key={row.name}>
                           <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="right">{row.value}</TableCell>
+                          <TableCell align="left">{row.value}</TableCell>
                         </TableRow>
                       ))
                     : memberCode === "Pedagang"
                     ? rowsPedagang.map((row) => (
                         <TableRow key={row.name}>
                           <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="right">{row.value}</TableCell>
+                          <TableCell align="left">{row.value}</TableCell>
                         </TableRow>
                       ))
                     : rowsPenangkar.map((row) => (
                         <TableRow key={row.name}>
                           <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="right">{row.value}</TableCell>
+                          <TableCell align="left">{row.value}</TableCell>
                         </TableRow>
                       ))}
                 </TableBody>

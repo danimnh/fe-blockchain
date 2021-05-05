@@ -46,20 +46,27 @@ function InboxTrx(props) {
   function createData(name, value) {
     return { name, value };
   }
+  function getStatus(isConfirmed) {
+    if (isConfirmed) {
+      return "Terkonfirmasi";
+    } else return "Tertunda";
+  }
   const rowsPenangkar = [
     createData("Username Pengirim", modalContent.usernamePengirim),
     createData("Username Penerima", modalContent.usernamePenerima),
     createData("Alamat Pengirim", modalContent.alamatPengirim),
     createData("Alamat Penerima", modalContent.alamatPenerima),
-    createData("Kuantitas", modalContent.kuantitas),
-    createData("Harga", modalContent.harga),
+    createData("Kuantitas", modalContent.kuantitasBenihKg + " Kg"),
+    createData("Harga", "Rp." + modalContent.hargaBenihPerKg),
     createData("Timestamp", moment(modalContent.timestamp).format("LL")),
     createData("Umur Benih", modalContent.umurBenih),
     createData("Umur Panen", modalContent.umurPanen),
     createData("Lama Penyimpanan", modalContent.lamaPenyimpanan),
     createData("Varietas", modalContent.varietas),
     createData("Harga Benih", modalContent.hargaBenih),
-    createData("Status", modalContent.status),
+    createData("Status", getStatus(modalContent.isConfirmed)),
+    createData("Hash Block", modalContent.id),
+
     createData("Transaksi ID", modalContent.transaksiID),
     createData("Batch ID", modalContent.batchID),
   ];
@@ -69,13 +76,16 @@ function InboxTrx(props) {
     createData("Username Penerima", modalContent.usernamePenerima),
     createData("Alamat Pengirim", modalContent.alamatPengirim),
     createData("Alamat Penerima", modalContent.alamatPenerima),
-    createData("Kuantitas", modalContent.kuantitas),
+    createData("Kuantitas", modalContent.kuantitasBenihKg),
     createData("Harga", modalContent.harga),
     createData("Timestamp", moment(modalContent.timestamp).format("LL")),
-    createData("Umur Benih", modalContent.umurBenih),
-    createData("Umur Panen", modalContent.umurPanen),
-    createData("Lama Penyimpanan", modalContent.lamaPenyimpanan),
-    createData("Varietas", modalContent.varietas),
+    createData("Ukuran Umbi", modalContent.umurBenih),
+    createData("Kadar Air Persen", modalContent.umurPanen),
+    createData("Pupuk", modalContent.lamaPenyimpanan),
+    createData("Pestisida", modalContent.varietas),
+    createData("Perlakuan", modalContent.Perlakuan),
+    createData("Produktivitas", modalContent.varietas),
+
     createData("Harga Benih", modalContent.hargaBenih),
     createData("Status", modalContent.status),
     createData("Transaksi ID", modalContent.transaksiID),
@@ -106,11 +116,10 @@ function InboxTrx(props) {
     createData("Kuantitas", modalContent.kuantitas),
     createData("Harga", modalContent.harga),
     createData("Timestamp", moment(modalContent.timestamp).format("LL")),
-    createData("Umur Benih", modalContent.umurBenih),
-    createData("Umur Panen", modalContent.umurPanen),
-    createData("Lama Penyimpanan", modalContent.lamaPenyimpanan),
-    createData("Varietas", modalContent.varietas),
-    createData("Harga Benih", modalContent.hargaBenih),
+    createData("Tanggal Masuk", modalContent.umurBenih),
+    createData("Alamat Gudang", modalContent.umurPanen),
+    createData("Teknik Sorting", modalContent.lamaPenyimpanan),
+    createData("Metode Pengemasan", modalContent.varietas),
     createData("Status", modalContent.status),
     createData("Transaksi ID", modalContent.transaksiID),
     createData("Batch ID", modalContent.batchID),
@@ -302,7 +311,7 @@ function InboxTrx(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Atribut</TableCell>
-                    <TableCell align="right">Informasi</TableCell>
+                    <TableCell align="left">Informasi</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -310,27 +319,27 @@ function InboxTrx(props) {
                     ? rowsPenangkar.map((row) => (
                         <TableRow key={row.name}>
                           <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="right">{row.value}</TableCell>
+                          <TableCell align="left">{row.value}</TableCell>
                         </TableRow>
                       ))
                     : memberCode === "Pengumpul"
                     ? rowsPetani.map((row) => (
                         <TableRow key={row.name}>
                           <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="right">{row.value}</TableCell>
+                          <TableCell align="left">{row.value}</TableCell>
                         </TableRow>
                       ))
                     : memberCode === "Pedagang"
                     ? rowsPengumpul.map((row) => (
                         <TableRow key={row.name}>
                           <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="right">{row.value}</TableCell>
+                          <TableCell align="left">{row.value}</TableCell>
                         </TableRow>
                       ))
                     : rowsPedagang.map((row) => (
                         <TableRow key={row.name}>
                           <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="right">{row.value}</TableCell>
+                          <TableCell align="left">{row.value}</TableCell>
                         </TableRow>
                       ))}
                 </TableBody>
