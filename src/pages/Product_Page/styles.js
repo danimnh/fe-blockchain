@@ -17,6 +17,20 @@ const useStyles = makeStyles(() => ({
     overflow: "visible",
     marginTop: "20px",
   },
+  timeline: {
+    marginLeft: "-130px",
+    // background: "red",
+    // textAlign: "left",
+    // height: `calc(100% - ${theme.mixins.toolbar.minHeight + 8}px)`,
+  },
+  cardTimeline: {
+    marginBottom: "20px",
+    width: "280px",
+    marginTop: "-24px",
+  },
+  title: {
+    fontWeight: "bold",
+  },
 }));
 
 export default useStyles;

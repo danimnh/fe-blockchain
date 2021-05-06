@@ -16,41 +16,52 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 
+import {
+  Timeline,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
+} from "@material-ui/lab";
+
 import Meta from "components/Meta";
 
 import useStyles from "./styles";
 
 function ProductPage(props) {
   const classes = useStyles();
+  // eslint-disable-next-line
+  const [modalContent, setModalContent] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   function createData(name, value) {
     return { name, value };
   }
-
-  let modalContent = {
+  // eslint-disable-next-line
+  let testState = {
     id: "fdc1e8a3d82d003ca18ceb0d6f6d4ccef54d7970d67e90f05cfa1afff1e51e3e",
-    genesisID: "",
-    usernamePengirim: "",
-    usernamePenerima: "",
-    alamatPengirim: "",
-    alamatPenerima: "",
-    kuantitasBenihKg: 0,
-    hargaBenihPerKg: 0,
-    hargaBenihTotal: 0,
-    kuantitasBawangKg: 0,
-    hargaBawangPerKg: 0,
-    hargaBawangTotal: 0,
+    genesisID: "asdasdasdasdasasdasdasd",
+    usernamePengirim: "DionaPpl",
+    usernamePenerima: "NingguangPdg",
+    alamatPengirim: "A",
+    alamatPenerima: "B",
+    kuantitasBenihKg: 5,
+    hargaBenihPerKg: 10000,
+    hargaBenihTotal: 50000,
+    kuantitasBawangKg: 30,
+    hargaBawangPerKg: 15000,
+    hargaBawangTotal: 450000,
     createdAt: 1617797595,
-    umurBenih: "",
-    umurPanen: "",
-    lamaPenyimpanan: "",
-    varietas: "",
-    ukuranUmbi: "",
+    umurBenih: "5 Hari",
+    umurPanen: "12 Hari",
+    lamaPenyimpanan: "10 Hari",
+    varietas: "Bumi Brebes",
+    ukuranUmbi: "Besar",
     kadarAirPersen: 0,
-    pupuk: "",
-    pestisida: "",
-    perlakuan: "",
-    produktivitas: "",
+    pupuk: "Vitamin A",
+    pestisida: "Tidak ada",
+    perlakuan: "-",
+    produktivitas: "100%",
     tanggalMasuk: "",
     alamatGudang: "",
     teknikSorting: "",
@@ -61,6 +72,7 @@ function ProductPage(props) {
     isGenesis: false,
     isConfirmed: false,
   };
+
   // eslint-disable-next-line
   const rowsGenesis = [
     createData("Varietas", modalContent.varietas),
@@ -82,7 +94,6 @@ function ProductPage(props) {
   const rowsPengumpul = [
     createData("tanggalMasuk", modalContent.usernamePenerima),
     createData("alamatPenerima", modalContent.alamatPenerima),
-
     createData("tanggalMasuk", modalContent.tanggalMasuk),
     createData("alamatGudang", modalContent.alamatGudang),
     createData("teknikSorting", +modalContent.teknikSorting),
@@ -199,7 +210,110 @@ function ProductPage(props) {
 
           {/* v grid closes */}
         </Grid>
-        <Typography variant="h6">Transaksi</Typography>
+        <Typography variant="h6">Timeline Transaksi</Typography>
+        <Grid container className={classes.timeline}>
+          <Timeline>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Card className={classes.cardTimeline}>
+                  <CardContent>
+                    <Typography className={classes.title}>
+                      Penangkar menambahkan Benih
+                    </Typography>
+                    <Typography variant="p">5 Mei 2021</Typography>
+                  </CardContent>
+                </Card>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Card className={classes.cardTimeline}>
+                  <CardContent>
+                    <Typography variant="p">
+                      Penangkar Mengirimkan Benih
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Card className={classes.cardTimeline}>
+                  <CardContent>
+                    <Typography variant="p">Petani menanam Benih</Typography>
+                  </CardContent>
+                </Card>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Card className={classes.cardTimeline}>
+                  <CardContent>
+                    <Typography variant="p">Petani memanen Bawang</Typography>
+                  </CardContent>
+                </Card>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Card className={classes.cardTimeline}>
+                  <CardContent>
+                    <Typography variant="p">Petani menjual Bawang</Typography>
+                  </CardContent>
+                </Card>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Card className={classes.cardTimeline}>
+                  <CardContent>
+                    <Typography variant="p">
+                      Pengumpul Warehouse Bawang
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Card className={classes.cardTimeline}>
+                  <CardContent>
+                    <Typography variant="p">
+                      Pengumpul menjual Bawang
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </TimelineContent>
+            </TimelineItem>
+          </Timeline>
+        </Grid>
 
         <ReactJson src={dataBlock1} theme="monokai" />
         {/* {true && (
