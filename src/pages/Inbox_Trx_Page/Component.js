@@ -70,7 +70,6 @@ function InboxTrx(props) {
     createData("Transaksi ID", modalContent.transaksiID),
     createData("Batch ID", modalContent.batchID),
   ];
-
   const rowsPetani = [
     createData("Username Pengirim", modalContent.usernamePengirim),
     createData("Username Penerima", modalContent.usernamePenerima),
@@ -91,7 +90,6 @@ function InboxTrx(props) {
     createData("Transaksi ID", modalContent.transaksiID),
     createData("Batch ID", modalContent.batchID),
   ];
-
   const rowsPengumpul = [
     createData("Username Pengirim", modalContent.usernamePengirim),
     createData("Username Penerima", modalContent.usernamePenerima),
