@@ -10,6 +10,7 @@ export default function FormPkrAddTrx(props) {
       usernamePenerima,
       kuantitasBenihKg,
       umurBenih,
+      umurPanen,
       lamaPenyimpanan,
       hargaBenihPerKg,
     },
@@ -34,6 +35,9 @@ export default function FormPkrAddTrx(props) {
         </Grid>
         <Grid item xs={12}>
           <InputField name={umurBenih.name} label={umurBenih.label} fullWidth />
+        </Grid>
+        <Grid item xs={12}>
+          <InputField name={umurPanen.name} label={umurPanen.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
           <InputField

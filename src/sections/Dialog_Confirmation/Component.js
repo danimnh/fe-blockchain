@@ -22,6 +22,7 @@ import {
 import FetchApi from "constants/FetchApi";
 import GetUsernameByID from "constants/GetUsernameByID";
 import InvokeTrxPkr from "constants/InvokeTrxPkr";
+import InvokeTrxPtn from "constants/InvokeTrxPtn";
 
 import AddBawangKuantitasByID from "constants/AddBawangKuantitasByID";
 import { useHistory } from "react-router-dom";
@@ -132,39 +133,40 @@ function DialogConfirmation({
             >
               Konfirmasi
             </Button>
-          ) : fcnName === "CreateTrxBawangByPetani" ? (
+          ) : fcnName === "UpdateBawangTrxByPetani" ? (
             <Button
               onClick={() => {
                 setIsLoading(true);
                 handleClose();
-                FetchApi(modalContent, fcnName, user)
-                  .then((result) => {
-                    setTxid(result);
-                    console.log(result);
-                  })
-                  .finally(() => {
-                    setQrVisible(true);
+                GetUsernameByID(
+                  modalContent.usernamePenerima,
+                  "Pengumpul"
+                ).then((result) => {
+                  if (result === undefined) {
                     setIsLoading(false);
-                  });
-              }}
-              variant="outlined"
-            >
-              Konfirmasi
-            </Button>
-          ) : fcnName === "CreateTrxBawangByPetani" ? (
-            <Button
-              onClick={() => {
-                setIsLoading(true);
-                handleClose();
-                FetchApi(modalContent, fcnName, user)
-                  .then((result) => {
-                    setTxid(result);
-                    console.log(result);
-                  })
-                  .finally(() => {
-                    setQrVisible(true);
-                    setIsLoading(false);
-                  });
+                    alert(
+                      "Username Penerima " +
+                        modalContent.usernamePenerima +
+                        " tidak ditemukan"
+                    );
+                    history.go(0);
+                  } else {
+                    InvokeTrxPtn(modalContent, fcnName, user)
+                      .then((result) => {
+                        if (result !== undefined) {
+                          setTxid(result);
+                          setQrVisible(true);
+                        } else {
+                          alert("Kuantitas tidak mencukupi");
+                          setIsLoading(false);
+                          // history.go(0);
+                        }
+                      })
+                      .finally(() => {
+                        setIsLoading(false);
+                      });
+                  }
+                });
               }}
               variant="outlined"
             >

@@ -5,6 +5,7 @@ import Meta from "components/Meta";
 
 import { Formik, Form } from "formik";
 import { Link as RouterLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import useStyles from "./styles";
 import validationSchema from "./Forms/validationSchema";
@@ -41,6 +42,8 @@ function _renderStepContent(step) {
 function SignUpPage(props) {
   const classes = useStyles();
   const refreshingLayout = props.refreshLayout;
+  const history = useHistory();
+
   const [activeStep, setActiveStep] = useState(0);
   const [validationController, setValidationController] = useState(0);
   const isLastStep = activeStep === steps.length - 1;
@@ -87,7 +90,7 @@ function SignUpPage(props) {
     await _sleep(1000);
     props.handleSignUp(values);
     actions.setSubmitting(false);
-    // history.push("/login");
+    history.push("/login");
   }
 
   function _handleSubmit(values, actions) {

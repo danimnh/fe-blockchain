@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import moment from "moment";
 
 import {
   Grid,
@@ -101,7 +102,20 @@ function AddTrx() {
     createData("Kuantitas", modalContent.kuantitasBenihKg + " Kg"),
     createData("Harga Benih", "Rp. " + modalContent.hargaBenihPerKg),
     createData("Umur Benih", modalContent.umurBenih + " Hari"),
+    createData("Umur Panen", modalContent.umurPanen + " Hari"),
     createData("Lama Penyimpanan", modalContent.lamaPenyimpanan + " Hari"),
+  ];
+
+  const rowsPetani = [
+    createData("Penerima", modalContent.usernamePenerima),
+    createData("Varietas", modalContent.varietas),
+    createData("Kuantitas", modalContent.kuantitasBawangKg + " Kg"),
+    createData("Harga Bawang", "Rp. " + modalContent.hargaBawangPerKg),
+    createData("Pupuk", modalContent.pupuk),
+    createData("Pestisida", modalContent.pestisida),
+    createData("Kadar Air (%)", modalContent.kadarAir),
+    createData("Perlakuan", modalContent.perlakuan),
+    createData("Produktivitas", modalContent.produktivitas),
   ];
 
   function createData(name, value) {
@@ -127,8 +141,13 @@ function AddTrx() {
       values.hargaBenihPerKg = parseInt(values.hargaBenihPerKg);
       values.varietas = asset[0].Record.varietas;
       values.usernamePengirim = user.username;
+    } else if (user.orgName === "Petani") {
+      values.hargaBawangPerKg = parseInt(values.hargaBawangPerKg);
+      values.varietas = asset[0].Record.varietas;
+      values.usernamePengirim = user.username;
     }
     //todo: aktor lain
+
     _submitForm(values, actions);
   }
   const initialValue = {
@@ -212,16 +231,34 @@ function AddTrx() {
                           <Typography className={classes.title}>
                             {asset.Record.varietas}
                           </Typography>
-                          <Typography>
-                            Aset saat ini : {asset.Record.kuantitasBenihKg} Kg
-                          </Typography>
+
+                          {user.orgName === "Penangkar" ? (
+                            <Typography>
+                              Aset saat ini : {asset.Record.kuantitasBenihKg} Kg
+                            </Typography>
+                          ) : (
+                            <>
+                              <Typography>
+                                Tanggal Pengiriman :{" "}
+                                {moment
+                                  .unix(asset.Record.createdAt)
+                                  .format("l")}
+                              </Typography>
+                              <Typography>
+                                Kuantitas : {asset.Record.kuantitasBenihKg} Kg
+                              </Typography>
+
+                              <Typography>
+                                Pengirim : {asset.Record.usernamePengirim}
+                              </Typography>
+                            </>
+                          )}
                         </CardContent>
                       </CardActionArea>
                     </Card>
                   );
                 })}
 
-              {/* TO-DO : Confirmation Popup */}
               {asset.length === 0 ? (
                 <>
                   <p>Anda tidak memiliki aset</p>
@@ -297,17 +334,38 @@ function AddTrx() {
                   )}
                 </>
               )}
-              <DialogConfirmation
-                rows={rowsPenangkar}
-                isVisible={visible}
-                modalContent={modalContent}
-                handleClose={() => {
-                  setVisible(false);
-                }}
-                dialogTitle="Transaksi Penjualan Benih"
-                fcnName="CreateTrxBawangByPenangkar"
-                user={user.username}
-              />
+              {user.orgName === "Penangkar" ? (
+                <DialogConfirmation
+                  rows={rowsPenangkar}
+                  isVisible={visible}
+                  modalContent={modalContent}
+                  handleClose={() => {
+                    setVisible(false);
+                  }}
+                  dialogTitle="Transaksi Penjualan Benih"
+                  fcnName="CreateTrxBawangByPenangkar"
+                  user={user.username}
+                />
+              ) : user.orgName === "Petani" ? (
+                <DialogConfirmation
+                  rows={rowsPetani}
+                  isVisible={visible}
+                  modalContent={modalContent}
+                  handleClose={() => {
+                    setVisible(false);
+                  }}
+                  dialogTitle="Transaksi Penjualan Bawang"
+                  fcnName="UpdateBawangTrxByPetani"
+                  user={user.username}
+                />
+              ) : user.orgName === "Pengumpul" ? (
+                console.log("ppl")
+              ) : user.orgName === "Pedagang" ? (
+                console.log("pdg")
+              ) : (
+                console.log("login")
+              )}
+
               {/* {user.orgName === "Penangkar" && (
                   <>
                     <Button

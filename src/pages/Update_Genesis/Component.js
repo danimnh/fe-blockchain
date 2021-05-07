@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 
 import {
   Typography,
@@ -81,55 +82,72 @@ function Update_Genesis() {
       <Meta title="Add_Transaction" description="Add_Transaction" />
       <Container maxWidth="sm" className={classes.root}>
         <Typography variant="h6">Update Asset Benih</Typography>
-        <Formik
-          initialValues={{
-            genesisID: "",
-            kuantitasBenihKg: "",
-            varietas: "",
-          }}
-          validate={(values) => {
-            const errors = {};
-            if (!values.genesisID) {
-              errors.varietas = "Varietas tidak boleh kosong";
-            } else if (!values.kuantitasBenihKg) {
-              errors.kuantitasBenihKg = "Kuantitas tidak boleh kosong";
-            }
-            return errors;
-          }}
-          onSubmit={_handleSubmit}
-        >
-          {({ isSubmitting, dirty, isValid, setFieldValue }) => (
-            <Form>
-              <FormUpdateGenesis
-                UpdateGenesisFields={UpdateGenesisFormFields}
-                genesisList={genesisList}
-                setFieldValue={setFieldValue}
-              />
-              <div className={classes.center}>
-                <Button
-                  className={classes.confirm}
-                  disabled={!(isValid && dirty) || isSubmitting}
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
-                  Tambah Asset
-                </Button>
-              </div>
-              <DialogConfirmation
-                rows={rowsGenesis}
-                isVisible={visible}
-                modalContent={modalContent}
-                handleClose={() => {
-                  setVisible(false);
-                }}
-                dialogTitle="Tambah Asset"
-                fcnName="AddBawangKuantitasByID"
-                user={user}
-              />
-            </Form>
-          )}
-        </Formik>
+        {genesisList.length === 0 ? (
+          <>
+            <p>Anda belum memiliki aset Benih.</p>
+            <Button
+              variant="outlined"
+              component={RouterLink}
+              color="primary"
+              to="/add_genesis"
+              className={classes.button}
+            >
+              Tambahkan Benih Baru
+            </Button>
+          </>
+        ) : (
+          <>
+            <Formik
+              initialValues={{
+                genesisID: "",
+                kuantitasBenihKg: "",
+                varietas: "",
+              }}
+              validate={(values) => {
+                const errors = {};
+                if (!values.genesisID) {
+                  errors.varietas = "Varietas tidak boleh kosong";
+                } else if (!values.kuantitasBenihKg) {
+                  errors.kuantitasBenihKg = "Kuantitas tidak boleh kosong";
+                }
+                return errors;
+              }}
+              onSubmit={_handleSubmit}
+            >
+              {({ isSubmitting, dirty, isValid, setFieldValue }) => (
+                <Form>
+                  <FormUpdateGenesis
+                    UpdateGenesisFields={UpdateGenesisFormFields}
+                    genesisList={genesisList}
+                    setFieldValue={setFieldValue}
+                  />
+                  <div className={classes.center}>
+                    <Button
+                      className={classes.confirm}
+                      disabled={!(isValid && dirty) || isSubmitting}
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                    >
+                      Tambah Asset
+                    </Button>
+                  </div>
+                  <DialogConfirmation
+                    rows={rowsGenesis}
+                    isVisible={visible}
+                    modalContent={modalContent}
+                    handleClose={() => {
+                      setVisible(false);
+                    }}
+                    dialogTitle="Tambah Asset"
+                    fcnName="AddBawangKuantitasByID"
+                    user={user}
+                  />
+                </Form>
+              )}
+            </Formik>
+          </>
+        )}
       </Container>
     </>
   );

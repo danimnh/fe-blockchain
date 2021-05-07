@@ -31,6 +31,11 @@ export default {
       label: "Umur Benih",
       requiredErrorMsg: "Umur Benih is required",
     },
+    umurPanen: {
+      name: "umurPanen",
+      label: "Umur Panen",
+      requiredErrorMsg: "Umur Panen is required",
+    },
     lamaPenyimpanan: {
       name: "lamaPenyimpanan",
       label: "Lama Penyimpanan",

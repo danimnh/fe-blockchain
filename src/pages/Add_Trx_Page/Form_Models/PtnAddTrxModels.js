@@ -1,45 +1,25 @@
 export default {
   formId: "PtnAddTrx",
   PtnAddTrxFormFields: {
-    batchID: {
-      name: "batchID",
-      label: "Batch ID",
-      requiredErrorMsg: "Batch ID is required",
-    },
-    namaPenerima: {
-      name: "namaPenerima",
+    usernamePenerima: {
+      name: "usernamePenerima",
       label: "Nama Penerima",
       requiredErrorMsg: "Nama Penerima is required",
     },
-    alamatPengirim: {
-      name: "alamatPengirim",
-      label: "Alamat Pengirim",
-      requiredErrorMsg: "Alamat Pengirim is required",
-    },
-    alamatPenerima: {
-      name: "alamatPenerima",
-      label: "Alamat Penerima",
-      requiredErrorMsg: "Alamat Penerima is required",
-    },
-    kuantitas: {
-      name: "kuantitas",
+    kuantitasBawangKg: {
+      name: "kuantitasBawangKg",
       label: "Kuantitas",
       requiredErrorMsg: "Kuantitas is required",
     },
-    harga: {
-      name: "harga",
+    hargaBawangPerKg: {
+      name: "hargaBawangPerKg",
       label: "Harga",
       requiredErrorMsg: "Harga is required",
     },
-    ukuranBenih: {
-      name: "umurBenih",
-      label: "Umur Benih",
-      requiredErrorMsg: "Umur Benih is required",
-    },
-    kadarAir: {
-      name: "kadarAir",
-      label: "Kadar Air",
-      requiredErrorMsg: "Kadar Air is required",
+    ukuranUmbi: {
+      name: "ukuranUmbi",
+      label: "Ukuran Umbi",
+      requiredErrorMsg: "ukuranUmbi is required",
     },
     pupuk: {
       name: "pupuk",
@@ -51,10 +31,20 @@ export default {
       label: "Pestisida",
       requiredErrorMsg: "Pestisida is required",
     },
+    kadarAir: {
+      name: "kadarAir",
+      label: "Kadar Air",
+      requiredErrorMsg: "Kadar Air is required",
+    },
     perlakuan: {
       name: "perlakuan",
       label: "Perlakuan",
       requiredErrorMsg: "Perlakuan is required",
+    },
+    produktivitas: {
+      name: "produktivitas",
+      label: "Produktivitas",
+      requiredErrorMsg: "Produktivitas is required",
     },
   },
 };

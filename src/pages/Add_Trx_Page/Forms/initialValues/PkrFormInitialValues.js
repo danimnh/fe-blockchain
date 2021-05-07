@@ -1,12 +1,13 @@
 import PkrAddTrxFields from "../../Form_Models/PkrAddTrxModels.js";
 const {
   formPkrFields: {
-    namaPenerima,
+    usernamePenerima,
     alamatPengirim,
     alamatPenerima,
     kuantitas,
     harga,
     umurBenih,
+    umurPanen,
     lamaPenyimpanan,
     varietas,
     hargaBenih,
@@ -14,12 +15,13 @@ const {
 } = PkrAddTrxFields;
 
 export default {
-  [namaPenerima.name]: "",
+  [usernamePenerima.name]: "",
   [alamatPengirim.name]: "",
   [alamatPenerima.name]: "",
   [kuantitas.name]: "",
   [harga.name]: "",
   [umurBenih.name]: "",
+  [umurPanen.name]: "",
   [lamaPenyimpanan.name]: "",
   [varietas.name]: "",
   [hargaBenih.name]: "",

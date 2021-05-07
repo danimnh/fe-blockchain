@@ -142,7 +142,7 @@ function SentTrx(props) {
             trxType +
             '\\":\\"' +
             username +
-            '\\",\\"isConfirmed\\":' +
+            '\\",\\"isGenesis\\":false,\\"isConfirmed\\":' +
             isConfirmed +
             "}}" +
             '"]',

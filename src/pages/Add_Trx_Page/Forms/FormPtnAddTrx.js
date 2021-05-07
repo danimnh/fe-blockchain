@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import InputField from "../../Sign_Up/FormFields/InputField";
 import InputKilogram from "../../Sign_Up/FormFields/InputKilogram";
 import InputRupiah from "../../Sign_Up/FormFields/InputRupiah";
@@ -7,61 +7,40 @@ import InputRupiah from "../../Sign_Up/FormFields/InputRupiah";
 export default function FormPtnAddTrx(props) {
   const {
     PtnAddTrxFields: {
-      batchID,
-      namaPenerima,
-      alamatPengirim,
-      alamatPenerima,
-      kuantitas,
-      harga,
-      ukuranBenih,
-      kadarAir,
+      usernamePenerima,
+      kuantitasBawangKg,
+      hargaBawangPerKg,
+      ukuranUmbi,
       pupuk,
       pestisida,
+      kadarAir,
       perlakuan,
+      produktivitas,
     },
   } = props;
 
   return (
-    <>
-      <Typography></Typography>
+    <div style={{ paddingTop: 20 }}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <InputField name={batchID.name} label={batchID.label} fullWidth />
-          <InputField
-            name={namaPenerima.name}
-            label={namaPenerima.label}
+          <InputKilogram
+            name={kuantitasBawangKg.name}
+            label={kuantitasBawangKg.label}
             fullWidth
           />
         </Grid>
         <Grid item xs={12}>
-          <InputField
-            name={alamatPengirim.name}
-            label={alamatPengirim.label}
-            fullWidth
+          <InputRupiah
+            name={hargaBawangPerKg.name}
+            label={hargaBawangPerKg.label}
           />
         </Grid>
         <Grid item xs={12}>
           <InputField
-            name={alamatPenerima.name}
-            label={alamatPenerima.label}
+            name={ukuranUmbi.name}
+            label={ukuranUmbi.label}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12}>
-          <InputKilogram name={kuantitas.name} label={kuantitas.label} />
-        </Grid>
-        <Grid item xs={12}>
-          <InputRupiah name={harga.name} label={harga.label} />
-        </Grid>
-        <Grid item xs={12}>
-          <InputField
-            name={ukuranBenih.name}
-            label={ukuranBenih.label}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <InputField name={kadarAir.name} label={kadarAir.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
           <InputField name={pupuk.name} label={pupuk.label} fullWidth />
@@ -70,9 +49,26 @@ export default function FormPtnAddTrx(props) {
           <InputField name={pestisida.name} label={pestisida.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
+          <InputField name={kadarAir.name} label={kadarAir.label} fullWidth />
+        </Grid>
+        <Grid item xs={12}>
           <InputField name={perlakuan.name} label={perlakuan.label} fullWidth />
         </Grid>
+        <Grid item xs={12}>
+          <InputField
+            name={produktivitas.name}
+            label={produktivitas.label}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <InputField
+            name={usernamePenerima.name}
+            label={usernamePenerima.label}
+            fullWidth
+          />
+        </Grid>
       </Grid>
-    </>
+    </div>
   );
 }

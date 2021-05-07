@@ -1,31 +1,26 @@
 import PtnAddTrxFields from "../../Form_Models/PtnAddTrxModels.js";
 const {
   formPtnFields: {
-    batchID,
-    namaPenerima,
-    alamatPengirim,
-    alamatPenerima,
-    kuantitas,
-    harga,
-    ukuranBenih,
-    kadarAir,
+    usernamePenerima,
+    kuantitasBawangKg,
+    hargaBawangPerKg,
+    ukuranUmbi,
     pupuk,
     pestisida,
+    kadarAir,
     perlakuan,
+    produktivitas,
   },
 } = PtnAddTrxFields;
 
 export default {
-  [batchID.name]: "",
-
-  [namaPenerima.name]: "",
-  [alamatPengirim.name]: "",
-  [alamatPenerima.name]: "",
-  [kuantitas.name]: "",
-  [harga.name]: "",
-  [ukuranBenih.name]: "",
-  [kadarAir.name]: "",
+  [usernamePenerima.name]: "",
+  [kuantitasBawangKg.name]: "",
+  [hargaBawangPerKg.name]: "",
+  [ukuranUmbi.name]: "",
   [pupuk.name]: "",
   [pestisida.name]: "",
+  [kadarAir.name]: "",
   [perlakuan.name]: "",
+  [produktivitas.name]: "",
 };

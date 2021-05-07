@@ -29,6 +29,7 @@ const fetchAllAssets = async (username, isConfirmed) => {
     return resp.data.result;
   } catch (err) {
     console.log(err);
+    return [];
   }
 };
 

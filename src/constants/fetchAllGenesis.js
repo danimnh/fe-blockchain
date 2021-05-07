@@ -26,6 +26,7 @@ const fetchAllGenesis = async (props) => {
     return resp.data.result;
   } catch (err) {
     console.log(err);
+    return [];
   }
 };
 

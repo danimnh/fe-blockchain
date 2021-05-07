@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
     marginTop: "20px",
   },
   timeline: {
-    marginLeft: "-130px",
+    marginLeft: "-40px",
     // background: "red",
     // textAlign: "left",
     // height: `calc(100% - ${theme.mixins.toolbar.minHeight + 8}px)`,
