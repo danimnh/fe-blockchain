@@ -58,7 +58,10 @@ function InboxTrx(props) {
     createData("Alamat Penerima", modalContent.alamatPenerima),
     createData("Kuantitas", modalContent.kuantitasBenihKg + " Kg"),
     createData("Harga", "Rp." + modalContent.hargaBenihPerKg),
-    createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+    createData(
+      "Timestamp",
+      moment(modalContent.timestamp).format("DD/MM/YYYY")
+    ),
     createData("Umur Benih", modalContent.umurBenih),
     createData("Umur Panen", modalContent.umurPanen),
     createData("Lama Penyimpanan", modalContent.lamaPenyimpanan),
@@ -77,7 +80,10 @@ function InboxTrx(props) {
     createData("Alamat Penerima", modalContent.alamatPenerima),
     createData("Kuantitas", modalContent.kuantitasBenihKg),
     createData("Harga", modalContent.harga),
-    createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+    createData(
+      "Timestamp",
+      moment(modalContent.timestamp).format("DD/MM/YYYY")
+    ),
     createData("Ukuran Umbi", modalContent.umurBenih),
     createData("Kadar Air Persen", modalContent.umurPanen),
     createData("Pupuk", modalContent.lamaPenyimpanan),
@@ -97,7 +103,10 @@ function InboxTrx(props) {
     createData("Alamat Penerima", modalContent.alamatPenerima),
     createData("Kuantitas", modalContent.kuantitas),
     createData("Harga", modalContent.harga),
-    createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+    createData(
+      "Timestamp",
+      moment(modalContent.timestamp).format("DD/MM/YYYY")
+    ),
     createData("Kadar Air", modalContent.kadarAir),
     createData("Pupuk", modalContent.pupuk),
     createData("Pestisida", modalContent.pestisida),
@@ -113,7 +122,10 @@ function InboxTrx(props) {
     createData("Alamat Penerima", modalContent.alamatPenerima),
     createData("Kuantitas", modalContent.kuantitas),
     createData("Harga", modalContent.harga),
-    createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+    createData(
+      "Timestamp",
+      moment(modalContent.timestamp).format("DD/MM/YYYY")
+    ),
     createData("Tanggal Masuk", modalContent.umurBenih),
     createData("Alamat Gudang", modalContent.umurPanen),
     createData("Teknik Sorting", modalContent.lamaPenyimpanan),
@@ -289,7 +301,9 @@ function InboxTrx(props) {
                         </Typography>
 
                         <Typography>
-                          {moment.unix(trx.Record.createdAt).format("LL")}
+                          {moment
+                            .unix(trx.Record.createdAt)
+                            .format("DD/MM/YYYY")}
                         </Typography>
                         <Typography>{trx.Record.varietas}</Typography>
                       </Grid>

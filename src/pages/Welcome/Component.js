@@ -101,6 +101,19 @@ function Welcome(props) {
                 </Button>
               </>
             )}
+            {props.user.orgName === "Petani" && (
+              <>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  component={RouterLink}
+                  to="/convert_benih"
+                  className={classes.button}
+                >
+                  Konversikan Aset Benih
+                </Button>
+              </>
+            )}
           </>
         )}
 

@@ -195,7 +195,7 @@ function ProductPage(props) {
             </Grid>
 
             <Grid container className={classes.rowDetail} item xs={12}>
-              {dataBlock1.isGenesis && (
+              {dataBlock1.isAsset && (
                 <>
                   <Grid item xs={6}>
                     <Typography variant="body1">Varietas</Typography>

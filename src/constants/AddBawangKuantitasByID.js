@@ -1,13 +1,12 @@
 import axios from "axios";
 
 const AddBawangKuantitasByID = async (values, fcnName) => {
+  let sendArgs = [values[0], values[1]];
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
-  console.log("fetchapi " + fcnName);
-
   let body = {
     fcn: fcnName,
     peers: [
@@ -18,13 +17,9 @@ const AddBawangKuantitasByID = async (values, fcnName) => {
     ],
     chaincodeName: "bawangmerah_cc",
     channelName: "mychannel",
-    args: values,
+    args: sendArgs,
   };
-  console.log(body);
-  console.log("send to");
-  console.log(
-    "/channel/" + body.channelName + "/chaincodes/" + body.chaincodeName
-  );
+  console.log(body.args);
   try {
     const respBM = await axios.post(
       "/sc/channels/mychannel/chaincodes/bawangmerah_cc",

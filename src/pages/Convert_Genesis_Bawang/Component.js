@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import ReactJson from "react-json-view";
 
 import {
   Typography,
@@ -13,7 +13,7 @@ import { Formik, Form } from "formik";
 
 import Meta from "components/Meta";
 import getUsername from "../../constants/GetUsername";
-import fetchAllGenesis from "../../constants/fetchAllGenesis";
+import fetchAllGenesisUnconverted from "../../constants/fetchAllGenesisUnconverted";
 import useStyles from "./styles";
 import DialogConfirmation from "../../sections/Dialog_Confirmation";
 import UpdateGenesisFields from "./Form_Models/UpdateGenesisModels";
@@ -21,7 +21,7 @@ import FormUpdateGenesis from "./Forms/FormUpdateGenesis";
 
 const { UpdateGenesisFormFields } = UpdateGenesisFields;
 
-function Update_Genesis() {
+function ConvertGenesis() {
   const classes = useStyles();
   const [user, setUser] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -35,7 +35,9 @@ function Update_Genesis() {
 
   const rowsGenesis = [
     createData("Varietas", modalContent[2]),
-    createData("Kuantitas", modalContent[1] + " kg"),
+    createData("Kuantitas Benih (sebelum)", modalContent[3] + " kg"),
+
+    createData("Kuantitas Bawang (sesudah)", modalContent[1] + " kg"),
   ];
 
   function _sleep(ms) {
@@ -50,7 +52,14 @@ function Update_Genesis() {
   }
 
   function _handleSubmit(values, actions) {
-    let args = [values.genesisID, values.kuantitasBenihKg, values.varietas];
+    console.log(values);
+
+    let args = [
+      values.prevID,
+      values.kuantitasBawangKg,
+      values.varietas,
+      values.kuantitasBenihKg,
+    ];
     _submitForm(args, actions);
   }
 
@@ -58,7 +67,7 @@ function Update_Genesis() {
     getUsername().then((result) => {
       setIsLoading(true);
       setUser(result);
-      fetchAllGenesis(result)
+      fetchAllGenesisUnconverted(result)
         .then((result) => {
           setGenesisList(result);
           setIsLoading(false);
@@ -81,11 +90,11 @@ function Update_Genesis() {
 
       <Meta title="Add_Transaction" description="Add_Transaction" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h6">Update Asset Benih</Typography>
+        <Typography variant="h6">Konversi Panen Bawang</Typography>
         {genesisList.length === 0 ? (
           <>
             <p>Anda belum memiliki aset Benih.</p>
-            <Button
+            {/* <Button
               variant="outlined"
               component={RouterLink}
               color="primary"
@@ -93,28 +102,28 @@ function Update_Genesis() {
               className={classes.button}
             >
               Tambahkan Benih Baru
-            </Button>
+            </Button> */}
           </>
         ) : (
           <>
             <Formik
               initialValues={{
-                genesisID: "",
-                kuantitasBenihKg: "",
+                prevID: "",
+                kuantitasBawangKg: "",
                 varietas: "",
               }}
               validate={(values) => {
                 const errors = {};
-                if (!values.genesisID) {
-                  errors.varietas = "Varietas tidak boleh kosong";
-                } else if (!values.kuantitasBenihKg) {
-                  errors.kuantitasBenihKg = "Kuantitas tidak boleh kosong";
+                if (!values.prevID) {
+                  errors.prevID = "Varietas tidak boleh kosong";
+                } else if (!values.kuantitasBawangKg) {
+                  errors.kuantitasBawangKg = "Kuantitas tidak boleh kosong";
                 }
                 return errors;
               }}
               onSubmit={_handleSubmit}
             >
-              {({ isSubmitting, dirty, isValid, setFieldValue }) => (
+              {({ isSubmitting, dirty, isValid, values, setFieldValue }) => (
                 <Form>
                   <FormUpdateGenesis
                     UpdateGenesisFields={UpdateGenesisFormFields}
@@ -139,10 +148,11 @@ function Update_Genesis() {
                     handleClose={() => {
                       setVisible(false);
                     }}
-                    dialogTitle="Tambah Asset"
-                    fcnName="AddBenihKuantitasByID"
+                    dialogTitle="Konversi Benih"
+                    fcnName="AddBawangKuantitasByID"
                     user={user}
                   />
+                  <ReactJson src={values} />
                 </Form>
               )}
             </Formik>
@@ -153,4 +163,4 @@ function Update_Genesis() {
   );
 }
 
-export default Update_Genesis;
+export default ConvertGenesis;

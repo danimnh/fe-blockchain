@@ -15,6 +15,7 @@ const fetchAllAssets = async (username, isConfirmed) => {
           username +
           '\\", \\"isConfirmed\\":' +
           isConfirmed +
+          ',\\"kuantitasBawangKg\\":{\\"$gt\\":0}' +
           "}}" +
           '"]',
       },

@@ -54,7 +54,10 @@ function SentTrx(props) {
     createData("Alamat Penerima", modalContent.alamatPenerima),
     createData("Kuantitas", modalContent.kuantitasBenihKg),
     createData("Harga", modalContent.harga),
-    createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+    createData(
+      "Timestamp",
+      moment(modalContent.timestamp).format("DD/MM/YYYY")
+    ),
     createData("Umur Benih", modalContent.umurBenih),
     createData("Umur Panen", modalContent.umurPanen),
     createData("Lama Penyimpanan", modalContent.lamaPenyimpanan),
@@ -72,7 +75,10 @@ function SentTrx(props) {
     createData("Alamat Penerima", modalContent.alamatPenerima),
     createData("Kuantitas", modalContent.kuantitasBenihKg),
     createData("Harga", modalContent.harga),
-    createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+    createData(
+      "Timestamp",
+      moment(modalContent.timestamp).format("DD/MM/YYYY")
+    ),
     createData("Ukuran Umbi", modalContent.umurBenih),
     createData("Kadar Air Persen", modalContent.umurPanen),
     createData("Pupuk", modalContent.lamaPenyimpanan),
@@ -92,7 +98,10 @@ function SentTrx(props) {
     createData("Alamat Penerima", modalContent.alamatPenerima),
     createData("Kuantitas", modalContent.kuantitas),
     createData("Harga", modalContent.harga),
-    createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+    createData(
+      "Timestamp",
+      moment(modalContent.timestamp).format("DD/MM/YYYY")
+    ),
     createData("Kadar Air", modalContent.kadarAir),
     createData("Pupuk", modalContent.pupuk),
     createData("Pestisida", modalContent.pestisida),
@@ -108,7 +117,10 @@ function SentTrx(props) {
     createData("Alamat Penerima", modalContent.alamatPenerima),
     createData("Kuantitas", modalContent.kuantitas),
     createData("Harga", modalContent.harga),
-    createData("Timestamp", moment(modalContent.timestamp).format("LL")),
+    createData(
+      "Timestamp",
+      moment(modalContent.timestamp).format("DD/MM/YYYY")
+    ),
     createData("Umur Benih", modalContent.umurBenih),
     createData("Umur Panen", modalContent.umurPanen),
     createData("Lama Penyimpanan", modalContent.lamaPenyimpanan),
@@ -142,7 +154,7 @@ function SentTrx(props) {
             trxType +
             '\\":\\"' +
             username +
-            '\\",\\"isGenesis\\":false,\\"isConfirmed\\":' +
+            '\\",\\"isAsset\\":false,\\"isConfirmed\\":' +
             isConfirmed +
             "}}" +
             '"]',
@@ -251,7 +263,7 @@ function SentTrx(props) {
                         Pengiriman ke {trx.Record.usernamePenerima}
                       </Typography>
                       <Typography>
-                        {moment.unix(trx.Record.createdAt).format("LL")}
+                        {moment.unix(trx.Record.createdAt).format("DD/MM/YYYY")}
                       </Typography>
                       <Typography>{trx.Record.varietas}</Typography>
                     </Grid>

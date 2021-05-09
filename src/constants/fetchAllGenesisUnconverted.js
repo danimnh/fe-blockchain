@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const fetchAllGenesis = async (props) => {
+const fetchAllGenesisUnconverted = async (props) => {
   console.log(props);
   try {
     let config = {
@@ -12,9 +12,9 @@ const fetchAllGenesis = async (props) => {
         fcn: "GetBawangForQuery",
         args:
           '["' +
-          '{\\"selector\\":{\\"usernamePengirim\\":\\"' +
+          '{\\"selector\\":{\\"usernamePenerima\\":\\"' +
           props +
-          '\\", \\"isAsset\\":true}}' +
+          '\\", \\"isConfirmed\\":true, \\"kuantitasBawangKg\\":0}}' +
           '"]',
       },
     };
@@ -30,4 +30,4 @@ const fetchAllGenesis = async (props) => {
   }
 };
 
-export default fetchAllGenesis;
+export default fetchAllGenesisUnconverted;

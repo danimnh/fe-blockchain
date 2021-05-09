@@ -242,10 +242,11 @@ function AddTrx() {
                                 Tanggal Pengiriman :{" "}
                                 {moment
                                   .unix(asset.Record.createdAt)
-                                  .format("l")}
+                                  .format("DD/MM/YYYY")}
                               </Typography>
                               <Typography>
-                                Kuantitas : {asset.Record.kuantitasBenihKg} Kg
+                                Kuantitas Bawang :{" "}
+                                {asset.Record.kuantitasBawangKg} Kg
                               </Typography>
 
                               <Typography>
@@ -307,10 +308,20 @@ function AddTrx() {
                             <Typography className={classes.title}>
                               <strong>{selectedAsset.Record.varietas}</strong>
                             </Typography>
-                            <Typography>
-                              Aset saat ini :{" "}
-                              {selectedAsset.Record.kuantitasBenihKg} Kg
-                            </Typography>
+
+                            {user.orgName === "Penangkar" ? (
+                              <Typography>
+                                Aset saat ini :{" "}
+                                {selectedAsset.Record.kuantitasBenihKg} Kg
+                              </Typography>
+                            ) : (
+                              <>
+                                <Typography>
+                                  Kuantitas Bawang :{" "}
+                                  {selectedAsset.Record.kuantitasBawangKg} Kg
+                                </Typography>
+                              </>
+                            )}
                           </CardContent>
                         </CardActionArea>
                       </Card>

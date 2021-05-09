@@ -1,13 +1,12 @@
 import axios from "axios";
 
-const FetchApi = async (values, fcnName, username) => {
+const CreateBenih = async (values, fcnName, username) => {
   // eslint-disable-next-line
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
-  console.log("fetchapi " + fcnName);
   values.usernamePengirim = username;
   let arrayValue = [JSON.stringify(values)];
   let body = {
@@ -23,10 +22,6 @@ const FetchApi = async (values, fcnName, username) => {
     args: arrayValue,
   };
   console.log(body);
-  console.log("send to");
-  console.log(
-    "/channel/" + body.channelName + "/chaincodes/" + body.chaincodeName
-  );
   try {
     const respBM = await axios.post(
       "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
@@ -42,4 +37,4 @@ const FetchApi = async (values, fcnName, username) => {
   }
 };
 
-export default FetchApi;
+export default CreateBenih;

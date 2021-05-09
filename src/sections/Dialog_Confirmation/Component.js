@@ -19,7 +19,7 @@ import {
   Paper,
   DialogContentText,
 } from "@material-ui/core";
-import FetchApi from "constants/FetchApi";
+import CreateBenih from "constants/CreateBenih";
 import GetUsernameByID from "constants/GetUsernameByID";
 import InvokeTrxPkr from "constants/InvokeTrxPkr";
 import InvokeTrxPtn from "constants/InvokeTrxPtn";
@@ -75,7 +75,25 @@ function DialogConfirmation({
           </TableContainer>
         </DialogContent>
         <DialogActions>
-          {fcnName === "AddBawangKuantitasByID" ? (
+          {fcnName === "CreateBenih" ? (
+            <Button
+              onClick={() => {
+                setIsLoading(true);
+                handleClose();
+                CreateBenih(modalContent, fcnName, user)
+                  .then((result) => {
+                    console.log(result);
+                    history.go(0);
+                  })
+                  .finally(() => {
+                    setIsLoading(false);
+                  });
+              }}
+              variant="outlined"
+            >
+              Konfirmasi
+            </Button>
+          ) : fcnName === "AddBenihKuantitasByID" ? (
             <Button
               onClick={() => {
                 setIsLoading(true);
@@ -133,6 +151,42 @@ function DialogConfirmation({
             >
               Konfirmasi
             </Button>
+          ) : fcnName === "CreateBawang" ? (
+            <Button
+              onClick={() => {
+                setIsLoading(true);
+                handleClose();
+                AddBawangKuantitasByID(modalContent, fcnName)
+                  .then((result) => {
+                    console.log(result);
+                    history.go(0);
+                  })
+                  .finally(() => {
+                    setIsLoading(false);
+                  });
+              }}
+              variant="outlined"
+            >
+              Konfirmasi
+            </Button>
+          ) : fcnName === "AddBawangKuantitasByID" ? (
+            <Button
+              onClick={() => {
+                setIsLoading(true);
+                handleClose();
+                AddBawangKuantitasByID(modalContent, fcnName)
+                  .then((result) => {
+                    console.log(result);
+                    history.go(0);
+                  })
+                  .finally(() => {
+                    setIsLoading(false);
+                  });
+              }}
+              variant="outlined"
+            >
+              Konfirmasi
+            </Button>
           ) : fcnName === "UpdateBawangTrxByPetani" ? (
             <Button
               onClick={() => {
@@ -173,24 +227,7 @@ function DialogConfirmation({
               Konfirmasi
             </Button>
           ) : (
-            <Button
-              onClick={() => {
-                setIsLoading(true);
-                handleClose();
-                FetchApi(modalContent, fcnName, user)
-                  .then((result) => {
-                    setTxid(result);
-                    console.log(result);
-                  })
-                  .finally(() => {
-                    setQrVisible(true);
-                    setIsLoading(false);
-                  });
-              }}
-              variant="outlined"
-            >
-              Konfirmasi
-            </Button>
+            fcnName === "UpdateBawangTrxByPengumpul"(console.log("end"))
           )}
         </DialogActions>
       </Dialog>
