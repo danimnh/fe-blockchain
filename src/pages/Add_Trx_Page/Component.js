@@ -13,7 +13,7 @@ import {
   CardContent,
   CardActionArea,
 } from "@material-ui/core";
-import ReactJson from "react-json-view";
+// import ReactJson from "react-json-view";
 
 import { Formik, Form } from "formik";
 
@@ -22,6 +22,8 @@ import Meta from "components/Meta";
 import useStyles from "./styles";
 import getUsername from "../../constants/GetUsername";
 import getUserOrgName from "../../constants/GetUserOrgName";
+import getUserAlamat from "../../constants/GetUserAlamat";
+
 import fetchAllGenesis from "../../constants/fetchAllGenesis";
 import fetchAllAssets from "../../constants/fetchAllAssets";
 
@@ -145,13 +147,11 @@ function AddTrx() {
 
   async function _submitForm(values, actions) {
     await _sleep(1000);
-
     console.log(values, actions);
     setModalContent(values);
     setVisible(true);
   }
   function _handleSubmit(values, actions) {
-    console.log(user);
     if (user.orgName === "Penangkar") {
       values.hargaBenihPerKg = parseInt(values.hargaBenihPerKg);
       values.varietas = asset[0].Record.varietas;
@@ -170,8 +170,28 @@ function AddTrx() {
       values.usernamePengirim = user.username;
     }
     //todo: aktor lain
-
-    _submitForm(values, actions);
+    getUserAlamat(values.usernamePengirim)
+      .then((result) => (values.alamatPengirim = result))
+      .finally(
+        getUserAlamat(values.usernamePenerima)
+          .then((result) => (values.alamatPenerima = result))
+          .finally(() => {
+            _submitForm(values, actions);
+            setIsLoading(false);
+          })
+      );
+    // .finally(
+    //   GetUserAlamat(modalContent.usernamePenerima)
+    //     .then(
+    //       (result) => (modalContent.alamatPenerima = result)
+    //     ).finally(
+    //       _submitForm(values, actions);
+    //     ))
+    //         .finally(() => {
+    //           setIsLoading(false);
+    //         })
+    //     )
+    // );
   }
   const initialValue = {
     prevID: "",
@@ -298,7 +318,7 @@ function AddTrx() {
                 </>
               ) : (
                 <>
-                  <ReactJson src={values} />
+                  {/* <ReactJson src={values} /> */}
 
                   {values.prevID === "" ? (
                     <Button

@@ -2,17 +2,20 @@ import axios from "axios";
 //username
 const InvokeTrxPkr = async (values, fcnName) => {
   // eslint-disable-next-line
+  console.log("invoke");
+  console.log(values);
+
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
-  console.log("fetchapi " + fcnName);
+
   let prevID = values.prevID;
   delete values["prevID"];
 
   let arrayValue = [JSON.stringify(values)];
-
+  console.log(arrayValue);
   let newArgs = [arrayValue, prevID];
   console.log(newArgs);
   let body = {
@@ -32,6 +35,7 @@ const InvokeTrxPkr = async (values, fcnName) => {
   console.log(
     "/channel/" + body.channelName + "/chaincodes/" + body.chaincodeName
   );
+
   try {
     const respBM = await axios.post(
       "/sc/channels/mychannel/chaincodes/bawangmerah_cc",

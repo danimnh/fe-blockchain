@@ -35,7 +35,7 @@ function Update_Genesis() {
 
   const rowsGenesis = [
     createData("Varietas", modalContent[2]),
-    createData("Kuantitas", modalContent[1] + " kg"),
+    createData("Penambahan Kuantitas", modalContent[1] + " kg"),
   ];
 
   function _sleep(ms) {
