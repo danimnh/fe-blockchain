@@ -23,6 +23,7 @@ import CreateBenih from "constants/CreateBenih";
 import GetUsernameByID from "constants/GetUsernameByID";
 import InvokeTrxPkr from "constants/InvokeTrxPkr";
 import InvokeTrxPtn from "constants/InvokeTrxPtn";
+import InvokeTrxPpl from "constants/InvokeTrxPpl";
 
 import AddBawangKuantitasByID from "constants/AddBawangKuantitasByID";
 import { useHistory } from "react-router-dom";
@@ -226,8 +227,46 @@ function DialogConfirmation({
             >
               Konfirmasi
             </Button>
+          ) : fcnName === "UpdateBawangTrxByPengumpul" ? (
+            <Button
+              onClick={() => {
+                setIsLoading(true);
+                handleClose();
+                GetUsernameByID(modalContent.usernamePenerima, "Pedagang").then(
+                  (result) => {
+                    if (result === undefined) {
+                      setIsLoading(false);
+                      alert(
+                        "Username Penerima " +
+                          modalContent.usernamePenerima +
+                          " tidak ditemukan"
+                      );
+                      history.go(0);
+                    } else {
+                      InvokeTrxPpl(modalContent, fcnName, user)
+                        .then((result) => {
+                          if (result !== undefined) {
+                            setTxid(result);
+                            setQrVisible(true);
+                          } else {
+                            alert("Kuantitas tidak mencukupi");
+                            setIsLoading(false);
+                            // history.go(0);
+                          }
+                        })
+                        .finally(() => {
+                          setIsLoading(false);
+                        });
+                    }
+                  }
+                );
+              }}
+              variant="outlined"
+            >
+              Konfirmasi
+            </Button>
           ) : (
-            fcnName === "UpdateBawangTrxByPengumpul"(console.log("end"))
+            console.log("end")
           )}
         </DialogActions>
       </Dialog>

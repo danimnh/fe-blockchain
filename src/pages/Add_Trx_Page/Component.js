@@ -13,7 +13,7 @@ import {
   CardContent,
   CardActionArea,
 } from "@material-ui/core";
-// import ReactJson from "react-json-view";
+import ReactJson from "react-json-view";
 
 import { Formik, Form } from "formik";
 
@@ -27,13 +27,17 @@ import fetchAllAssets from "../../constants/fetchAllAssets";
 
 import PkrAddTrxFields from "./Form_Models/PkrAddTrxModels";
 import PtnAddTrxFields from "./Form_Models/PtnAddTrxModels";
+import PplAddTrxFields from "./Form_Models/PplAddTrxModels";
+
 import FormPkrAddTrx from "./Forms/FormPkrAddTrx";
 import FormPtnAddTrx from "./Forms/FormPtnAddTrx";
+import FormPplAddTrx from "./Forms/FormPplAddTrx";
 
 import DialogConfirmation from "../../sections/Dialog_Confirmation";
 
 const { PkrAddTrxFormFields } = PkrAddTrxFields;
 const { PtnAddTrxFormFields } = PtnAddTrxFields;
+const { PplAddTrxFormFields } = PplAddTrxFields;
 
 // todo : username penerima checks out
 function _renderStepContent(orgName) {
@@ -45,7 +49,7 @@ function _renderStepContent(orgName) {
       return <FormPtnAddTrx PtnAddTrxFields={PtnAddTrxFormFields} />;
     // return <h1>petani</h1>;
     case "Pengumpul":
-      return <h1>Pengumpul</h1>;
+      return <FormPplAddTrx PplAddTrxFields={PplAddTrxFormFields} />;
     case "Pedagang":
       return <h1>Pedagang</h1>;
     // return <FormUserTypeDetail formField={formField} />;
@@ -118,6 +122,17 @@ function AddTrx() {
     createData("Produktivitas", modalContent.produktivitas),
   ];
 
+  const rowsPengumpul = [
+    createData("Penerima", modalContent.usernamePenerima),
+    createData("Varietas", modalContent.varietas),
+    createData("Kuantitas", modalContent.kuantitasBawangKg + " Kg"),
+    createData("Harga Bawang", "Rp. " + modalContent.hargaBawangPerKg),
+    createData("Tanggal Masuk", modalContent.tanggalMasuk),
+    // createData("Alamat Gudang", modalContent.alamatGudang),
+    createData("Teknik Sorting", modalContent.teknikSorting),
+    createData("Metode Pengemasan", modalContent.metodePengemasan),
+  ];
+
   function createData(name, value) {
     return { name, value };
   }
@@ -142,6 +157,14 @@ function AddTrx() {
       values.varietas = asset[0].Record.varietas;
       values.usernamePengirim = user.username;
     } else if (user.orgName === "Petani") {
+      values.hargaBawangPerKg = parseInt(values.hargaBawangPerKg);
+      values.varietas = asset[0].Record.varietas;
+      values.usernamePengirim = user.username;
+    } else if (user.orgName === "Pengumpul") {
+      values.hargaBawangPerKg = parseInt(values.hargaBawangPerKg);
+      values.varietas = asset[0].Record.varietas;
+      values.usernamePengirim = user.username;
+    } else if (user.orgName === "Pedagang") {
       values.hargaBawangPerKg = parseInt(values.hargaBawangPerKg);
       values.varietas = asset[0].Record.varietas;
       values.usernamePengirim = user.username;
@@ -275,7 +298,7 @@ function AddTrx() {
                 </>
               ) : (
                 <>
-                  {/* <ReactJson src={values} /> */}
+                  <ReactJson src={values} />
 
                   {values.prevID === "" ? (
                     <Button
@@ -370,35 +393,22 @@ function AddTrx() {
                   user={user.username}
                 />
               ) : user.orgName === "Pengumpul" ? (
-                console.log("ppl")
+                <DialogConfirmation
+                  rows={rowsPengumpul}
+                  isVisible={visible}
+                  modalContent={modalContent}
+                  handleClose={() => {
+                    setVisible(false);
+                  }}
+                  dialogTitle="Transaksi Penjualan Bawang"
+                  fcnName="UpdateBawangTrxByPengumpul"
+                  user={user.username}
+                />
               ) : user.orgName === "Pedagang" ? (
                 console.log("pdg")
               ) : (
                 console.log("login")
               )}
-
-              {/* {user.orgName === "Penangkar" && (
-                  <>
-                    <Button
-                      variant="outlined"
-                      component={RouterLink}
-                      color="primary"
-                      to="/add_genesis"
-                      className={classes.button}
-                    >
-                      Tambahkan Benih Baru
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      component={RouterLink}
-                      color="primary"
-                      to="/update_genesis"
-                      className={classes.button}
-                    >
-                      Atur Aset Benih
-                    </Button>
-                  </>
-                )} */}
             </Form>
           )}
         </Formik>
