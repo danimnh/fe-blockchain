@@ -1,5 +1,7 @@
 import React from "react";
 import useStyles from "./styles";
+import { withStyles } from "@material-ui/core/styles";
+
 import QRCode from "qrcode.react";
 
 import Backdrop from "@material-ui/core/Backdrop";
@@ -43,6 +45,24 @@ function DialogConfirmation({
   const [txid, setTxid] = React.useState("");
   const classes = useStyles();
   const [qrVisible, setQrVisible] = React.useState(false);
+
+  const StyledTableCell = withStyles((theme) => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }))(TableCell);
+
+  const StyledTableRow = withStyles((theme) => ({
+    root: {
+      "&:nth-of-type(odd)": {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }))(TableRow);
   return (
     <>
       <Dialog open={isVisible} onClose={handleClose}>
@@ -55,21 +75,21 @@ function DialogConfirmation({
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
-                <TableRow>
-                  <TableCell>Atribut</TableCell>
-                  <TableCell align="right">Informasi</TableCell>
-                </TableRow>
+                <StyledTableRow>
+                  <StyledTableCell>Atribut</StyledTableCell>
+                  <StyledTableCell align="right">Informasi</StyledTableCell>
+                </StyledTableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell align="left">Pengirim</TableCell>
-                  <TableCell align="right">{user}</TableCell>
-                </TableRow>
+                <StyledTableRow>
+                  <StyledTableCell align="left">Pengirim</StyledTableCell>
+                  <StyledTableCell align="right">{user}</StyledTableCell>
+                </StyledTableRow>
                 {rows.map((row) => (
-                  <TableRow key={row.name}>
-                    <TableCell align="left">{row.name}</TableCell>
-                    <TableCell align="right">{row.value}</TableCell>
-                  </TableRow>
+                  <StyledTableRow key={row.name}>
+                    <StyledTableCell align="left">{row.name}</StyledTableCell>
+                    <StyledTableCell align="right">{row.value}</StyledTableCell>
+                  </StyledTableRow>
                 ))}
               </TableBody>
             </Table>

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 // import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import moment from "moment";
+import NumberFormat from "react-number-format";
 
 import {
   Grid,
@@ -32,6 +33,7 @@ import getUsername from "../../constants/GetUsername";
 import getUserOrgName from "../../constants/GetUserOrgName";
 
 import useStyles from "./styles";
+import { withStyles } from "@material-ui/core/styles";
 
 function SentTrx(props) {
   const classes = useStyles();
@@ -49,66 +51,97 @@ function SentTrx(props) {
   //To-Do : rows tiap aktor
   const rowsPenangkar = [
     createData("Username Pengirim", modalContent.usernamePengirim),
-    createData("Username Penerima", modalContent.usernamePenerima),
     createData("Alamat Pengirim", modalContent.alamatPengirim),
+    createData("Username Penerima", modalContent.usernamePenerima),
     createData("Alamat Penerima", modalContent.alamatPenerima),
-    createData("Kuantitas", modalContent.kuantitasBenihKg),
-    createData("Harga", modalContent.harga),
+    createData("Kuantitas Benih", modalContent.kuantitasBenihKg + " Kg"),
     createData(
-      "Timestamp",
+      "Harga Benih",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBenihPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
+    createData(
+      "Tanggal Transaksi",
       moment(modalContent.timestamp).format("DD/MM/YYYY")
     ),
-    createData("Umur Benih", modalContent.umurBenih),
-    createData("Umur Panen", modalContent.umurPanen),
-    createData("Lama Penyimpanan", modalContent.lamaPenyimpanan),
+    createData("Umur Benih", modalContent.umurBenih + " Hari"),
+    createData("Umur Panen", modalContent.umurPanen + " Hari"),
+    createData("Lama Penyimpanan", modalContent.lamaPenyimpanan + " Hari"),
     createData("Varietas", modalContent.varietas),
-    createData("Harga Benih", modalContent.hargaBenih),
-    createData("Status", modalContent.status),
-    createData("Transaksi ID", modalContent.transaksiID),
-    createData("Batch ID", modalContent.batchID),
+    createData(
+      "Status",
+      modalContent.isConfirmed ? "Terkonfirmasi oleh Penerima" : "Tertunda"
+    ),
   ];
 
   const rowsPetani = [
     createData("Username Pengirim", modalContent.usernamePengirim),
-    createData("Username Penerima", modalContent.usernamePenerima),
     createData("Alamat Pengirim", modalContent.alamatPengirim),
+    createData("Username Penerima", modalContent.usernamePenerima),
     createData("Alamat Penerima", modalContent.alamatPenerima),
-    createData("Kuantitas", modalContent.kuantitasBenihKg),
-    createData("Harga", modalContent.harga),
+    createData("Kuantitas Bawang", modalContent.kuantitasBawangKg + " Kg"),
+    // modalContent.harga
     createData(
-      "Timestamp",
+      "Harga Bawang",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBawangPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
+    createData(
+      "Tanggal Transaksi",
       moment(modalContent.timestamp).format("DD/MM/YYYY")
     ),
-    createData("Ukuran Umbi", modalContent.umurBenih),
-    createData("Kadar Air Persen", modalContent.umurPanen),
-    createData("Pupuk", modalContent.lamaPenyimpanan),
-    createData("Pestisida", modalContent.varietas),
-    createData("Perlakuan", modalContent.Perlakuan),
-    createData("Produktivitas", modalContent.varietas),
-    createData("Harga Benih", modalContent.hargaBenih),
-    createData("Status", modalContent.status),
-    createData("Transaksi ID", modalContent.transaksiID),
-    createData("Batch ID", modalContent.batchID),
+    createData("Ukuran Umbi", modalContent.ukuranUmbi),
+    createData("Kadar Air Persen", modalContent.kadarAirPersen),
+    createData("Pupuk", modalContent.pupuk),
+    createData("Pestisida", modalContent.pestisida),
+    createData("Perlakuan", modalContent.perlakuan),
+    createData("Produktivitas", modalContent.produktivitas),
+    createData(
+      "Status",
+      modalContent.isConfirmed ? "Terkonfirmasi oleh Penerima" : "Tertunda"
+    ),
   ];
 
   const rowsPengumpul = [
     createData("Username Pengirim", modalContent.usernamePengirim),
-    createData("Username Penerima", modalContent.usernamePenerima),
     createData("Alamat Pengirim", modalContent.alamatPengirim),
+    createData("Username Penerima", modalContent.usernamePenerima),
     createData("Alamat Penerima", modalContent.alamatPenerima),
-    createData("Kuantitas", modalContent.kuantitas),
-    createData("Harga", modalContent.harga),
+    createData("Kuantitas Bawang", modalContent.kuantitasBawangKg + " Kg"),
     createData(
-      "Timestamp",
+      "Harga Bawang",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBawangPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
+    createData(
+      "Tanggal Transaksi",
       moment(modalContent.timestamp).format("DD/MM/YYYY")
     ),
-    createData("Kadar Air", modalContent.kadarAir),
-    createData("Pupuk", modalContent.pupuk),
-    createData("Pestisida", modalContent.pestisida),
-    createData("Perlakuan", modalContent.perlakuan),
-    createData("Status", modalContent.status),
-    createData("Transaksi ID", modalContent.transaksiID),
-    createData("Batch ID", modalContent.batchID),
+    createData("Tanggal Masuk", modalContent.tanggalMasuk),
+    createData("Teknik Sorting", modalContent.teknikSorting),
+    createData("Metode Pengemasan", modalContent.metodePengemasan),
+    createData(
+      "Status",
+      modalContent.isConfirmed ? "Terkonfirmasi oleh Penerima" : "Tertunda"
+    ),
   ];
   const rowsPedagang = [
     createData("Username Pengirim", modalContent.usernamePengirim),
@@ -118,7 +151,7 @@ function SentTrx(props) {
     createData("Kuantitas", modalContent.kuantitas),
     createData("Harga", modalContent.harga),
     createData(
-      "Timestamp",
+      "Tanggal Transaksi",
       moment(modalContent.timestamp).format("DD/MM/YYYY")
     ),
     createData("Umur Benih", modalContent.umurBenih),
@@ -135,9 +168,23 @@ function SentTrx(props) {
     setVisible(false);
   };
 
-  // pkr, ptn, ppl, pdg
-  // pending = unconfirmed, confirmed
-  // inbox, sent
+  const StyledTableCell = withStyles((theme) => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }))(TableCell);
+
+  const StyledTableRow = withStyles((theme) => ({
+    root: {
+      "&:nth-of-type(odd)": {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }))(TableRow);
 
   const fetchAllSentTrx = async (trxType, username, isConfirmed) => {
     try {
@@ -233,7 +280,7 @@ function SentTrx(props) {
         )}
 
         {sentTrx.length !== 0 ? (
-          <p>Menampilkan {sentTrx.length} transaksi tertunda </p>
+          <p>Menampilkan {sentTrx.length} transaksi</p>
         ) : (
           <p>Tidak ada transaksi keluar</p>
         )}
@@ -276,44 +323,64 @@ function SentTrx(props) {
         })}
 
         <Dialog open={visible} onClose={handleClose}>
-          <DialogTitle>Konfirmasi Transaksi</DialogTitle>
+          <DialogTitle>Detail Transaksi</DialogTitle>
           <DialogContent>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
-                  <TableRow>
-                    <TableCell>Atribut</TableCell>
-                    <TableCell align="left">Informasi</TableCell>
-                  </TableRow>
+                  <StyledTableRow>
+                    <StyledTableCell>Atribut</StyledTableCell>
+                    <StyledTableCell align="left">Informasi</StyledTableCell>
+                  </StyledTableRow>
                 </TableHead>
                 <TableBody>
                   {memberCode === "Petani"
                     ? rowsPetani.map((row) => (
-                        <TableRow key={row.name}>
-                          <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="left">{row.value}</TableCell>
-                        </TableRow>
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
                       ))
                     : memberCode === "Pengumpul"
                     ? rowsPengumpul.map((row) => (
-                        <TableRow key={row.name}>
-                          <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="left">{row.value}</TableCell>
-                        </TableRow>
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
                       ))
                     : memberCode === "Pedagang"
                     ? rowsPedagang.map((row) => (
-                        <TableRow key={row.name}>
-                          <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="left">{row.value}</TableCell>
-                        </TableRow>
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
                       ))
                     : rowsPenangkar.map((row) => (
-                        <TableRow key={row.name}>
-                          <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="left">{row.value}</TableCell>
-                        </TableRow>
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
                       ))}
+                  <StyledTableCell align="left">ID Transaksi</StyledTableCell>
+                  <StyledTableCell align="left">
+                    <QRCode value={modalContent.id} size={128} />
+                  </StyledTableCell>
                 </TableBody>
               </Table>
             </TableContainer>

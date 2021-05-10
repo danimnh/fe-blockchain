@@ -35,9 +35,9 @@ function ConvertGenesis() {
 
   const rowsGenesis = [
     createData("Varietas", modalContent[2]),
-    createData("Kuantitas Benih (sebelum)", modalContent[3] + " kg"),
+    createData("Kuantitas Benih (sebelum)", modalContent[3] + " Kg"),
 
-    createData("Kuantitas Bawang (sesudah)", modalContent[1] + " kg"),
+    createData("Kuantitas Bawang (sesudah)", modalContent[1] + " Kg"),
   ];
 
   function _sleep(ms) {
@@ -69,7 +69,13 @@ function ConvertGenesis() {
       setUser(result);
       fetchAllGenesisUnconverted(result)
         .then((result) => {
-          setGenesisList(result);
+          let sorted = result;
+          const after = sorted.sort((a, b) =>
+            a.Record.createdAt > b.Record.createdAt ? -1 : 1
+          );
+          setGenesisList([]);
+          setGenesisList(after);
+
           setIsLoading(false);
         })
         .finally();

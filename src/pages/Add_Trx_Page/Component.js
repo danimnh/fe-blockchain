@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import moment from "moment";
+import NumberFormat from "react-number-format";
 
 import {
   Grid,
@@ -41,51 +42,18 @@ const { PkrAddTrxFormFields } = PkrAddTrxFields;
 const { PtnAddTrxFormFields } = PtnAddTrxFields;
 const { PplAddTrxFormFields } = PplAddTrxFields;
 
-// todo : username penerima checks out
 function _renderStepContent(orgName) {
   switch (orgName) {
     case "Penangkar":
       return <FormPkrAddTrx PkrAddTrxFields={PkrAddTrxFormFields} />;
-    // return <h1>penangkar</h1>;
     case "Petani":
       return <FormPtnAddTrx PtnAddTrxFields={PtnAddTrxFormFields} />;
-    // return <h1>petani</h1>;
     case "Pengumpul":
       return <FormPplAddTrx PplAddTrxFields={PplAddTrxFormFields} />;
     case "Pedagang":
       return <h1>Pedagang</h1>;
-    // return <FormUserTypeDetail formField={formField} />;
     case "admin":
       return <h1>admin</h1>;
-    default:
-  }
-}
-// eslint-disable-next-line
-function _determineInitialValue(orgName) {
-  switch (orgName) {
-    case "Penangkar": {
-      const initialValuePkr = { prevID: "" };
-      return initialValuePkr;
-    }
-    case "Petani": {
-      const initialValuePtn = { prevID: "" };
-      return initialValuePtn;
-    }
-
-    case "Pengumpul": {
-      const initialValuePpl = { prevID: "" };
-      return initialValuePpl;
-    }
-
-    case "Pedagang": {
-      const initialValuePdg = { prevID: "" };
-      return initialValuePdg;
-    }
-
-    case "admin": {
-      return <h1>admin</h1>;
-    }
-
     default:
   }
 }
@@ -103,32 +71,63 @@ function AddTrx() {
   const [selectedAsset, setSelectedAsset] = React.useState([]);
 
   const rowsPenangkar = [
-    createData("Penerima", modalContent.usernamePenerima),
+    createData("Username Penerima", modalContent.usernamePenerima),
     createData("Varietas", modalContent.varietas),
     createData("Kuantitas", modalContent.kuantitasBenihKg + " Kg"),
-    createData("Harga Benih", "Rp. " + modalContent.hargaBenihPerKg),
+    createData(
+      "Harga Benih",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBenihPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
     createData("Umur Benih", modalContent.umurBenih + " Hari"),
     createData("Umur Panen", modalContent.umurPanen + " Hari"),
     createData("Lama Penyimpanan", modalContent.lamaPenyimpanan + " Hari"),
   ];
 
   const rowsPetani = [
-    createData("Penerima", modalContent.usernamePenerima),
+    createData("Username Penerima", modalContent.usernamePenerima),
     createData("Varietas", modalContent.varietas),
     createData("Kuantitas", modalContent.kuantitasBawangKg + " Kg"),
-    createData("Harga Bawang", "Rp. " + modalContent.hargaBawangPerKg),
+    createData(
+      "Harga Bawang",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBawangPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
+    createData("Ukuran Umbi", modalContent.ukuranUmbi),
     createData("Pupuk", modalContent.pupuk),
     createData("Pestisida", modalContent.pestisida),
-    createData("Kadar Air (%)", modalContent.kadarAir),
+    createData("Kadar Air (%)", modalContent.kadarAirPersen + " %"),
     createData("Perlakuan", modalContent.perlakuan),
     createData("Produktivitas", modalContent.produktivitas),
   ];
 
   const rowsPengumpul = [
-    createData("Penerima", modalContent.usernamePenerima),
+    createData("Username Penerima", modalContent.usernamePenerima),
     createData("Varietas", modalContent.varietas),
     createData("Kuantitas", modalContent.kuantitasBawangKg + " Kg"),
-    createData("Harga Bawang", "Rp. " + modalContent.hargaBawangPerKg),
+    createData(
+      "Harga Bawang",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBawangPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
     createData("Tanggal Masuk", modalContent.tanggalMasuk),
     // createData("Alamat Gudang", modalContent.alamatGudang),
     createData("Teknik Sorting", modalContent.teknikSorting),
@@ -169,7 +168,7 @@ function AddTrx() {
       values.varietas = asset[0].Record.varietas;
       values.usernamePengirim = user.username;
     }
-    //todo: aktor lain
+
     getUserAlamat(values.usernamePengirim)
       .then((result) => (values.alamatPengirim = result))
       .finally(
@@ -180,18 +179,6 @@ function AddTrx() {
             setIsLoading(false);
           })
       );
-    // .finally(
-    //   GetUserAlamat(modalContent.usernamePenerima)
-    //     .then(
-    //       (result) => (modalContent.alamatPenerima = result)
-    //     ).finally(
-    //       _submitForm(values, actions);
-    //     ))
-    //         .finally(() => {
-    //           setIsLoading(false);
-    //         })
-    //     )
-    // );
   }
   const initialValue = {
     prevID: "",
@@ -218,6 +205,9 @@ function AddTrx() {
                 setAsset(result);
                 setIsLoading(false);
               });
+              //Decide what pedagang see
+            } else if (user.orgName === "Pedagang") {
+              setIsLoading(false);
             } else {
               fetchAllAssets(user.username, true).then((result) => {
                 setAsset(result);

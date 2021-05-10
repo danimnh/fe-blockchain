@@ -13,7 +13,7 @@ export default function FormPtnAddTrx(props) {
       ukuranUmbi,
       pupuk,
       pestisida,
-      kadarAir,
+      kadarAirPersen,
       perlakuan,
       produktivitas,
     },
@@ -49,7 +49,12 @@ export default function FormPtnAddTrx(props) {
           <InputField name={pestisida.name} label={pestisida.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
-          <InputField name={kadarAir.name} label={kadarAir.label} fullWidth />
+          <InputField
+            type="number"
+            name={kadarAirPersen.name}
+            label={kadarAirPersen.label}
+            fullWidth
+          />
         </Grid>
         <Grid item xs={12}>
           <InputField name={perlakuan.name} label={perlakuan.label} fullWidth />

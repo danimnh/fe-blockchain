@@ -3,17 +3,17 @@ export default {
   PplAddTrxFormFields: {
     usernamePenerima: {
       name: "usernamePenerima",
-      label: "Nama Penerima",
+      label: "Username Penerima",
       requiredErrorMsg: "Nama Penerima is required",
     },
     kuantitasBawangKg: {
       name: "kuantitasBawangKg",
-      label: "Kuantitas",
+      label: "Kuantitas (Kg)",
       requiredErrorMsg: "Kuantitas is required",
     },
     hargaBawangPerKg: {
       name: "hargaBawangPerKg",
-      label: "Harga",
+      label: "Harga (per Kg)",
       requiredErrorMsg: "Harga is required",
     },
     teknikSorting: {

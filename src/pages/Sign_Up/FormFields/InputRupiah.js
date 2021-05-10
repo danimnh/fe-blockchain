@@ -21,8 +21,7 @@ function NumberFormatCustom(props) {
       }}
       thousandSeparator={"."}
       decimalSeparator={","}
-      // isNumericString
-      prefix="Rp."
+      prefix="Rp. "
     />
   );
 }

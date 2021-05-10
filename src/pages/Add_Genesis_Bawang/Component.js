@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 // eslint-disable-next-line
 import axios from "axios";
+import NumberFormat from "react-number-format";
 
 import {
   Grid,
@@ -39,7 +40,17 @@ function Add_Genesis(props) {
   const rowsGenesis = [
     createData("Varietas", modalContent.varietas),
     createData("Kuantitas", modalContent.kuantitasBenihKg + " Kg"),
-    createData("Harga Benih", "Rp. " + modalContent.hargaBenihPerKg),
+    createData(
+      "Harga Benih",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBenihPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
     createData("Umur Benih", modalContent.umurBenih + " Hari"),
     createData("Umur Panen", modalContent.umurPanen + " Hari"),
   ];

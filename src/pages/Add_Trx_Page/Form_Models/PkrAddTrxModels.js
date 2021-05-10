@@ -18,27 +18,27 @@ export default {
     },
     kuantitasBenihKg: {
       name: "kuantitasBenihKg",
-      label: "Kuantitas",
+      label: "Kuantitas (Kg)",
       requiredErrorMsg: "Kuantitas is required",
     },
     hargaBenihPerKg: {
       name: "hargaBenihPerKg",
-      label: "Harga",
+      label: "Harga (per Kg)",
       requiredErrorMsg: "Harga is required",
     },
     umurBenih: {
       name: "umurBenih",
-      label: "Umur Benih",
+      label: "Umur Benih (Hari)",
       requiredErrorMsg: "Umur Benih is required",
     },
     umurPanen: {
       name: "umurPanen",
-      label: "Umur Panen",
+      label: "Umur Panen (Hari)",
       requiredErrorMsg: "Umur Panen is required",
     },
     lamaPenyimpanan: {
       name: "lamaPenyimpanan",
-      label: "Lama Penyimpanan",
+      label: "Lama Penyimpanan (Hari)",
       requiredErrorMsg: "Lama Penyimpanan is required",
     },
     varietas: {

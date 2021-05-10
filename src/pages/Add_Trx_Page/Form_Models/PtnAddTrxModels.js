@@ -3,17 +3,17 @@ export default {
   PtnAddTrxFormFields: {
     usernamePenerima: {
       name: "usernamePenerima",
-      label: "Nama Penerima",
+      label: "Username Penerima",
       requiredErrorMsg: "Nama Penerima is required",
     },
     kuantitasBawangKg: {
       name: "kuantitasBawangKg",
-      label: "Kuantitas",
+      label: "Kuantitas (Kg)",
       requiredErrorMsg: "Kuantitas is required",
     },
     hargaBawangPerKg: {
       name: "hargaBawangPerKg",
-      label: "Harga",
+      label: "Harga (per Kg)",
       requiredErrorMsg: "Harga is required",
     },
     ukuranUmbi: {
@@ -23,7 +23,7 @@ export default {
     },
     pupuk: {
       name: "pupuk",
-      label: "Pupuk",
+      label: "Jenis Pupuk",
       requiredErrorMsg: "Pupuk is required",
     },
     pestisida: {
@@ -31,9 +31,9 @@ export default {
       label: "Pestisida",
       requiredErrorMsg: "Pestisida is required",
     },
-    kadarAir: {
-      name: "kadarAir",
-      label: "Kadar Air",
+    kadarAirPersen: {
+      name: "kadarAirPersen",
+      label: "Kadar Air (%)",
       requiredErrorMsg: "Kadar Air is required",
     },
     perlakuan: {

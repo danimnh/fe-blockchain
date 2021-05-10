@@ -7,7 +7,7 @@ const {
     ukuranUmbi,
     pupuk,
     pestisida,
-    kadarAir,
+    kadarAirPersen,
     perlakuan,
     produktivitas,
   },
@@ -20,7 +20,7 @@ export default {
   [ukuranUmbi.name]: "",
   [pupuk.name]: "",
   [pestisida.name]: "",
-  [kadarAir.name]: "",
+  [kadarAirPersen.name]: "",
   [perlakuan.name]: "",
   [produktivitas.name]: "",
 };
