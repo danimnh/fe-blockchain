@@ -8,6 +8,7 @@ import AddTrx from "pages/Add_Trx_Page";
 import AddGenesis from "pages/Add_Genesis_Bawang";
 import UpdateGenesis from "pages/Update_Genesis";
 import ConvertGenesis from "pages/Convert_Genesis_Bawang";
+import PanenBawang from "pages/Panen_Bawang";
 
 // import TransactionList from "pages/TransactionList";
 import SentTrx from "pages/Sent_Trx_Page";
@@ -94,9 +95,16 @@ function Content({
         />
         <Route
           exact
-          path="/convert_benih"
+          path="/tanam_benih"
           render={() => (
             <ConvertGenesis refreshLayout={refreshLayout} user={user} />
+          )}
+        />
+        <Route
+          exact
+          path="/panen_bawang"
+          render={() => (
+            <PanenBawang refreshLayout={refreshLayout} user={user} />
           )}
         />
         <Route

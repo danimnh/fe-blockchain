@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 
 import {
   Typography,
@@ -12,7 +13,7 @@ import { Formik, Form } from "formik";
 
 import Meta from "components/Meta";
 import getUsername from "../../constants/GetUsername";
-import fetchAllGenesisUnconverted from "../../constants/fetchAllGenesisUnconverted";
+import fetchAllPetaniBawangAsset from "../../constants/fetchAllPetaniBawangAsset";
 import useStyles from "./styles";
 import DialogConfirmation from "../../sections/Dialog_Confirmation";
 import UpdateGenesisFields from "./Form_Models/UpdateGenesisModels";
@@ -20,7 +21,7 @@ import FormUpdateGenesis from "./Forms/FormUpdateGenesis";
 
 const { UpdateGenesisFormFields } = UpdateGenesisFields;
 //TANAM BAWANG
-function ConvertGenesis() {
+function PanenBawang() {
   const classes = useStyles();
   const [user, setUser] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -35,7 +36,16 @@ function ConvertGenesis() {
   const rowsGenesis = [
     createData("Varietas", modalContent.varietas),
     createData("Kuantitas Benih", modalContent.kuantitasBenihKg + " Kg"),
-    createData("Jenis Pupuk", modalContent.pupuk),
+    createData(
+      "Kuantitas Panen Bawang",
+      modalContent.kuantitasBawangKg + " Kg"
+    ),
+
+    createData("Ukuran Umbi", modalContent.ukuranUmbi),
+    createData("Pestisida", modalContent.pestisida),
+    createData("Kadar Air (%)", modalContent.kadarAirPersen + " %"),
+    createData("Perlakuan", modalContent.perlakuan),
+    createData("Produktivitas", modalContent.produktivitas),
   ];
 
   function _sleep(ms) {
@@ -52,8 +62,6 @@ function ConvertGenesis() {
   function _handleSubmit(values, actions) {
     console.log(values);
 
-    values.usernamePengirim = user;
-
     _submitForm(values, actions);
   }
 
@@ -61,7 +69,7 @@ function ConvertGenesis() {
     getUsername().then((result) => {
       setIsLoading(true);
       setUser(result);
-      fetchAllGenesisUnconverted(result)
+      fetchAllPetaniBawangAsset(result)
         .then((result) => {
           let sorted = result;
           const after = sorted.sort((a, b) =>
@@ -90,34 +98,33 @@ function ConvertGenesis() {
 
       <Meta title="Add_Transaction" description="Add_Transaction" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h6">Pencatatan Tanam Benih</Typography>
+        <Typography variant="h6">Pencatatan Panen Bawang</Typography>
         {genesisList.length === 0 ? (
           <>
-            <p>Anda belum memiliki aset Benih.</p>
-            {/* <Button
+            <p>Anda belum menanam Benih.</p>
+            <Button
               variant="outlined"
               component={RouterLink}
               color="primary"
-              to="/add_genesis"
+              to="/"
               className={classes.button}
             >
-              Tambahkan Benih Baru
-            </Button> */}
+              Kembali ke halaman utama
+            </Button>
           </>
         ) : (
           <>
             <Formik
               initialValues={{
                 prevID: "",
-                pupuk: "",
                 varietas: "",
               }}
               validate={(values) => {
                 const errors = {};
                 if (!values.prevID) {
-                  errors.prevID = "Varietas tidak boleh kosong";
-                } else if (!values.pupuk) {
-                  errors.pupuk = "Pupuk tidak boleh kosong";
+                  errors.prevID = "prevID tidak boleh kosong";
+                } else if (!values.produktivitas) {
+                  errors.produktivitas = "produktivitas tidak boleh kosong";
                 }
                 return errors;
               }}
@@ -148,10 +155,11 @@ function ConvertGenesis() {
                     handleClose={() => {
                       setVisible(false);
                     }}
-                    dialogTitle="Tanam Bawang"
-                    fcnName="PlantBenih"
+                    dialogTitle="Panen Bawang"
+                    fcnName="ConvertBawang"
                     user={user}
                   />
+                  {/* <ReactJson src={values} /> */}
                 </Form>
               )}
             </Formik>
@@ -162,4 +170,4 @@ function ConvertGenesis() {
   );
 }
 
-export default ConvertGenesis;
+export default PanenBawang;

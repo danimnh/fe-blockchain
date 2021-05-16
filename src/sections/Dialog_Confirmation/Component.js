@@ -26,6 +26,8 @@ import GetUsernameByID from "constants/GetUsernameByID";
 import InvokeTrxPkr from "constants/InvokeTrxPkr";
 import InvokeTrxPtn from "constants/InvokeTrxPtn";
 import InvokeTrxPpl from "constants/InvokeTrxPpl";
+import PlantBenih from "constants/PlantBenih";
+import ConvertBawang from "constants/ConvertBawang";
 
 import AddBawangKuantitasByID from "constants/AddBawangKuantitasByID";
 import { useHistory } from "react-router-dom";
@@ -82,7 +84,9 @@ function DialogConfirmation({
               </TableHead>
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell align="left">Pengirim</StyledTableCell>
+                  <StyledTableCell align="left">
+                    Username Pengirim
+                  </StyledTableCell>
                   <StyledTableCell align="right">{user}</StyledTableCell>
                 </StyledTableRow>
                 {rows.map((row) => (
@@ -172,15 +176,47 @@ function DialogConfirmation({
             >
               Konfirmasi
             </Button>
-          ) : fcnName === "CreateBawang" ? (
+          ) : fcnName === "PlantBenih" ? (
             <Button
               onClick={() => {
                 setIsLoading(true);
                 handleClose();
-                AddBawangKuantitasByID(modalContent, fcnName)
+                PlantBenih(modalContent, fcnName)
                   .then((result) => {
-                    console.log(result);
-                    history.go(0);
+                    if (result !== undefined) {
+                      setTxid(result);
+                      setQrVisible(true);
+                      console.log(result);
+                    } else {
+                      alert("Pencatatan Gagal");
+                      setIsLoading(false);
+                      history.go(0);
+                    }
+                  })
+                  .finally(() => {
+                    setIsLoading(false);
+                  });
+              }}
+              variant="outlined"
+            >
+              Konfirmasi
+            </Button>
+          ) : fcnName === "ConvertBawang" ? (
+            <Button
+              onClick={() => {
+                setIsLoading(true);
+                handleClose();
+                ConvertBawang(modalContent, fcnName)
+                  .then((result) => {
+                    if (result !== undefined) {
+                      setTxid(result);
+                      setQrVisible(true);
+                      console.log(result);
+                    } else {
+                      alert("Pencatatan Gagal");
+                      setIsLoading(false);
+                      history.go(0);
+                    }
                   })
                   .finally(() => {
                     setIsLoading(false);
@@ -198,7 +234,7 @@ function DialogConfirmation({
                 AddBawangKuantitasByID(modalContent, fcnName)
                   .then((result) => {
                     console.log(result);
-                    history.go(0);
+                    // history.go(0);
                   })
                   .finally(() => {
                     setIsLoading(false);

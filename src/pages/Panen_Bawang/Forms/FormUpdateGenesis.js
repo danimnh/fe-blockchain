@@ -11,19 +11,26 @@ import moment from "moment";
 import useStyles from "../styles";
 import InputField from "../../Sign_Up/FormFields/InputField";
 
-// import InputKilogram from "../../Sign_Up/FormFields/InputKilogram";
+import InputKilogram from "../../Sign_Up/FormFields/InputKilogram";
 
 export default function FormUpdateGenesis(props) {
   const classes = useStyles();
   const [isSelected, setIsSelected] = React.useState(0);
 
   const {
-    UpdateGenesisFields: { pupuk },
+    UpdateGenesisFields: {
+      kuantitasBawangKg,
+      ukuranUmbi,
+      pestisida,
+      kadarAirPersen,
+      perlakuan,
+      produktivitas,
+    },
   } = props;
 
   return (
-    <>
-      <Grid container spacing={2}>
+    <div style={{ paddingTop: 20 }}>
+      <Grid container spacing={1}>
         <Grid item xs={12}>
           {props.genesisList.map((genesis) => {
             return (
@@ -54,13 +61,14 @@ export default function FormUpdateGenesis(props) {
                       Pengirim : {genesis.Record.usernamePengirim}
                     </Typography>
                     <Typography>
-                      Tanggal Transaksi :{" "}
+                      Tanggal ditanam :{" "}
                       {moment
                         .unix(genesis.Record.createdAt)
                         .format("DD/MM/YYYY")}
                     </Typography>
                     <Typography>
-                      Kuantitas Benih : {genesis.Record.kuantitasBenihKg} Kg
+                      Kuantitas Benih ditanam :{" "}
+                      {genesis.Record.kuantitasBenihKg} Kg
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -69,9 +77,41 @@ export default function FormUpdateGenesis(props) {
           })}
         </Grid>
         <Grid item xs={12}>
-          <InputField name={pupuk.name} label={pupuk.label} fullWidth />
+          <InputKilogram
+            name={kuantitasBawangKg.name}
+            label={kuantitasBawangKg.label}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <InputField
+            name={ukuranUmbi.name}
+            label={ukuranUmbi.label}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <InputField name={pestisida.name} label={pestisida.label} fullWidth />
+        </Grid>
+        <Grid item xs={12}>
+          <InputField
+            type="number"
+            name={kadarAirPersen.name}
+            label={kadarAirPersen.label}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <InputField name={perlakuan.name} label={perlakuan.label} fullWidth />
+        </Grid>
+        <Grid item xs={12}>
+          <InputField
+            name={produktivitas.name}
+            label={produktivitas.label}
+            fullWidth
+          />
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 }

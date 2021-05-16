@@ -14,7 +14,7 @@ const fetchAllGenesisUnconverted = async (props) => {
           '["' +
           '{\\"selector\\":{\\"usernamePenerima\\":\\"' +
           props +
-          '\\", \\"isConfirmed\\":true, \\"kuantitasBawangKg\\":0}}' +
+          '\\", \\"isConfirmed\\":true, \\"kuantitasBawangKg\\":0, \\"isEmpty\\":false}}' +
           '"]',
       },
     };

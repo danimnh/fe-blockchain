@@ -107,10 +107,19 @@ function Welcome(props) {
                   variant="contained"
                   color="primary"
                   component={RouterLink}
-                  to="/convert_benih"
+                  to="/tanam_benih"
                   className={classes.button}
                 >
-                  Konversikan Aset Benih
+                  Tanam Benih
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  component={RouterLink}
+                  to="/panen_bawang"
+                  className={classes.button}
+                >
+                  Panen Bawang
                 </Button>
               </>
             )}

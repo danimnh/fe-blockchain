@@ -11,5 +11,10 @@ export default {
       label: "Varietas",
       requiredErrorMsg: "Varietas is required",
     },
+    pupuk: {
+      name: "pupuk",
+      label: "Pupuk",
+      requiredErrorMsg: "Pupuk is required",
+    },
   },
 };

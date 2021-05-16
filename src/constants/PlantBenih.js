@@ -1,8 +1,12 @@
 import axios from "axios";
 
-const AddBawangKuantitasByID = async (values, fcnName) => {
-  let sendArgs = [values[1], values[0]];
-  console.log(sendArgs);
+const PlantBenih = async (values, fcnName) => {
+  let prevID = values.prevID;
+  delete values["prevID"];
+
+  let arrayValue = JSON.stringify(values);
+
+  let newArgs = [arrayValue, prevID];
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -18,7 +22,7 @@ const AddBawangKuantitasByID = async (values, fcnName) => {
     ],
     chaincodeName: "bawangmerah_cc",
     channelName: "mychannel",
-    args: sendArgs,
+    args: newArgs,
   };
   console.log(body.args);
   try {
@@ -28,11 +32,13 @@ const AddBawangKuantitasByID = async (values, fcnName) => {
       config
     );
     await alert("Transaksi berhasil disimpan");
-    return respBM;
+    if (respBM.data.result.result.txid !== "") {
+      return respBM.data.result.result.txid;
+    }
   } catch (err) {
     alert(err);
     console.log(err);
   }
 };
 
-export default AddBawangKuantitasByID;
+export default PlantBenih;

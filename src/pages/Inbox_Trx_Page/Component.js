@@ -67,7 +67,7 @@ function InboxTrx(props) {
     ),
     createData(
       "Tanggal Transaksi",
-      moment(modalContent.timestamp).format("DD/MM/YYYY")
+      moment.unix(modalContent.createdAt).format("DD/MM/YYYY")
     ),
     createData("Umur Benih", modalContent.umurBenih + " Hari"),
     createData("Umur Panen", modalContent.umurPanen + " Hari"),
@@ -97,7 +97,7 @@ function InboxTrx(props) {
     ),
     createData(
       "Tanggal Transaksi",
-      moment(modalContent.timestamp).format("DD/MM/YYYY")
+      moment.unix(modalContent.createdAt).format("DD/MM/YYYY")
     ),
     createData("Ukuran Umbi", modalContent.ukuranUmbi),
     createData("Pupuk", modalContent.pupuk),
@@ -130,7 +130,7 @@ function InboxTrx(props) {
     ),
     createData(
       "Tanggal Transaksi",
-      moment(modalContent.timestamp).format("DD/MM/YYYY")
+      moment.unix(modalContent.createdAt).format("DD/MM/YYYY")
     ),
     createData("Tanggal Masuk", modalContent.tanggalMasuk),
     createData("Teknik Sorting", modalContent.teknikSorting),
@@ -150,7 +150,7 @@ function InboxTrx(props) {
     createData("Harga", modalContent.harga),
     createData(
       "Tanggal Transaksi",
-      moment(modalContent.timestamp).format("DD/MM/YYYY")
+      moment.unix(modalContent.createdAt).format("DD/MM/YYYY")
     ),
     createData("Tanggal Masuk", modalContent.umurBenih),
     createData("Alamat Gudang", modalContent.umurPanen),

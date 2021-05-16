@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const fetchAllAssets = async (username, trxType, isConfirmed) => {
+const fetchAllGenesisUnconverted = async (props) => {
+  console.log(props);
   try {
     let config = {
       headers: {
@@ -9,16 +10,17 @@ const fetchAllAssets = async (username, trxType, isConfirmed) => {
       params: {
         peer: "peer0.penangkar.example.com",
         fcn: "GetBawangForQuery",
+        // args:
+        //   '["' +
+        //   '{\\"selector\\":{\\"usernamePengirim\\":\\"' +
+        //   props +
+        //   '\\", \\"isConfirmed\\":true, \\"kuantitasBawangKg\\":0, \\"isAsset\\":true}}' +
+        //   '"]',
         args:
           '["' +
-          '{\\"selector\\":{\\"username' +
-          trxType +
-          '\\":\\"' +
-          username +
-          '\\", \\"isConfirmed\\":' +
-          isConfirmed +
-          ',\\"kuantitasBawangKg\\":{\\"$gt\\":0}' +
-          "}}" +
+          '{\\"selector\\":{ \\"usernamePengirim\\":\\"' +
+          props +
+          '\\", \\"kuantitasBawangKg\\":0, \\"isAsset\\":true}}' +
           '"]',
       },
     };
@@ -28,7 +30,6 @@ const fetchAllAssets = async (username, trxType, isConfirmed) => {
       config
     );
 
-    // await setGenesisList(resp.data.result);
     return resp.data.result;
   } catch (err) {
     console.log(err);
@@ -36,4 +37,4 @@ const fetchAllAssets = async (username, trxType, isConfirmed) => {
   }
 };
 
-export default fetchAllAssets;
+export default fetchAllGenesisUnconverted;

@@ -202,15 +202,33 @@ function AddTrx() {
           .finally(() => {
             if (user.orgName === "Penangkar") {
               fetchAllGenesis(user.username).then((result) => {
-                setAsset(result);
+                let sorted = result;
+                const after = sorted.sort((a, b) =>
+                  a.Record.createdAt > b.Record.createdAt ? -1 : 1
+                );
+                setAsset(after);
                 setIsLoading(false);
               });
-              //Decide what pedagang see
             } else if (user.orgName === "Pedagang") {
               setIsLoading(false);
+            } else if (user.orgName === "Petani") {
+              fetchAllAssets(user.username, "Pengirim", false).then(
+                (result) => {
+                  let sorted = result;
+                  const after = sorted.sort((a, b) =>
+                    a.Record.createdAt > b.Record.createdAt ? -1 : 1
+                  );
+                  setAsset(after);
+                  setIsLoading(false);
+                }
+              );
             } else {
-              fetchAllAssets(user.username, true).then((result) => {
-                setAsset(result);
+              fetchAllAssets(user.username, "Penerima", true).then((result) => {
+                let sorted = result;
+                const after = sorted.sort((a, b) =>
+                  a.Record.createdAt > b.Record.createdAt ? -1 : 1
+                );
+                setAsset(after);
                 setIsLoading(false);
               });
             }
