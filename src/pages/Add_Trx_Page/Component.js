@@ -28,6 +28,8 @@ import getUserAlamat from "../../constants/GetUserAlamat";
 import fetchAllGenesis from "../../constants/fetchAllGenesis";
 import fetchAllAssets from "../../constants/fetchAllAssets";
 
+import fetchAllAssetsPetani from "../../constants/fetchAllAssetsPetani";
+
 import PkrAddTrxFields from "./Form_Models/PkrAddTrxModels";
 import PtnAddTrxFields from "./Form_Models/PtnAddTrxModels";
 import PplAddTrxFields from "./Form_Models/PplAddTrxModels";
@@ -105,12 +107,21 @@ function AddTrx() {
         prefix="Rp. "
       />
     ),
-    createData("Ukuran Umbi", modalContent.ukuranUmbi),
-    createData("Pupuk", modalContent.pupuk),
-    createData("Pestisida", modalContent.pestisida),
-    createData("Kadar Air (%)", modalContent.kadarAirPersen + " %"),
-    createData("Perlakuan", modalContent.perlakuan),
-    createData("Produktivitas", modalContent.produktivitas),
+    createData(
+      "Tanggal Tanam",
+      moment.unix(selectedAsset.tanggalTanam).format("DD/MM/YYYY")
+    ),
+    createData(
+      "Tanggal Panen",
+      moment.unix(selectedAsset.tanggalPanen).format("DD/MM/YYYY")
+    ),
+
+    createData("Ukuran Umbi", selectedAsset.ukuranUmbi),
+    createData("Pupuk", selectedAsset.pupuk),
+    createData("Pestisida", selectedAsset.pestisida),
+    createData("Kadar Air (%)", selectedAsset.kadarAirPersen + " %"),
+    createData("Perlakuan", selectedAsset.perlakuan),
+    createData("Produktivitas", selectedAsset.produktivitas),
   ];
 
   const rowsPengumpul = [
@@ -146,6 +157,7 @@ function AddTrx() {
 
   async function _submitForm(values, actions) {
     await _sleep(1000);
+    console.log(selectedAsset);
     console.log(values, actions);
     setModalContent(values);
     setVisible(true);
@@ -153,7 +165,7 @@ function AddTrx() {
   function _handleSubmit(values, actions) {
     if (user.orgName === "Penangkar") {
       values.hargaBenihPerKg = parseInt(values.hargaBenihPerKg);
-      values.varietas = asset[0].Record.varietas;
+      values.varietas = asset[0].varietas;
       values.usernamePengirim = user.username;
     } else if (user.orgName === "Petani") {
       values.hargaBawangPerKg = parseInt(values.hargaBawangPerKg);
@@ -212,7 +224,7 @@ function AddTrx() {
             } else if (user.orgName === "Pedagang") {
               setIsLoading(false);
             } else if (user.orgName === "Petani") {
-              fetchAllAssets(user.username, "Pengirim", false).then(
+              fetchAllAssetsPetani(user.username, "Pengirim", false).then(
                 (result) => {
                   let sorted = result;
                   const after = sorted.sort((a, b) =>
@@ -273,20 +285,43 @@ function AddTrx() {
                     >
                       <CardActionArea
                         onClick={() => {
+                          console.log(asset);
                           setPrevID(asset.Key);
-                          setSelectedAsset(asset);
+                          setSelectedAsset(asset.Record);
                           setIsSelected(asset.Key);
                         }}
                       >
                         <CardContent>
                           <Typography className={classes.title}>
-                            {asset.Record.varietas}
+                            {asset.varietas}
                           </Typography>
 
                           {user.orgName === "Penangkar" ? (
                             <Typography>
                               Aset saat ini : {asset.Record.kuantitasBenihKg} Kg
                             </Typography>
+                          ) : user.orgName === "Petani" ? (
+                            <>
+                              <Typography className={classes.title}>
+                                {asset.Record.varietas}
+                              </Typography>
+                              <Typography>
+                                Kuantitas Bawang :{" "}
+                                {asset.Record.kuantitasBawangKg} Kg
+                              </Typography>
+                              <Typography>
+                                Tanggal Tanam :{" "}
+                                {moment
+                                  .unix(asset.Record.tanggalTanam)
+                                  .format("DD/MM/YYYY")}
+                              </Typography>
+                              <Typography>
+                                Tanggal Panen :{" "}
+                                {moment
+                                  .unix(asset.Record.tanggalPanen)
+                                  .format("DD/MM/YYYY")}
+                              </Typography>
+                            </>
                           ) : (
                             <>
                               <Typography>
@@ -357,19 +392,19 @@ function AddTrx() {
                         >
                           <CardContent>
                             <Typography className={classes.title}>
-                              <strong>{selectedAsset.Record.varietas}</strong>
+                              <strong>{selectedAsset.varietas}</strong>
                             </Typography>
 
                             {user.orgName === "Penangkar" ? (
                               <Typography>
-                                Aset saat ini :{" "}
-                                {selectedAsset.Record.kuantitasBenihKg} Kg
+                                Aset saat ini : {selectedAsset.kuantitasBenihKg}{" "}
+                                Kg
                               </Typography>
                             ) : (
                               <>
                                 <Typography>
                                   Kuantitas Bawang :{" "}
-                                  {selectedAsset.Record.kuantitasBawangKg} Kg
+                                  {selectedAsset.kuantitasBawangKg} Kg
                                 </Typography>
                               </>
                             )}
