@@ -68,7 +68,7 @@ function SentTrx(props) {
     ),
     createData(
       "Tanggal Transaksi",
-      moment(modalContent.timestamp).format("DD/MM/YYYY")
+      moment(modalContent.timestamp).format("LLL")
     ),
     createData("Umur Benih", modalContent.umurBenih + " Hari"),
     createData("Umur Panen", modalContent.umurPanen + " Hari"),
@@ -100,7 +100,7 @@ function SentTrx(props) {
     ),
     createData(
       "Tanggal Transaksi",
-      moment(modalContent.timestamp).format("DD/MM/YYYY")
+      moment(modalContent.timestamp).format("LLL")
     ),
     createData("Ukuran Umbi", modalContent.ukuranUmbi),
     createData("Kadar Air Persen", modalContent.kadarAirPersen),
@@ -133,7 +133,7 @@ function SentTrx(props) {
     ),
     createData(
       "Tanggal Transaksi",
-      moment(modalContent.timestamp).format("DD/MM/YYYY")
+      moment(modalContent.timestamp).format("LLL")
     ),
     createData("Tanggal Masuk", modalContent.tanggalMasuk),
     createData("Teknik Sorting", modalContent.teknikSorting),
@@ -152,7 +152,7 @@ function SentTrx(props) {
     createData("Harga", modalContent.harga),
     createData(
       "Tanggal Transaksi",
-      moment(modalContent.timestamp).format("DD/MM/YYYY")
+      moment(modalContent.timestamp).format("LLL")
     ),
     createData("Umur Benih", modalContent.umurBenih),
     createData("Umur Panen", modalContent.umurPanen),
@@ -310,7 +310,7 @@ function SentTrx(props) {
                         Pengiriman ke {trx.Record.usernamePenerima}
                       </Typography>
                       <Typography>
-                        {moment.unix(trx.Record.createdAt).format("DD/MM/YYYY")}
+                        {moment.unix(trx.Record.createdAt).format("LLL")}
                       </Typography>
                       <Typography>{trx.Record.varietas}</Typography>
                     </Grid>

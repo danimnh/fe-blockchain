@@ -1,7 +1,6 @@
 import axios from "axios";
 //username
 const InvokeTrxPkr = async (values, fcnName) => {
-  // eslint-disable-next-line
   console.log("invoke");
   console.log(values);
 

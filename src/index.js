@@ -1,5 +1,4 @@
 import * as serviceWorker from "./serviceWorker";
-// eslint-disable-next-line
 import axios from "axios";
 import { getActions as getSWActions } from "store/sw";
 

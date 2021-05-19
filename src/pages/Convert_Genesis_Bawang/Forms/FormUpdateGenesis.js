@@ -55,9 +55,7 @@ export default function FormUpdateGenesis(props) {
                     </Typography>
                     <Typography>
                       Tanggal Transaksi :{" "}
-                      {moment
-                        .unix(genesis.Record.createdAt)
-                        .format("DD/MM/YYYY")}
+                      {moment.unix(genesis.Record.createdAt).format("LLL")}
                     </Typography>
                     <Typography>
                       Kuantitas Benih : {genesis.Record.kuantitasBenihKg} Kg

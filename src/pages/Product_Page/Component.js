@@ -1,17 +1,30 @@
 import React, { useEffect } from "react";
-// import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import QRCode from "qrcode.react";
 import ReactJson from "react-json-view";
+import NumberFormat from "react-number-format";
+
 import {
   Grid,
-  // Button,
+  Button,
   Typography,
   Container,
   Card,
   CardContent,
   CardActionArea,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
   Backdrop,
   CircularProgress,
 } from "@material-ui/core";
@@ -25,88 +38,242 @@ import {
   TimelineDot,
 } from "@material-ui/lab";
 
-import Meta from "components/Meta";
+import getUsername from "../../constants/GetUsername";
+import getUserOrgName from "../../constants/GetUserOrgName";
 
 import useStyles from "./styles";
+import { withStyles } from "@material-ui/core/styles";
+
+import { useHistory } from "react-router-dom";
 
 function ProductPage(props) {
   const classes = useStyles();
+  const history = useHistory();
   // eslint-disable-next-line
+  const [visible, setVisible] = React.useState(false);
+  const handleClose = () => {
+    setVisible(false);
+  };
+  const [modalDataBlockContent, setModalDataBlockContent] = React.useState([]);
+
   const [modalContent, setModalContent] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   function createData(name, value) {
     return { name, value };
   }
-  // eslint-disable-next-line
-  let testState = {
-    id: "fdc1e8a3d82d003ca18ceb0d6f6d4ccef54d7970d67e90f05cfa1afff1e51e3e",
-    genesisID: "asdasdasdasdasasdasdasd",
-    usernamePengirim: "DionaPpl",
-    usernamePenerima: "NingguangPdg",
-    alamatPengirim: "A",
-    alamatPenerima: "B",
-    kuantitasBenihKg: 5,
-    hargaBenihPerKg: 10000,
-    hargaBenihTotal: 50000,
-    kuantitasBawangKg: 30,
-    hargaBawangPerKg: 15000,
-    hargaBawangTotal: 450000,
-    createdAt: 1617797595,
-    umurBenih: "5 Hari",
-    umurPanen: "12 Hari",
-    lamaPenyimpanan: "10 Hari",
-    varietas: "Bumi Brebes",
-    ukuranUmbi: "Besar",
-    kadarAirPersen: 0,
-    pupuk: "Vitamin A",
-    pestisida: "Tidak ada",
-    perlakuan: "-",
-    produktivitas: "100%",
-    tanggalMasuk: "",
-    alamatGudang: "",
-    teknikSorting: "",
-    metodePengemasan: "",
-    txID1: "",
-    txID2: "",
-    txID3: "",
-    isGenesis: false,
-    isConfirmed: false,
-  };
-
-  // eslint-disable-next-line
-  const rowsGenesis = [
-    createData("Varietas", modalContent.varietas),
-    createData("Kuantitas", modalContent.kuantitasBenihKg + " Kg"),
-    createData("Harga Benih", "Rp. " + modalContent.hargaBenihPerKg),
+  const rowsAsetBenih = [
+    createData("Username Pengirim", modalContent.usernamePengirim),
+    createData("Umur Benih", modalDataBlockContent.umurBenih + " Hari"),
+    createData("Umur Panen", modalDataBlockContent.umurPanen + " Hari"),
+  ];
+  const rowsPenangkar = [
+    createData("Username Pengirim", modalContent.usernamePengirim),
+    createData("Alamat Pengirim", modalContent.alamatPengirim),
+    createData("Username Penerima", modalContent.usernamePenerima),
+    createData("Alamat Penerima", modalContent.alamatPenerima),
+    createData(
+      "Kuantitas Benih",
+      modalDataBlockContent.kuantitasBenihKg + " Kg"
+    ),
+    createData(
+      "Harga Benih",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBenihPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
+    createData(
+      "Tanggal Transaksi",
+      moment.unix(modalContent.createdAt).format("LLL")
+    ),
     createData("Umur Benih", modalContent.umurBenih + " Hari"),
     createData("Umur Panen", modalContent.umurPanen + " Hari"),
+    createData("Lama Penyimpanan", modalContent.lamaPenyimpanan + " Hari"),
+    createData("Varietas", modalContent.varietas),
+    createData(
+      "Status",
+      modalContent.isConfirmed ? "Terkonfirmasi oleh Penerima" : "Tertunda"
+    ),
   ];
-  // eslint-disable-next-line
+  const rowsTanam = [
+    createData("Username Petani", modalContent.usernamePenerima),
+    createData(
+      "Kuantitas Benih ditanam",
+      modalDataBlockContent.kuantitasBenihKg + " Kg"
+    ),
+    createData(
+      "Tanggal ditanam",
+      moment.unix(modalDataBlockContent.tanggalTanam).format("LLL")
+    ),
+    createData("Lokasi Lahan", modalContent.alamatPenerima),
+    createData("Pupuk", modalDataBlockContent.pupuk),
+  ];
+
+  const rowsPanen = [
+    createData("Username Petani", modalContent.usernamePenerima),
+    createData(
+      "Kuantitas Benih ditanam",
+      modalDataBlockContent.kuantitasBenihKg + " Kg"
+    ),
+    createData(
+      "Kuantitas Bawang dipanen",
+      modalDataBlockContent.kuantitasBawangKg + " Kg"
+    ),
+    createData(
+      "Tanggal dipanen",
+      moment.unix(modalDataBlockContent.tanggalPanen).format("LLL")
+    ),
+    createData("Lokasi Lahan", modalContent.alamatPenerima),
+    createData("Pupuk", modalDataBlockContent.pupuk),
+    createData("Pestisida", modalDataBlockContent.pestisida),
+    createData("Kadar Air (%)", modalDataBlockContent.kadarAirPersen + "%"),
+    createData("Perlakuan", modalDataBlockContent.perlakuan),
+    createData("Produktivitas", modalDataBlockContent.produktivitas),
+  ];
+
   const rowsPetani = [
-    createData("ukuranUmbi", modalContent.ukuranUmbi),
-    createData("KadarAirPersen", modalContent.kadarAirPersen),
-    createData("Pupuk", +modalContent.pupuk),
-    createData("pestisida", modalContent.pestisida),
-    createData("perlakuan", modalContent.perlakuan),
-    createData("produktivitas", modalContent.produktivitas),
+    createData("Username Pengirim", modalContent.usernamePengirim),
+    createData("Alamat Pengirim", modalContent.alamatPengirim),
+    createData("Username Penerima", modalContent.usernamePenerima),
+    createData("Alamat Penerima", modalContent.alamatPenerima),
+    createData(
+      "Kuantitas Bawang",
+      modalDataBlockContent.kuantitasBawangKg + " Kg"
+    ),
+    createData(
+      "Harga Bawang",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBawangPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
+    createData(
+      "Tanggal Transaksi",
+      moment.unix(modalContent.createdAt).format("LLL")
+    ),
+    createData("Ukuran Umbi", modalContent.ukuranUmbi),
+    createData("Pupuk", modalContent.pupuk),
+    createData("Pestisida", modalContent.pestisida),
+    createData("Kadar Air (%)", modalContent.kadarAirPersen + "%"),
+    createData("Perlakuan", modalContent.perlakuan),
+    createData("Produktivitas", modalContent.produktivitas),
+
+    createData(
+      "Status",
+      modalContent.isConfirmed ? "Terkonfirmasi oleh Penerima" : "Tertunda"
+    ),
   ];
-  // eslint-disable-next-line
   const rowsPengumpul = [
-    createData("tanggalMasuk", modalContent.usernamePenerima),
-    createData("alamatPenerima", modalContent.alamatPenerima),
-    createData("tanggalMasuk", modalContent.tanggalMasuk),
-    createData("alamatGudang", modalContent.alamatGudang),
-    createData("teknikSorting", +modalContent.teknikSorting),
-    createData("metodePengemasan", modalContent.metodePengemasan),
+    createData("Username Pengirim", modalContent.usernamePengirim),
+    createData("Alamat Pengirim", modalContent.alamatPengirim),
+    createData("Username Penerima", modalContent.usernamePenerima),
+    createData("Alamat Penerima", modalContent.alamatPenerima),
+    createData(
+      "Kuantitas Bawang",
+      modalDataBlockContent.kuantitasBawangKg + " Kg"
+    ),
+    createData(
+      "Harga Bawang",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBawangPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
+    createData(
+      "Tanggal Transaksi",
+      moment.unix(modalContent.createdAt).format("LLL")
+    ),
+    createData("Tanggal Masuk", modalContent.tanggalMasuk),
+    createData("Teknik Sorting", modalContent.teknikSorting),
+    createData("Metode Pengemasan", modalContent.metodePengemasan),
+
+    createData(
+      "Status",
+      modalContent.isConfirmed ? "Terkonfirmasi oleh Penerima" : "Tertunda"
+    ),
+  ];
+  // eslint-disable-next-line
+  const rowsWarehouse = [
+    createData("Username Pengirim", modalContent.usernamePengirim),
+    createData("Alamat Pengirim", modalContent.alamatPengirim),
+    createData(
+      "Kuantitas Bawang",
+      modalDataBlockContent.kuantitasBawangKg + " Kg"
+    ),
+  ];
+  const rowsPedagang = [
+    createData("Username Pengirim", modalContent.usernamePengirim),
+    createData("Username Penerima", modalContent.usernamePenerima),
+    createData("Alamat Pengirim", modalContent.alamatPengirim),
+    createData("Alamat Penerima", modalContent.alamatPenerima),
+    createData(
+      "Kuantitas Bawang",
+      modalDataBlockContent.kuantitasBawangKg + " Kg"
+    ),
+    createData(
+      "Harga Bawang",
+      <NumberFormat
+        displayType="text"
+        value={modalContent.hargaBawangPerKg}
+        decimalSeparator={","}
+        thousandSeparator={"."}
+        isNumericString
+        prefix="Rp. "
+      />
+    ),
+    createData(
+      "Tanggal Transaksi",
+      moment.unix(modalContent.createdAt).format("LLL")
+    ),
+    createData("Tanggal Masuk", modalContent.tanggalMasuk),
+    createData("Alamat Gudang", modalContent.umurPanen),
+    createData("Teknik Sorting", modalContent.lamaPenyimpanan),
+    createData("Metode Pengemasan", modalContent.varietas),
+    createData(
+      "Status",
+      modalContent.isConfirmed ? "Terkonfirmasi oleh Penerima" : "Tertunda"
+    ),
   ];
 
-  // const rowsPedagang = [];
+  const StyledTableCell = withStyles((theme) => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }))(TableCell);
 
-  // eslint-disable-next-line
-  const [dataBlock1, setDataBlock1] = React.useState({});
-  // const [dataBlock2, setDataBlock2] = React.useState({}); //txid1
-  // const [dataBlock3, setDataBlock3] = React.useState({}); //txid2
-  // const [dataBlock4, setDataBlock4] = React.useState({}); //txid3
+  const StyledTableRow = withStyles((theme) => ({
+    root: {
+      "&:nth-of-type(odd)": {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }))(TableRow);
+
+  const [dialogCode, setDialogCode] = React.useState("");
+  const [user, setUser] = React.useState({ username: "", orgName: "" });
+  const [dataBlock, setDataBlock] = React.useState({});
+  const [trxPkr, setTrxPkr] = React.useState({}); //txid1
+  const [benihAsetId, setBenihAsetId] = React.useState({}); //benihAsetId
+  const [trxPtn, setTrxPtn] = React.useState({}); //txid2
+  const [bawangAsetId, setBawangAsetId] = React.useState({}); //benihBawangId
+
+  const [trxPpl, setTrxPpl] = React.useState({}); //txid3
 
   // eslint-disable-next-line
   const fetchDataByID = async (batchID) => {
@@ -118,7 +285,7 @@ function ProductPage(props) {
         },
         params: {
           peer: "peer0.penangkar.example.com",
-          fcn: "GetHistoryForAssetByID",
+          fcn: "GetBawangByID",
           args: '["' + batchID + '"]',
         },
       };
@@ -126,13 +293,44 @@ function ProductPage(props) {
         "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
         config
       );
-      // await console.log(resp.data.result);
 
-      // await console.log(resp.data.result[0].Value);
-      // await console.log(dataBlock1);
       await setIsLoading(false);
+      return resp.data.result;
+    } catch (err) {
+      console.log(err);
+      return "Transaksi tidak ditemukan";
+    }
+  };
 
-      return resp.data.result[0].Value;
+  const confirmTrxByID = async (trxId) => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    };
+    console.log("confirmTrxById");
+
+    let body = {
+      fcn: "ConfirmTrxByID",
+      peers: [
+        "peer0.penangkar.example.com",
+        "peer0.petani.example.com",
+        "peer0.pengumpul.example.com",
+        "peer0.pedagang.example.com",
+      ],
+      chaincodeName: "bawangmerah_cc",
+      channelName: "mychannel",
+      args: [trxId],
+    };
+    try {
+      const resp = await axios.post(
+        "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
+        body,
+        config
+      );
+      console.log(resp);
+      await alert("Transaksi berhasil dikonfirmasi");
+      history.go(0);
     } catch (err) {
       console.log(err);
     }
@@ -140,17 +338,61 @@ function ProductPage(props) {
   useEffect(() => {
     const batchId = props.match.params.batchId;
 
-    fetchDataByID(batchId).then((result) => {
-      setDataBlock1(result);
-      if (result.txID1 !== "") {
-        console.log("kosong");
-      }
+    getUsername()
+      .then((result) => {
+        let stateCopy = user;
+        stateCopy.username = result;
+        setUser(stateCopy);
+      })
+      .finally(() => {
+        getUserOrgName().then((result) => {
+          let stateCopy = user;
+          stateCopy.orgName = result;
+          setUser(stateCopy);
+          console.log("Berhasil login sebagai " + user.orgName);
+        });
+      });
 
-      // if (result !== "") {
-      //   console.log("isi");
-      // }
+    fetchDataByID(batchId).then((result) => {
+      console.log(result);
+
+      if (result !== "Transaksi tidak ditemukan") {
+        setDataBlock(result);
+        if (result.txID1 !== "") {
+          fetchDataByID(result.txID1).then((result) => {
+            setTrxPkr(result);
+          });
+        }
+
+        if (result.txID2 !== "") {
+          fetchDataByID(result.txID2).then((result) => {
+            setTrxPtn(result);
+          });
+        }
+
+        if (result.txID3 !== "") {
+          fetchDataByID(result.txID3).then((result) => {
+            setTrxPpl(result);
+          });
+        }
+
+        if (result.benihAsetID !== "") {
+          fetchDataByID(result.benihAsetID).then((result) => {
+            setBenihAsetId(result);
+          });
+        }
+
+        if (result.bawangAsetID !== "") {
+          fetchDataByID(result.bawangAsetID).then((result) => {
+            setBawangAsetId(result);
+          });
+        }
+      } else {
+        alert("Transaksi tidak ditemukan");
+        history.go(-1);
+      }
     });
-  }, [props.match.params.batchId]);
+  }, [props.match.params.batchId, history, user]);
   return (
     <>
       {isLoading && (
@@ -160,200 +402,493 @@ function ProductPage(props) {
           </Backdrop>
         </>
       )}
-      <Meta title="Page 4" description="Page 4" />
+      {/* <Meta title="Page 4" description="Page 4" /> */}
       <Container maxWidth="sm" className={classes.root}>
         <Grid direction="column" container spacing={1}>
           <Grid item xs={12}>
             <Typography variant="h6">Detail Transaksi</Typography>
 
-            <Grid container className={classes.rowDetail} item xs={12}>
+            <Grid container direction="row" item xs={12}>
               <Grid item xs={6}>
-                <Typography variant="body1">QR Code</Typography>
-                {dataBlock1.id !== undefined && (
-                  <QRCode value={dataBlock1.id} />
-                )}
+                {/* <Typography variant="body1">QR Code</Typography> */}
+                {dataBlock.id !== undefined && <QRCode value={dataBlock.id} />}
               </Grid>
               <Grid item xs={6}></Grid>
             </Grid>
 
-            <Grid container className={classes.rowDetail} item xs={12}>
+            <Grid container direction="row" spacing={1} xs={12}>
               <Grid item xs={6}>
-                <Typography variant="body1">Pelaku Transaksi</Typography>
+                <Typography variant="body1">Pencatat Transaksi</Typography>
               </Grid>
               <Grid item xs={6}>
-                <p>{dataBlock1.usernamePengirim}</p>
+                <Typography variant="body1">
+                  {dataBlock.usernamePengirim}
+                </Typography>
               </Grid>
-            </Grid>
 
-            <Grid container className={classes.rowDetail} item xs={12}>
               <Grid item xs={6}>
-                <Typography variant="body1">Tanggal Masuk</Typography>
+                <Typography variant="body1">Status Transaksi</Typography>
               </Grid>
               <Grid item xs={6}>
-                <p>{moment.unix(dataBlock1.createdAt).format("LLL")}</p>
+                <Typography variant="body1">
+                  {dataBlock.isConfirmed ? "Terkonfirmasi" : "Tertunda"}
+                </Typography>
               </Grid>
-            </Grid>
 
-            <Grid container className={classes.rowDetail} item xs={12}>
-              {dataBlock1.isAsset && (
+              <Grid item xs={6}>
+                <Typography variant="body1">Tanggal Transaksi</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">
+                  {moment.unix(dataBlock.createdAt).format("LLL")}
+                </Typography>
+              </Grid>
+              {dataBlock.isAsset && (
                 <>
                   <Grid item xs={6}>
                     <Typography variant="body1">Varietas</Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <p>{dataBlock1.varietas}</p>
+                    <Typography variant="body1">
+                      {dataBlock.varietas}
+                    </Typography>
                   </Grid>
                 </>
               )}
             </Grid>
           </Grid>
+          {user.orgName === "Petani" ? (
+            dataBlock.usernamePenerima === user.username &&
+            dataBlock.isConfirmed === false ? (
+              <Button
+                onClick={() => {
+                  console.log(dataBlock.id);
+                  confirmTrxByID(dataBlock.id);
+                }}
+                variant="contained"
+                fullWidth
+                color="primary"
+              >
+                Konfirmasi Transaksi
+              </Button>
+            ) : dataBlock.usernamePenerima === user.username &&
+              dataBlock.kuantitasBenihKg > 0 &&
+              dataBlock.isConfirmed === true ? (
+              <Button
+                variant="contained"
+                component={RouterLink}
+                to="/tanam_benih"
+                fullWidth
+                color="primary"
+              >
+                Tanam Benih
+              </Button>
+            ) : dataBlock.usernamePengirim === user.username &&
+              dataBlock.usernamePenerima === "" &&
+              dataBlock.kuantitasBawangKg > 0 &&
+              dataBlock.isConfirmed === false ? (
+              <Button
+                variant="contained"
+                component={RouterLink}
+                to="/create_transaction"
+                fullWidth
+                color="primary"
+              >
+                Tambah Transaksi
+              </Button>
+            ) : dataBlock.usernamePengirim === user.username &&
+              dataBlock.usernamePenerima === "" &&
+              dataBlock.kuantitasBawangKg === 0 &&
+              dataBlock.isConfirmed === false ? (
+              console.log("panen bawang")
+            ) : null
+          ) : null}
 
+          {user.orgName === "Pengumpul" ? (
+            dataBlock.usernamePenerima === user.username ? (
+              dataBlock.isConfirmed ? (
+                <Button
+                  variant="contained"
+                  component={RouterLink}
+                  to="/create_transaction"
+                  fullWidth
+                  color="primary"
+                >
+                  Tambah Transaksi
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    console.log(dataBlock.id);
+                    confirmTrxByID(dataBlock.id);
+                  }}
+                  variant="contained"
+                  fullWidth
+                  color="primary"
+                >
+                  Konfirmasi Transaksi
+                </Button>
+              )
+            ) : null
+          ) : null}
+
+          {user.orgName === "Pedagang" ? (
+            dataBlock.usernamePenerima === user.username ? (
+              dataBlock.isConfirmed ? null : (
+                <Button
+                  onClick={() => {
+                    console.log(dataBlock.id);
+                    confirmTrxByID(dataBlock.id);
+                  }}
+                  variant="contained"
+                  fullWidth
+                  color="primary"
+                >
+                  Konfirmasi Transaksi
+                </Button>
+              )
+            ) : null
+          ) : null}
           {/* v grid closes */}
         </Grid>
-        <Typography variant="h6">Timeline Transaksi</Typography>
+        <Typography variant="h6" style={{ marginTop: 20 }}>
+          Timeline Transaksi
+        </Typography>
+
         <Grid container className={classes.timeline}>
           <Timeline>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Card className={classes.cardTimeline}>
-                  <CardContent>
-                    <Typography className={classes.title}>
-                      Penangkar menambahkan Benih
-                    </Typography>
-                    <Typography variant="p">5 Mei 2021</Typography>
-                  </CardContent>
-                </Card>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Card className={classes.cardTimeline}>
-                  <CardContent>
-                    <Typography variant="p">
-                      Penangkar Mengirimkan Benih
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Card className={classes.cardTimeline}>
-                  <CardContent>
-                    <Typography variant="p">Petani menanam Benih</Typography>
-                  </CardContent>
-                </Card>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Card className={classes.cardTimeline}>
-                  <CardContent>
-                    <Typography variant="p">Petani memanen Bawang</Typography>
-                  </CardContent>
-                </Card>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Card className={classes.cardTimeline}>
-                  <CardContent>
-                    <Typography variant="p">Petani menjual Bawang</Typography>
-                  </CardContent>
-                </Card>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Card className={classes.cardTimeline}>
-                  <CardContent>
-                    <Typography variant="p">
-                      Pengumpul Warehouse Bawang
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Card className={classes.cardTimeline}>
-                  <CardContent>
-                    <Typography variant="p">
-                      Pengumpul menjual Bawang
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </TimelineContent>
-            </TimelineItem>
+            {dataBlock.txID3 !== "" && (
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Card className={classes.cardTimeline}>
+                    <CardActionArea
+                      onClick={() => {
+                        setDialogCode("Pengumpul");
+                        setModalContent(trxPpl);
+                        setModalDataBlockContent(dataBlock);
+                        setVisible(true);
+                      }}
+                    >
+                      <CardContent>
+                        <Typography className={classes.title}>
+                          Pengumpul menjual Bawang
+                        </Typography>
+                        <Typography>
+                          {moment.unix(trxPpl.createdAt).format("LLL")}
+                        </Typography>
+                        <Typography>{trxPpl.usernamePenerima}</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </TimelineContent>
+              </TimelineItem>
+            )}
+
+            {dataBlock.tanggalMasuk !== 0 && (
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Card className={classes.cardTimeline}>
+                    <CardContent>
+                      <Typography className={classes.title}>
+                        Pengumpul Warehouse Bawang
+                      </Typography>
+                      <Typography>
+                        {moment.unix(trxPpl.createdAt).format("LLL")}
+                      </Typography>
+                      <Typography>{trxPpl.usernamePengirim}</Typography>
+                    </CardContent>
+                  </Card>
+                </TimelineContent>
+              </TimelineItem>
+            )}
+
+            {dataBlock.txID2 !== "" && (
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Card className={classes.cardTimeline}>
+                    <CardActionArea
+                      onClick={() => {
+                        setDialogCode("Petani");
+                        setModalContent(trxPtn);
+                        setModalDataBlockContent(dataBlock);
+                        setVisible(true);
+                      }}
+                    >
+                      <CardContent>
+                        <Typography className={classes.title}>
+                          Petani menjual Bawang
+                        </Typography>
+                        <Typography>
+                          {moment.unix(trxPtn.createdAt).format("LLL")}
+                        </Typography>
+                        <Typography>{trxPtn.usernamePengirim}</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </TimelineContent>
+              </TimelineItem>
+            )}
+
+            {dataBlock.kuantitasBawangKg !== 0 && (
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Card className={classes.cardTimeline}>
+                    <CardActionArea
+                      onClick={() => {
+                        setDialogCode("PanenBawang");
+                        setModalContent(trxPkr);
+                        setModalDataBlockContent(dataBlock);
+                        setVisible(true);
+                      }}
+                    >
+                      <CardContent>
+                        <Typography className={classes.title}>
+                          Petani memanen Bawang
+                        </Typography>
+                        <Typography>
+                          {moment.unix(bawangAsetId.createdAt).format("LLL")}
+                        </Typography>
+                        <Typography>{bawangAsetId.usernamePengirim}</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </TimelineContent>
+              </TimelineItem>
+            )}
+            {dataBlock.pupuk !== "" && (
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Card className={classes.cardTimeline}>
+                    <CardActionArea
+                      onClick={() => {
+                        setDialogCode("TanamBenih");
+                        setModalContent(trxPkr);
+                        setModalDataBlockContent(dataBlock);
+                        setVisible(true);
+                      }}
+                    >
+                      <CardContent>
+                        <Typography className={classes.title}>
+                          Petani menanam Benih
+                        </Typography>
+                        <Typography>
+                          {moment.unix(bawangAsetId.tanggalTanam).format("LLL")}
+                        </Typography>
+                        <Typography>{bawangAsetId.usernamePengirim}</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </TimelineContent>
+              </TimelineItem>
+            )}
+
+            {dataBlock.txID1 !== "" && (
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Card className={classes.cardTimeline}>
+                    <CardActionArea
+                      onClick={() => {
+                        setDialogCode("Penangkar");
+                        console.log(trxPkr);
+                        setModalContent(trxPkr);
+                        setModalDataBlockContent(dataBlock);
+                        setVisible(true);
+                      }}
+                    >
+                      <CardContent>
+                        <Typography className={classes.title}>
+                          Penangkar Mengirimkan Benih
+                        </Typography>
+                        <Typography>
+                          {moment.unix(trxPkr.createdAt).format("LLL")}
+                        </Typography>
+                        <Typography>{trxPkr.usernamePengirim}</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </TimelineContent>
+              </TimelineItem>
+            )}
+
+            {dataBlock.asetBenihID !== "" && (
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Card className={classes.cardTimeline}>
+                    <CardActionArea
+                      onClick={() => {
+                        setDialogCode("AsetBenih");
+                        console.log(benihAsetId);
+                        setModalContent(benihAsetId);
+                        setVisible(true);
+                      }}
+                    >
+                      <CardContent>
+                        <Typography className={classes.title}>
+                          Penangkar menambahkan Benih
+                        </Typography>
+                        <Typography>
+                          {moment.unix(benihAsetId.createdAt).format("LLL")}
+                        </Typography>
+                        <Typography>{benihAsetId.usernamePengirim}</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </TimelineContent>
+              </TimelineItem>
+            )}
           </Timeline>
         </Grid>
 
-        <ReactJson src={dataBlock1} theme="monokai" />
-        {/* {true && (
-          <Button
-            className={{ width: "300px", marginTop: 10 }}
-            fullWidth
-            variant="contained"
-            color="primary"
-            component={RouterLink}
-            to="/addNew"
-          >
-            Tambah Transaksi
-          </Button>
-        )} */}
+        <ReactJson src={dataBlock} theme="monokai" />
 
-        {dataBlock1.timestamptoPetani && (
-          <Card className={classes.cardContainer}>
-            <CardActionArea
-            // component={RouterLink}
-            // to={{
-            //   pathname:
-            //     "/product/" +
-            //     props.match.params.batchId +
-            //     "/details/" +
-            //     dataBlock.batchID.toString(),
-            //   trxProps: dataBlock,
-            // }}
+        <Dialog open={visible} onClose={handleClose}>
+          <DialogTitle>Detail Transaksi</DialogTitle>
+          <DialogContent>
+            <TableContainer component={Paper}>
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <StyledTableRow>
+                    <StyledTableCell>Atribut</StyledTableCell>
+                    <StyledTableCell align="left">Informasi</StyledTableCell>
+                  </StyledTableRow>
+                </TableHead>
+                <TableBody>
+                  {dialogCode === "Penangkar"
+                    ? rowsPenangkar.map((row) => (
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))
+                    : dialogCode === "AsetBenih"
+                    ? rowsAsetBenih.map((row) => (
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))
+                    : dialogCode === "TanamBenih"
+                    ? rowsTanam.map((row) => (
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))
+                    : dialogCode === "PanenBawang"
+                    ? rowsPanen.map((row) => (
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))
+                    : dialogCode === "Petani"
+                    ? rowsPetani.map((row) => (
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))
+                    : dialogCode === "Pengumpul"
+                    ? rowsPengumpul.map((row) => (
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))
+                    : dialogCode === "Pedagang"
+                    ? rowsPedagang.map((row) => (
+                        <StyledTableRow key={row.name}>
+                          <StyledTableCell align="left">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.value}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))
+                    : null}
+                  <StyledTableCell align="left">ID Transaksi</StyledTableCell>
+                  <StyledTableCell align="left">
+                    <QRCode value={modalContent.id} size={128} />
+                  </StyledTableCell>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                handleClose();
+              }}
+              variant="outlined"
             >
-              <CardContent>
-                <Typography>
-                  {moment(dataBlock1.timestamptoPetani).format("LLL")}{" "}
-                </Typography>
-                <Typography gutterBottom>
-                  Aktor : {dataBlock1.usernamePenangkar}
-                </Typography>
-                <Typography variant="body2">{dataBlock1.batchID}</Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        )}
+              Tutup
+            </Button>
+            {/* {modalContent.usernamePenerima === user.username && (
+              <Button
+                onClick={() => {
+                  console.log(modalContent.id);
+                  // confirmTrxByID(modalContent.id);
+                }}
+                variant="contained"
+                color="primary"
+              >
+                Konfirmasi
+              </Button>
+            )} */}
+          </DialogActions>
+        </Dialog>
       </Container>
     </>
   );

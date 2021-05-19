@@ -85,7 +85,7 @@ function SignUpPage(props) {
   function _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
-  // eslint-disable-next-line
+
   async function _submitForm(values, actions) {
     await _sleep(1000);
     props.handleSignUp(values);

@@ -24,7 +24,6 @@ function Welcome(props) {
     setqrRead(event.target.value);
   };
   const refreshingLayout = props.refreshLayout;
-  // eslint-disable-line react-hooks/exhaustive-deps
   const matchSmallScreen = useMediaQuery("(max-width: 600px)");
   const classes = useStyles({ isSmallScreen: matchSmallScreen });
   const handleScan = (data) => {

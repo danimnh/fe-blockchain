@@ -14,7 +14,7 @@ import {
   CardContent,
   CardActionArea,
 } from "@material-ui/core";
-// import ReactJson from "react-json-view";
+import ReactJson from "react-json-view";
 
 import { Formik, Form } from "formik";
 
@@ -109,11 +109,11 @@ function AddTrx() {
     ),
     createData(
       "Tanggal Tanam",
-      moment.unix(selectedAsset.tanggalTanam).format("DD/MM/YYYY")
+      moment.unix(selectedAsset.tanggalTanam).format("LLL")
     ),
     createData(
       "Tanggal Panen",
-      moment.unix(selectedAsset.tanggalPanen).format("DD/MM/YYYY")
+      moment.unix(selectedAsset.tanggalPanen).format("LLL")
     ),
 
     createData("Ukuran Umbi", selectedAsset.ukuranUmbi),
@@ -165,7 +165,7 @@ function AddTrx() {
   function _handleSubmit(values, actions) {
     if (user.orgName === "Penangkar") {
       values.hargaBenihPerKg = parseInt(values.hargaBenihPerKg);
-      values.varietas = asset[0].varietas;
+      values.varietas = asset[0].Record.varietas;
       values.usernamePengirim = user.username;
     } else if (user.orgName === "Petani") {
       values.hargaBawangPerKg = parseInt(values.hargaBawangPerKg);
@@ -297,9 +297,15 @@ function AddTrx() {
                           </Typography>
 
                           {user.orgName === "Penangkar" ? (
-                            <Typography>
-                              Aset saat ini : {asset.Record.kuantitasBenihKg} Kg
-                            </Typography>
+                            <>
+                              <Typography className={classes.title}>
+                                {asset.Record.varietas}
+                              </Typography>
+                              <Typography>
+                                Aset saat ini : {asset.Record.kuantitasBenihKg}{" "}
+                                Kg
+                              </Typography>
+                            </>
                           ) : user.orgName === "Petani" ? (
                             <>
                               <Typography className={classes.title}>
@@ -313,22 +319,25 @@ function AddTrx() {
                                 Tanggal Tanam :{" "}
                                 {moment
                                   .unix(asset.Record.tanggalTanam)
-                                  .format("DD/MM/YYYY")}
+                                  .format("LLL")}
                               </Typography>
                               <Typography>
                                 Tanggal Panen :{" "}
                                 {moment
                                   .unix(asset.Record.tanggalPanen)
-                                  .format("DD/MM/YYYY")}
+                                  .format("LLL")}
                               </Typography>
                             </>
                           ) : (
                             <>
+                              <Typography className={classes.title}>
+                                {asset.Record.varietas}
+                              </Typography>
                               <Typography>
                                 Tanggal Pengiriman :{" "}
                                 {moment
                                   .unix(asset.Record.createdAt)
-                                  .format("DD/MM/YYYY")}
+                                  .format("LLL")}
                               </Typography>
                               <Typography>
                                 Kuantitas Bawang :{" "}
@@ -361,7 +370,7 @@ function AddTrx() {
                 </>
               ) : (
                 <>
-                  {/* <ReactJson src={values} /> */}
+                  <ReactJson src={values} />
 
                   {values.prevID === "" ? (
                     <Button
@@ -380,8 +389,8 @@ function AddTrx() {
                       <Card
                         className={
                           isSelected === selectedAsset.Key
-                            ? classes.selected
-                            : classes.card
+                            ? classes.card
+                            : classes.selected
                         }
                       >
                         <CardActionArea

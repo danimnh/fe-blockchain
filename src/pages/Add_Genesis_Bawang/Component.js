@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-// eslint-disable-next-line
-import axios from "axios";
 import NumberFormat from "react-number-format";
 
 import {

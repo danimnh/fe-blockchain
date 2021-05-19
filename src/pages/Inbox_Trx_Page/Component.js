@@ -67,7 +67,7 @@ function InboxTrx(props) {
     ),
     createData(
       "Tanggal Transaksi",
-      moment.unix(modalContent.createdAt).format("DD/MM/YYYY")
+      moment.unix(modalContent.createdAt).format("LLL")
     ),
     createData("Umur Benih", modalContent.umurBenih + " Hari"),
     createData("Umur Panen", modalContent.umurPanen + " Hari"),
@@ -88,7 +88,7 @@ function InboxTrx(props) {
       "Harga Bawang",
       <NumberFormat
         displayType="text"
-        value={modalContent.hargaBenihPerKg}
+        value={modalContent.hargaBawangPerKg}
         decimalSeparator={","}
         thousandSeparator={"."}
         isNumericString
@@ -97,7 +97,7 @@ function InboxTrx(props) {
     ),
     createData(
       "Tanggal Transaksi",
-      moment.unix(modalContent.createdAt).format("DD/MM/YYYY")
+      moment.unix(modalContent.createdAt).format("LLL")
     ),
     createData("Ukuran Umbi", modalContent.ukuranUmbi),
     createData("Pupuk", modalContent.pupuk),
@@ -121,7 +121,7 @@ function InboxTrx(props) {
       "Harga Bawang",
       <NumberFormat
         displayType="text"
-        value={modalContent.hargaBenihPerKg}
+        value={modalContent.hargaBawangPerKg}
         decimalSeparator={","}
         thousandSeparator={"."}
         isNumericString
@@ -130,7 +130,7 @@ function InboxTrx(props) {
     ),
     createData(
       "Tanggal Transaksi",
-      moment.unix(modalContent.createdAt).format("DD/MM/YYYY")
+      moment.unix(modalContent.createdAt).format("LLL")
     ),
     createData("Tanggal Masuk", modalContent.tanggalMasuk),
     createData("Teknik Sorting", modalContent.teknikSorting),
@@ -150,7 +150,7 @@ function InboxTrx(props) {
     createData("Harga", modalContent.harga),
     createData(
       "Tanggal Transaksi",
-      moment.unix(modalContent.createdAt).format("DD/MM/YYYY")
+      moment.unix(modalContent.createdAt).format("LLL")
     ),
     createData("Tanggal Masuk", modalContent.umurBenih),
     createData("Alamat Gudang", modalContent.umurPanen),
@@ -342,9 +342,7 @@ function InboxTrx(props) {
                         </Typography>
 
                         <Typography>
-                          {moment
-                            .unix(trx.Record.createdAt)
-                            .format("DD/MM/YYYY")}
+                          {moment.unix(trx.Record.createdAt).format("LLL")}
                         </Typography>
                         <Typography>{trx.Record.varietas}</Typography>
                       </Grid>
