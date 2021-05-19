@@ -45,6 +45,21 @@ function InboxTrx(props) {
   const [modalContent, setModalContent] = React.useState([]);
   const history = useHistory();
 
+  const downloadQRCode = () => {
+    console.log(modalContent.id);
+    const qrCodeURL = document
+      .getElementById("qrCodeEl")
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    console.log(qrCodeURL);
+    let aEl = document.createElement("a");
+    aEl.href = qrCodeURL;
+    aEl.download = "QR_" + modalContent.id + ".png";
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
+  };
+
   function createData(name, value) {
     return { name, value };
   }
@@ -411,7 +426,13 @@ function InboxTrx(props) {
                       ))}
                   <StyledTableCell align="left">ID Transaksi</StyledTableCell>
                   <StyledTableCell align="left">
-                    <QRCode value={modalContent.id} size={128} />
+                    <QRCode id="qrCodeEl" value={modalContent.id} size={128} />
+                    <Button
+                      variant="outlined"
+                      onClick={(txid) => downloadQRCode(txid)}
+                    >
+                      Simpan QR
+                    </Button>
                   </StyledTableCell>
                 </TableBody>
               </Table>

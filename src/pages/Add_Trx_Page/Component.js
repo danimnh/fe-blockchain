@@ -14,7 +14,6 @@ import {
   CardContent,
   CardActionArea,
 } from "@material-ui/core";
-import ReactJson from "react-json-view";
 
 import { Formik, Form } from "formik";
 
@@ -139,7 +138,10 @@ function AddTrx() {
         prefix="Rp. "
       />
     ),
-    createData("Tanggal Masuk", modalContent.tanggalMasuk),
+    createData(
+      "Tanggal Masuk",
+      moment.unix(selectedAsset.tanggalMasuk).format("LLL")
+    ),
     // createData("Alamat Gudang", modalContent.alamatGudang),
     createData("Teknik Sorting", modalContent.teknikSorting),
     createData("Metode Pengemasan", modalContent.metodePengemasan),
@@ -157,7 +159,7 @@ function AddTrx() {
 
   async function _submitForm(values, actions) {
     await _sleep(1000);
-    console.log(selectedAsset);
+    // console.log(selectedAsset);
     console.log(values, actions);
     setModalContent(values);
     setVisible(true);
@@ -175,6 +177,7 @@ function AddTrx() {
       values.hargaBawangPerKg = parseInt(values.hargaBawangPerKg);
       values.varietas = asset[0].Record.varietas;
       values.usernamePengirim = user.username;
+      values.tanggalMasuk = asset[0].Record.tanggalMasuk;
     } else if (user.orgName === "Pedagang") {
       values.hargaBawangPerKg = parseInt(values.hargaBawangPerKg);
       values.varietas = asset[0].Record.varietas;
@@ -370,8 +373,6 @@ function AddTrx() {
                 </>
               ) : (
                 <>
-                  <ReactJson src={values} />
-
                   {values.prevID === "" ? (
                     <Button
                       onClick={() => {

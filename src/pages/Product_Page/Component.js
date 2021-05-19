@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import QRCode from "qrcode.react";
-import ReactJson from "react-json-view";
+
 import NumberFormat from "react-number-format";
 
 import {
@@ -58,6 +58,22 @@ function ProductPage(props) {
 
   const [modalContent, setModalContent] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const downloadQRCode = () => {
+    console.log(modalContent.id);
+    const qrCodeURL = document
+      .getElementById("qrCodeEl")
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    console.log(qrCodeURL);
+    let aEl = document.createElement("a");
+    aEl.href = qrCodeURL;
+    aEl.download = "QR_" + modalContent.id + ".png";
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
+  };
+
   function createData(name, value) {
     return { name, value };
   }
@@ -195,7 +211,10 @@ function ProductPage(props) {
       "Tanggal Transaksi",
       moment.unix(modalContent.createdAt).format("LLL")
     ),
-    createData("Tanggal Masuk", modalContent.tanggalMasuk),
+    createData(
+      "Tanggal Masuk",
+      moment.unix(modalDataBlockContent.tanggalMasuk).format("LLL")
+    ),
     createData("Teknik Sorting", modalContent.teknikSorting),
     createData("Metode Pengemasan", modalContent.metodePengemasan),
 
@@ -500,7 +519,15 @@ function ProductPage(props) {
               dataBlock.usernamePenerima === "" &&
               dataBlock.kuantitasBawangKg === 0 &&
               dataBlock.isConfirmed === false ? (
-              console.log("panen bawang")
+              <Button
+                variant="contained"
+                component={RouterLink}
+                to="/panen_bawang"
+                fullWidth
+                color="primary"
+              >
+                Panen Bawang
+              </Button>
             ) : null
           ) : null}
 
@@ -601,9 +628,9 @@ function ProductPage(props) {
                         Pengumpul Warehouse Bawang
                       </Typography>
                       <Typography>
-                        {moment.unix(trxPpl.createdAt).format("LLL")}
+                        {moment.unix(trxPtn.tanggalMasuk).format("LLL")}
                       </Typography>
-                      <Typography>{trxPpl.usernamePengirim}</Typography>
+                      <Typography>{trxPtn.usernamePenerima}</Typography>
                     </CardContent>
                   </Card>
                 </TimelineContent>
@@ -766,8 +793,6 @@ function ProductPage(props) {
           </Timeline>
         </Grid>
 
-        <ReactJson src={dataBlock} theme="monokai" />
-
         <Dialog open={visible} onClose={handleClose}>
           <DialogTitle>Detail Transaksi</DialogTitle>
           <DialogContent>
@@ -860,7 +885,13 @@ function ProductPage(props) {
                     : null}
                   <StyledTableCell align="left">ID Transaksi</StyledTableCell>
                   <StyledTableCell align="left">
-                    <QRCode value={modalContent.id} size={128} />
+                    <QRCode id="qrCodeEl" value={modalContent.id} size={128} />
+                    <Button
+                      variant="outlined"
+                      onClick={(txid) => downloadQRCode(txid)}
+                    >
+                      Simpan QR
+                    </Button>
                   </StyledTableCell>
                 </TableBody>
               </Table>

@@ -159,7 +159,6 @@ function PanenBawang() {
                     fcnName="ConvertBawang"
                     user={user}
                   />
-                  {/* <ReactJson src={values} /> */}
                 </Form>
               )}
             </Formik>

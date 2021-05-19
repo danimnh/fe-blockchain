@@ -45,6 +45,21 @@ function DialogConfirmation({
   const history = useHistory();
 
   const [txid, setTxid] = React.useState("");
+
+  const downloadQRCode = () => {
+    console.log(txid);
+    const qrCodeURL = document
+      .getElementById("qrCodeEl")
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    console.log(qrCodeURL);
+    let aEl = document.createElement("a");
+    aEl.href = qrCodeURL;
+    aEl.download = "QR_" + txid + ".png";
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
+  };
   const classes = useStyles();
   const [qrVisible, setQrVisible] = React.useState(false);
 
@@ -331,10 +346,13 @@ function DialogConfirmation({
         <DialogTitle>Transaksi Berhasil Disimpan</DialogTitle>
         <DialogContent>
           <DialogContentText>QR Code Transaksi</DialogContentText>
-          <QRCode value={txid} />
+          <QRCode id="qrCodeEl" value={txid} includeMargin={true} />
         </DialogContent>
 
         <DialogActions>
+          <Button variant="outlined" onClick={(txid) => downloadQRCode(txid)}>
+            Download QR
+          </Button>
           <Button
             onClick={async () => {
               await setQrVisible(false);
