@@ -3,6 +3,7 @@ import useStyles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 
 import QRCode from "qrcode.react";
+import moment from "moment";
 
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -47,7 +48,7 @@ function DialogConfirmation({
   const [txid, setTxid] = React.useState("");
 
   const downloadQRCode = () => {
-    console.log(txid);
+    console.log(modalContent);
     const qrCodeURL = document
       .getElementById("qrCodeEl")
       .toDataURL("image/png")
@@ -55,7 +56,12 @@ function DialogConfirmation({
     console.log(qrCodeURL);
     let aEl = document.createElement("a");
     aEl.href = qrCodeURL;
-    aEl.download = "QR_" + txid + ".png";
+    aEl.download =
+      "QR_" +
+      modalContent.usernamePengirim +
+      "_" +
+      moment().format("DDMMYYYY_hhmm") +
+      ".png";
     document.body.appendChild(aEl);
     aEl.click();
     document.body.removeChild(aEl);

@@ -68,7 +68,12 @@ function ProductPage(props) {
     console.log(qrCodeURL);
     let aEl = document.createElement("a");
     aEl.href = qrCodeURL;
-    aEl.download = "QR_" + modalContent.id + ".png";
+    aEl.download =
+      "QR_" +
+      modalContent.usernamePengirim +
+      "_" +
+      moment.unix(modalContent.createdAt).format("DDMMYYYY_hhmm") +
+      ".png";
     document.body.appendChild(aEl);
     aEl.click();
     document.body.removeChild(aEl);
