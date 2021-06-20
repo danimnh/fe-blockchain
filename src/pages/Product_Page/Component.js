@@ -84,8 +84,18 @@ function ProductPage(props) {
   }
   const rowsAsetBenih = [
     createData("Username Pengirim", modalContent.usernamePengirim),
-    createData("Umur Benih", modalDataBlockContent.umurBenih + " Hari"),
-    createData("Umur Panen", modalDataBlockContent.umurPanen + " Hari"),
+    createData(
+      "Umur Benih",
+      modalDataBlockContent.umurBenih === undefined
+        ? "Hari"
+        : modalDataBlockContent.umurBenih + " Hari"
+    ),
+    createData(
+      "Umur Panen",
+      modalDataBlockContent.umurPanen === undefined
+        ? "Hari"
+        : modalDataBlockContent.umurPanen + " Hari"
+    ),
   ];
   const rowsPenangkar = [
     createData("Username Pengirim", modalContent.usernamePengirim),
@@ -376,7 +386,9 @@ function ProductPage(props) {
           let stateCopy = user;
           stateCopy.orgName = result;
           setUser(stateCopy);
-          console.log("Berhasil login sebagai " + user.orgName);
+          if (user.orgName !== undefined) {
+            console.log("Berhasil login sebagai " + user.orgName);
+          }
         });
       });
 

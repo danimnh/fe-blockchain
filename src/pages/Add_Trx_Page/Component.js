@@ -159,7 +159,6 @@ function AddTrx() {
 
   async function _submitForm(values, actions) {
     await _sleep(1000);
-    // console.log(selectedAsset);
     console.log(values, actions);
     setModalContent(values);
     setVisible(true);
@@ -167,7 +166,7 @@ function AddTrx() {
   function _handleSubmit(values, actions) {
     if (user.orgName === "Penangkar") {
       values.hargaBenihPerKg = parseInt(values.hargaBenihPerKg);
-      values.varietas = asset[0].Record.varietas;
+      values.varietas = selectedAsset.varietas;
       values.usernamePengirim = user.username;
     } else if (user.orgName === "Petani") {
       values.hargaBawangPerKg = parseInt(values.hargaBawangPerKg);
