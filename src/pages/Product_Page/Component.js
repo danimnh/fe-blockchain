@@ -261,7 +261,10 @@ function ProductPage(props) {
       "Tanggal Transaksi",
       moment.unix(modalContent.createdAt).format("LLL")
     ),
-    createData("Tanggal Masuk", modalContent.tanggalMasuk),
+    createData(
+      "Tanggal Masuk",
+      moment.unix(modalContent.tanggalMasuk).format("LLL")
+    ),
     createData("Alamat Gudang", modalContent.umurPanen),
     createData("Teknik Sorting", modalContent.lamaPenyimpanan),
     createData("Metode Pengemasan", modalContent.varietas),

@@ -152,7 +152,10 @@ function InboxTrx(props) {
       "Tanggal Transaksi",
       moment.unix(modalContent.createdAt).format("LLL")
     ),
-    createData("Tanggal Masuk", modalContent.tanggalMasuk),
+    createData(
+      "Tanggal Masuk",
+      moment.unix(modalContent.tanggalMasuk).format("LLL")
+    ),
     createData("Teknik Sorting", modalContent.teknikSorting),
     createData("Metode Pengemasan", modalContent.metodePengemasan),
 

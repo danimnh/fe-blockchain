@@ -153,7 +153,10 @@ function SentTrx(props) {
       "Tanggal Transaksi",
       moment(modalContent.timestamp).format("LLL")
     ),
-    createData("Tanggal Masuk", modalContent.tanggalMasuk),
+    createData(
+      "Tanggal Masuk",
+      moment.unix(modalContent.tanggalMasuk).format("LLL")
+    ),
     createData("Teknik Sorting", modalContent.teknikSorting),
     createData("Metode Pengemasan", modalContent.metodePengemasan),
     createData(
