@@ -145,7 +145,7 @@ function PanenBawang() {
                       color="primary"
                       type="submit"
                     >
-                      Tambah Asset
+                      Tambah Informasi Panen Bawang
                     </Button>
                   </div>
                   <DialogConfirmation
@@ -156,7 +156,7 @@ function PanenBawang() {
                       setVisible(false);
                     }}
                     dialogTitle="Panen Bawang"
-                    fcnName="ConvertBawang"
+                    fcnName="HarvestBawang"
                     user={user}
                   />
                 </Form>

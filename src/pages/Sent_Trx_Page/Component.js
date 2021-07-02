@@ -224,6 +224,7 @@ function SentTrx(props) {
             username +
             '\\",\\"isAsset\\":false,\\"isConfirmed\\":' +
             isConfirmed +
+            ',\\"isRejected\\":false' +
             "}}" +
             '"]',
         },

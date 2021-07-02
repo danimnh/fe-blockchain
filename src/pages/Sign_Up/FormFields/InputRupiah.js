@@ -19,6 +19,7 @@ function NumberFormatCustom(props) {
           },
         });
       }}
+      allowNegative={false}
       thousandSeparator={"."}
       decimalSeparator={","}
       prefix="Rp. "

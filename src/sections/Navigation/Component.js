@@ -2,11 +2,9 @@ import React, { useState } from "react";
 
 import AppBar from "sections/AppBar";
 import Menu from "sections/Menu";
-import Notification from "sections/Notification";
 
 function Navigation(handleLogout, dialogLogout, user) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const handleListItemClick = (index) => {
     handleMenuClose();
@@ -21,20 +19,8 @@ function Navigation(handleLogout, dialogLogout, user) {
     setIsMenuOpen(false);
   };
 
-  const handleNotifOpen = () => {
-    setIsNotifOpen(true);
-  };
-
-  const handleNotifClose = () => {
-    setIsNotifOpen(false);
-  };
   return (
     <>
-      <Notification
-        isOpen={isNotifOpen}
-        onOpen={handleNotifOpen}
-        onClose={handleNotifClose}
-      />
       <Menu
         isOpen={isMenuOpen}
         selectedIndex={selectedIndex}
@@ -49,7 +35,6 @@ function Navigation(handleLogout, dialogLogout, user) {
         isMenuOpen={isMenuOpen}
         selectedIndex={selectedIndex}
         onMenuOpen={handleMenuOpen}
-        onNotifOpen={handleNotifOpen}
         handleListItemClick={handleListItemClick}
         props={handleLogout}
       />

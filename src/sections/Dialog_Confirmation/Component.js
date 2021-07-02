@@ -222,7 +222,7 @@ function DialogConfirmation({
             >
               Konfirmasi
             </Button>
-          ) : fcnName === "ConvertBawang" ? (
+          ) : fcnName === "HarvestBawang" ? (
             <Button
               onClick={() => {
                 setIsLoading(true);
@@ -234,6 +234,7 @@ function DialogConfirmation({
                       setQrVisible(true);
                       console.log(result);
                     } else {
+                      console.log(result);
                       alert("Pencatatan Gagal");
                       setIsLoading(false);
                       history.go(0);

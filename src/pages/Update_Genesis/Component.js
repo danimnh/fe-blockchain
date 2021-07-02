@@ -58,17 +58,18 @@ function Update_Genesis() {
     getUsername().then((result) => {
       setIsLoading(true);
       setUser(result);
-      fetchAllGenesis(result)
-        .then((result) => {
-          setGenesisList(result);
-          setIsLoading(false);
-        })
-        .finally();
+      fetchAllGenesis(result).then((result) => {
+        let sorted = result;
+        const after = sorted.sort((a, b) =>
+          a.Record.kuantitasBenihKg > b.Record.kuantitasBenihKg ? -1 : 1
+        );
+        setGenesisList(after);
+        setIsLoading(false);
+      });
     });
 
     // eslint-disable-next-line
   }, []);
-  // to get user {props.user.orgName}
   return (
     <>
       {isLoading && (

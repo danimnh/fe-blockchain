@@ -16,7 +16,6 @@ import { useHistory } from "react-router-dom";
 import Content from "sections/Content";
 import Copyright from "sections/Copyright";
 import Navigation from "sections/Navigation";
-import Notifications from "sections/Notifications";
 
 import useStyles from "./styles";
 const Layout = () => {
@@ -166,7 +165,6 @@ const Layout = () => {
           </Backdrop>
         </>
       )}
-      <Notifications />
       {isLoggedIn && (
         <Navigation
           handleLogout={handleLogout}

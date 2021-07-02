@@ -24,6 +24,10 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Radio,
+  RadioGroup,
+  FormControl,
+  FormControlLabel,
 } from "@material-ui/core";
 import QRCode from "qrcode.react";
 import Meta from "components/Meta";
@@ -42,6 +46,8 @@ function InboxTrx(props) {
   const [user, setUser] = React.useState({ username: "", orgName: "" });
   const [inboxTrx, setInboxTrx] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
+  const [visibleReject, setVisibleReject] = React.useState(false);
+  const [rejectReason, setRejectReason] = React.useState("");
   const [modalContent, setModalContent] = React.useState([]);
   const history = useHistory();
 
@@ -189,6 +195,14 @@ function InboxTrx(props) {
     setVisible(false);
   };
 
+  const handleRejectClose = () => {
+    setVisibleReject(false);
+  };
+
+  const handleRejectChange = (event) => {
+    setRejectReason(event.target.value);
+  };
+
   const StyledTableCell = withStyles((theme) => ({
     head: {
       backgroundColor: theme.palette.common.black,
@@ -224,10 +238,12 @@ function InboxTrx(props) {
             username +
             '\\",\\"isConfirmed\\":' +
             isConfirmed +
+            ',\\"isRejected\\":false' +
             "}}" +
             '"]',
         },
       };
+      console.log(config.params.args);
       const resp = await axios.get(
         "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
         config
@@ -240,13 +256,50 @@ function InboxTrx(props) {
       return [];
     }
   };
+
+  const rejectTrxByID = async (
+    sourceTrxId,
+    kuantitas,
+    rejectTxId,
+    rejectReason
+  ) => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    };
+
+    let body = {
+      fcn: "RejectTrxByID",
+      peers: [
+        "peer0.penangkar.example.com",
+        "peer0.petani.example.com",
+        "peer0.pengumpul.example.com",
+        "peer0.pedagang.example.com",
+      ],
+      chaincodeName: "bawangmerah_cc",
+      channelName: "mychannel",
+      args: [sourceTrxId, rejectTxId, kuantitas, rejectReason],
+    };
+    try {
+      const resp = await axios.post(
+        "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
+        body,
+        config
+      );
+      console.log(resp);
+      await alert("Transaksi berhasil ditolak");
+      history.go(0);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const confirmTrxByID = async (trxId) => {
     const config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     };
-    console.log("confirmTrxById");
 
     let body = {
       fcn: "ConfirmTrxByID",
@@ -456,20 +509,104 @@ function InboxTrx(props) {
               Tutup
             </Button>
             {listType === "pending" && (
-              <Button
-                onClick={() => {
-                  console.log(modalContent.id);
-                  confirmTrxByID(modalContent.id);
-                }}
-                variant="contained"
-                color="primary"
-              >
-                Konfirmasi
-              </Button>
+              <>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    setVisibleReject(true);
+                  }}
+                >
+                  Tolak
+                </Button>
+                <Button
+                  onClick={() => {
+                    console.log(modalContent.id);
+                    confirmTrxByID(modalContent.id);
+                  }}
+                  variant="contained"
+                  color="primary"
+                >
+                  Konfirmasi
+                </Button>
+              </>
             )}
           </DialogActions>
         </Dialog>
       </Container>
+      <Dialog open={visibleReject} onClose={handleRejectClose}>
+        <DialogTitle>Alasan penolakan</DialogTitle>
+        <DialogContent>
+          <FormControl>
+            <RadioGroup
+              aria-label="rejectReason"
+              name="rejectReason"
+              value={rejectReason}
+              onChange={handleRejectChange}
+            >
+              <FormControlLabel
+                value="Harga tidak sesuai"
+                control={<Radio />}
+                label="Harga tidak sesuai"
+              />
+              <FormControlLabel
+                value="Kuantitas tidak sesuai"
+                control={<Radio />}
+                label="Kuantitas tidak sesuai"
+              />
+              <FormControlLabel
+                value="Atribut tidak sesuai"
+                control={<Radio />}
+                label="Atribut tidak sesuai"
+              />
+            </RadioGroup>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            disabled={rejectReason === ""}
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              if (memberCode === "Petani") {
+                console.log(modalContent.benihAsetID);
+                console.log(modalContent.kuantitasBenihKg);
+                console.log(modalContent.txID1);
+                rejectTrxByID(
+                  modalContent.benihAsetID,
+                  modalContent.kuantitasBenihKg,
+                  modalContent.txID1,
+                  rejectReason
+                );
+              } else if (memberCode === "Pengumpul") {
+                console.log(modalContent.bawangAsetID);
+                console.log(modalContent.kuantitasBawangKg);
+                console.log(modalContent.txID2);
+                console.log(rejectReason);
+                rejectTrxByID(
+                  modalContent.bawangAsetID,
+                  modalContent.kuantitasBawangKg,
+                  modalContent.txID2,
+                  rejectReason
+                );
+              } else if (memberCode === "Pedagang") {
+                console.log(modalContent.txID2);
+                console.log(modalContent.kuantitasBawangKg);
+                console.log(modalContent.txID3);
+                console.log(rejectReason);
+                rejectTrxByID(
+                  modalContent.txID2,
+                  modalContent.kuantitasBawangKg,
+                  modalContent.txID3,
+                  rejectReason
+                );
+              }
+            }}
+          >
+            Tolak Transaksi
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

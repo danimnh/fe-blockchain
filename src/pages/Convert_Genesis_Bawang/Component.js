@@ -138,7 +138,7 @@ function ConvertGenesis() {
                       color="primary"
                       type="submit"
                     >
-                      Tambah Asset
+                      Tambah Informasi Tanam Benih
                     </Button>
                   </div>
                   <DialogConfirmation

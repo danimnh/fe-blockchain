@@ -218,7 +218,7 @@ function AddTrx() {
               fetchAllGenesis(user.username).then((result) => {
                 let sorted = result;
                 const after = sorted.sort((a, b) =>
-                  a.Record.createdAt > b.Record.createdAt ? -1 : 1
+                  a.Record.kuantitasBenihKg > b.Record.kuantitasBenihKg ? -1 : 1
                 );
                 setAsset(after);
                 setIsLoading(false);
@@ -230,7 +230,9 @@ function AddTrx() {
                 (result) => {
                   let sorted = result;
                   const after = sorted.sort((a, b) =>
-                    a.Record.createdAt > b.Record.createdAt ? -1 : 1
+                    a.Record.kuantitasBawangKg > b.Record.kuantitasBawangKg
+                      ? -1
+                      : 1
                   );
                   setAsset(after);
                   setIsLoading(false);
@@ -272,7 +274,7 @@ function AddTrx() {
         </Grid>
 
         <Formik initialValues={initialValue} onSubmit={_handleSubmit}>
-          {({ isSubmitting, values, setFieldValue }) => (
+          {({ values, setFieldValue }) => (
             <Form>
               {values.prevID === "" &&
                 asset.map((asset) => {
@@ -427,8 +429,7 @@ function AddTrx() {
                         className={classes.confirm}
                         disabled={
                           values.usernamePenerima === "" ||
-                          values.kuantitasBenihKg === "" ||
-                          isSubmitting
+                          values.kuantitasBenihKg === ""
                         }
                         variant="contained"
                         color="primary"

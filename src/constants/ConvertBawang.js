@@ -31,8 +31,9 @@ const ConvertBawang = async (values, fcnName) => {
       body,
       config
     );
-    await alert("Transaksi berhasil disimpan");
+    console.log(respBM);
     if (respBM.data.result.result.txid !== "") {
+      await alert("Transaksi berhasil disimpan");
       return respBM.data.result.result.txid;
     }
   } catch (err) {

@@ -27,6 +27,11 @@ import {
   Paper,
   Backdrop,
   CircularProgress,
+  Radio,
+  RadioGroup,
+  FormControl,
+  FormControlLabel,
+  Chip,
 } from "@material-ui/core";
 
 import {
@@ -51,8 +56,17 @@ function ProductPage(props) {
   const history = useHistory();
   // eslint-disable-next-line
   const [visible, setVisible] = React.useState(false);
+  const [visibleReject, setVisibleReject] = React.useState(false);
+  const [rejectReason, setRejectReason] = React.useState("");
+
   const handleClose = () => {
     setVisible(false);
+  };
+  const handleRejectClose = () => {
+    setVisibleReject(false);
+  };
+  const handleRejectChange = (event) => {
+    setRejectReason(event.target.value);
   };
   const [modalDataBlockContent, setModalDataBlockContent] = React.useState([]);
 
@@ -86,15 +100,15 @@ function ProductPage(props) {
     createData("Username Pengirim", modalContent.usernamePengirim),
     createData(
       "Umur Benih",
-      modalDataBlockContent.umurBenih === undefined
-        ? "Hari"
-        : modalDataBlockContent.umurBenih + " Hari"
+      modalContent.umurBenih === undefined
+        ? "Loading"
+        : modalContent.umurBenih + " Hari"
     ),
     createData(
       "Umur Panen",
-      modalDataBlockContent.umurPanen === undefined
+      modalContent.umurPanen === undefined
         ? "Hari"
-        : modalDataBlockContent.umurPanen + " Hari"
+        : modalContent.umurPanen + " Hari"
     ),
   ];
   const rowsPenangkar = [
@@ -127,7 +141,11 @@ function ProductPage(props) {
     createData("Varietas", modalContent.varietas),
     createData(
       "Status",
-      modalContent.isConfirmed ? "Terkonfirmasi oleh Penerima" : "Tertunda"
+      modalContent.isConfirmed
+        ? "Terkonfirmasi oleh Penerima"
+        : modalContent.isRejected
+        ? "Transaksi Ditolak"
+        : "Tertunda"
     ),
   ];
   const rowsTanam = [
@@ -199,7 +217,11 @@ function ProductPage(props) {
 
     createData(
       "Status",
-      modalContent.isConfirmed ? "Terkonfirmasi oleh Penerima" : "Tertunda"
+      modalContent.isConfirmed
+        ? "Terkonfirmasi oleh Penerima"
+        : modalContent.isRejected
+        ? "Transaksi Ditolak"
+        : "Tertunda"
     ),
   ];
   const rowsPengumpul = [
@@ -235,7 +257,11 @@ function ProductPage(props) {
 
     createData(
       "Status",
-      modalContent.isConfirmed ? "Terkonfirmasi oleh Penerima" : "Tertunda"
+      modalContent.isConfirmed
+        ? "Terkonfirmasi oleh Penerima"
+        : modalContent.isRejected
+        ? "Transaksi Ditolak"
+        : "Tertunda"
     ),
   ];
   // eslint-disable-next-line
@@ -372,6 +398,44 @@ function ProductPage(props) {
       console.log(err);
     }
   };
+
+  const rejectTrxByID = async (
+    sourceTrxId,
+    kuantitas,
+    rejectTxId,
+    rejectReason
+  ) => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    };
+
+    let body = {
+      fcn: "RejectTrxByID",
+      peers: [
+        "peer0.penangkar.example.com",
+        "peer0.petani.example.com",
+        "peer0.pengumpul.example.com",
+        "peer0.pedagang.example.com",
+      ],
+      chaincodeName: "bawangmerah_cc",
+      channelName: "mychannel",
+      args: [sourceTrxId, rejectTxId, kuantitas, rejectReason],
+    };
+    try {
+      const resp = await axios.post(
+        "/sc/channels/mychannel/chaincodes/bawangmerah_cc",
+        body,
+        config
+      );
+      console.log(resp);
+      await alert("Transaksi berhasil ditolak");
+      history.go(0);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     const batchId = props.match.params.batchId;
 
@@ -464,15 +528,39 @@ function ProductPage(props) {
                   {dataBlock.usernamePengirim}
                 </Typography>
               </Grid>
+              {dataBlock.isAsset !== true && (
+                <>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">Status Transaksi</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    {dataBlock.isConfirmed ? (
+                      <Chip label="Terkonfirmasi" color="primary" />
+                    ) : dataBlock.isRejected ? (
+                      <Chip
+                        label="Transaksi Ditolak"
+                        size="small"
+                        color="secondary"
+                      />
+                    ) : (
+                      <Chip label="Tertunda" size="small" color="default" />
+                    )}
+                  </Grid>
+                </>
+              )}
 
-              <Grid item xs={6}>
-                <Typography variant="body1">Status Transaksi</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">
-                  {dataBlock.isConfirmed ? "Terkonfirmasi" : "Tertunda"}
-                </Typography>
-              </Grid>
+              {dataBlock.rejectReason !== "" && (
+                <>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">Alasan penolakan</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">
+                      {dataBlock.rejectReason}
+                    </Typography>
+                  </Grid>
+                </>
+              )}
 
               <Grid item xs={6}>
                 <Typography variant="body1">Tanggal Transaksi</Typography>
@@ -498,18 +586,31 @@ function ProductPage(props) {
           </Grid>
           {user.orgName === "Petani" ? (
             dataBlock.usernamePenerima === user.username &&
-            dataBlock.isConfirmed === false ? (
-              <Button
-                onClick={() => {
-                  console.log(dataBlock.id);
-                  confirmTrxByID(dataBlock.id);
-                }}
-                variant="contained"
-                fullWidth
-                color="primary"
-              >
-                Konfirmasi Transaksi
-              </Button>
+            dataBlock.isConfirmed === false &&
+            dataBlock.isRejected === false ? (
+              <>
+                <Button
+                  onClick={() => {
+                    console.log(dataBlock.id);
+                    confirmTrxByID(dataBlock.id);
+                  }}
+                  variant="contained"
+                  fullWidth
+                  color="primary"
+                >
+                  Konfirmasi Transaksi
+                </Button>
+                <Button
+                  style={{ marginTop: "10px" }}
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    setVisibleReject(true);
+                  }}
+                >
+                  Tolak
+                </Button>
+              </>
             ) : dataBlock.usernamePenerima === user.username &&
               dataBlock.kuantitasBenihKg > 0 &&
               dataBlock.isConfirmed === true ? (
@@ -563,37 +664,73 @@ function ProductPage(props) {
                 >
                   Tambah Transaksi
                 </Button>
-              ) : (
-                <Button
-                  onClick={() => {
-                    console.log(dataBlock.id);
-                    confirmTrxByID(dataBlock.id);
-                  }}
-                  variant="contained"
-                  fullWidth
-                  color="primary"
-                >
-                  Konfirmasi Transaksi
-                </Button>
-              )
+              ) : dataBlock.isConfirmed === false &&
+                dataBlock.isRejected === false ? (
+                <>
+                  <Button
+                    onClick={() => {
+                      console.log(dataBlock.id);
+                      confirmTrxByID(dataBlock.id);
+                    }}
+                    variant="contained"
+                    fullWidth
+                    color="primary"
+                  >
+                    Konfirmasi Transaksi
+                  </Button>
+                  <Button
+                    style={{ marginTop: "10px" }}
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                      setVisibleReject(true);
+                    }}
+                  >
+                    Tolak
+                  </Button>
+                </>
+              ) : null
             ) : null
           ) : null}
 
           {user.orgName === "Pedagang" ? (
             dataBlock.usernamePenerima === user.username ? (
-              dataBlock.isConfirmed ? null : (
+              dataBlock.isConfirmed ? (
                 <Button
-                  onClick={() => {
-                    console.log(dataBlock.id);
-                    confirmTrxByID(dataBlock.id);
-                  }}
                   variant="contained"
+                  component={RouterLink}
+                  to="/create_transaction"
                   fullWidth
                   color="primary"
                 >
-                  Konfirmasi Transaksi
+                  Tambah Transaksi
                 </Button>
-              )
+              ) : dataBlock.isConfirmed === false &&
+                dataBlock.isRejected === false ? (
+                <>
+                  <Button
+                    onClick={() => {
+                      console.log(dataBlock.id);
+                      confirmTrxByID(dataBlock.id);
+                    }}
+                    variant="contained"
+                    fullWidth
+                    color="primary"
+                  >
+                    Konfirmasi Transaksi
+                  </Button>
+                  <Button
+                    style={{ marginTop: "10px" }}
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                      setVisibleReject(true);
+                    }}
+                  >
+                    Tolak
+                  </Button>
+                </>
+              ) : null
             ) : null
           ) : null}
           {/* v grid closes */}
@@ -926,21 +1063,74 @@ function ProductPage(props) {
             >
               Tutup
             </Button>
-            {/* {modalContent.usernamePenerima === user.username && (
-              <Button
-                onClick={() => {
-                  console.log(modalContent.id);
-                  // confirmTrxByID(modalContent.id);
-                }}
-                variant="contained"
-                color="primary"
-              >
-                Konfirmasi
-              </Button>
-            )} */}
           </DialogActions>
         </Dialog>
       </Container>
+      <Dialog open={visibleReject} onClose={handleRejectClose}>
+        <DialogTitle>Alasan penolakan</DialogTitle>
+        <DialogContent>
+          <FormControl>
+            <RadioGroup
+              aria-label="rejectReason"
+              name="rejectReason"
+              value={rejectReason}
+              onChange={handleRejectChange}
+            >
+              <FormControlLabel
+                value="Harga tidak sesuai"
+                control={<Radio />}
+                label="Harga tidak sesuai"
+              />
+              <FormControlLabel
+                value="Kuantitas tidak sesuai"
+                control={<Radio />}
+                label="Kuantitas tidak sesuai"
+              />
+              <FormControlLabel
+                value="Atribut tidak sesuai"
+                control={<Radio />}
+                label="Atribut tidak sesuai"
+              />
+            </RadioGroup>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            disabled={rejectReason === ""}
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              if (user.orgName === "Petani") {
+                console.log(dataBlock.benihAsetID);
+                console.log(dataBlock.kuantitasBenihKg);
+                console.log(dataBlock.txID1);
+                rejectTrxByID(
+                  dataBlock.benihAsetID,
+                  dataBlock.kuantitasBenihKg,
+                  dataBlock.txID1,
+                  rejectReason
+                );
+              } else if (user.orgName === "Pengumpul") {
+                rejectTrxByID(
+                  dataBlock.bawangAsetID,
+                  dataBlock.kuantitasBawangKg,
+                  dataBlock.txID2,
+                  rejectReason
+                );
+              } else if (user.orgName === "Pedagang") {
+                rejectTrxByID(
+                  dataBlock.txID2,
+                  dataBlock.kuantitasBawangKg,
+                  dataBlock.txID3,
+                  rejectReason
+                );
+              }
+            }}
+          >
+            Tolak Transaksi
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

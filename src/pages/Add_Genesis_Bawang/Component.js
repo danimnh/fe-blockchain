@@ -125,7 +125,7 @@ function Add_Genesis(props) {
                   color="primary"
                   type="submit"
                 >
-                  Tambah Asset
+                  Registrasi Benih
                 </Button>
               </div>
               <DialogConfirmation
