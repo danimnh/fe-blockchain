@@ -87,7 +87,7 @@ function Welcome(props) {
                   to="/update_genesis"
                   className={classes.button}
                 >
-                  Atur Asset Penangkar
+                  Tambah Kuantitas Benih
                 </Button>
                 <Button
                   variant="outlined"
@@ -96,7 +96,7 @@ function Welcome(props) {
                   to="/add_genesis"
                   className={classes.button}
                 >
-                  Tambahkan Benih Baru
+                  Registrasi Benih Baru
                 </Button>
               </>
             )}

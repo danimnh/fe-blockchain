@@ -94,15 +94,6 @@ function ConvertGenesis() {
         {genesisList.length === 0 ? (
           <>
             <p>Anda belum memiliki aset Benih.</p>
-            {/* <Button
-              variant="outlined"
-              component={RouterLink}
-              color="primary"
-              to="/add_genesis"
-              className={classes.button}
-            >
-              Tambahkan Benih Baru
-            </Button> */}
           </>
         ) : (
           <>

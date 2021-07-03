@@ -78,7 +78,7 @@ function Add_Genesis(props) {
     <>
       <Meta title="Add_Transaction" description="Add_Transaction" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h6">Tambah Asset Benih</Typography>
+        <Typography variant="h6">Registrasi Benih Baru</Typography>
         <Grid container className={classes.rowDetail} item xs={12}>
           <Grid item xs={12}>
             <p>

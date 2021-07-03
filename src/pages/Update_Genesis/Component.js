@@ -82,7 +82,7 @@ function Update_Genesis() {
 
       <Meta title="Add_Transaction" description="Add_Transaction" />
       <Container maxWidth="sm" className={classes.root}>
-        <Typography variant="h6">Update Asset Benih</Typography>
+        <Typography variant="h6">Tambah Kuantitas Benih</Typography>
         {genesisList.length === 0 ? (
           <>
             <p>Anda belum memiliki aset Benih.</p>
@@ -93,7 +93,7 @@ function Update_Genesis() {
               to="/add_genesis"
               className={classes.button}
             >
-              Tambahkan Benih Baru
+              Registrasi Benih Baru
             </Button>
           </>
         ) : (
@@ -130,7 +130,7 @@ function Update_Genesis() {
                       color="primary"
                       type="submit"
                     >
-                      Tambah Asset
+                      Tambah Kuantitas Benih
                     </Button>
                   </div>
                   <DialogConfirmation
@@ -140,7 +140,7 @@ function Update_Genesis() {
                     handleClose={() => {
                       setVisible(false);
                     }}
-                    dialogTitle="Tambah Asset"
+                    dialogTitle="Tambah Kuantitas Benih"
                     fcnName="AddBenihKuantitasByID"
                     user={user}
                   />
