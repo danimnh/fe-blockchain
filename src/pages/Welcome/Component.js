@@ -55,7 +55,7 @@ function Welcome(props) {
         <p>atau</p>
         <TextField
           variant="outlined"
-          placeholder="Masukkan Serial Number Produk"
+          placeholder="Masukkan ID Transaksi"
           value={qrRead}
           onChange={handleChange}
           style={{ width: 300 }}

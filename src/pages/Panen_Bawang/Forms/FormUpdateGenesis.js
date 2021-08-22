@@ -29,7 +29,7 @@ export default function FormUpdateGenesis(props) {
   } = props;
 
   return (
-    <div style={{ paddingTop: 20 }}>
+    <div>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           {props.genesisList.map((genesis) => {
