@@ -695,17 +695,7 @@ function ProductPage(props) {
 
           {user.orgName === "Pedagang" ? (
             dataBlock.usernamePenerima === user.username ? (
-              dataBlock.isConfirmed ? (
-                <Button
-                  variant="contained"
-                  component={RouterLink}
-                  to="/create_transaction"
-                  fullWidth
-                  color="primary"
-                >
-                  Tambah Transaksi
-                </Button>
-              ) : dataBlock.isConfirmed === false &&
+              dataBlock.isConfirmed ? null : dataBlock.isConfirmed === false &&
                 dataBlock.isRejected === false ? (
                 <>
                   <Button
