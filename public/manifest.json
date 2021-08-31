@@ -1,5 +1,5 @@
 {
-  "short_name": "blockchain-hortikultura-ipb",
+  "short_name": "Blockchain-based Supply Chain Management System for Shallot Commodity",
   "name": "Blockchain-based Supply Chain Management System for Shallot Commodity",
   "icons": [
     {
@@ -19,7 +19,7 @@
     }
   ],
   "start_url": ".",
-  "display": "fullscreen",
+  "display": "standalone",
   "theme_color": "#111",
   "background_color": "#111"
 }
