@@ -1,6 +1,6 @@
 [{
-        "relation": ["delegate_permission/common.handle_all_urls"],
-        "target" : { "namespace": "android_app", "package_name": "app.netlify.blockchain_bawang_ipb.twa",
-                     "sha256_cert_fingerprints": ["0A:DB:29:3B:8A:6B:63:12:0C:A1:04:C9:DC:D9:9F:A1:78:C2:0C:9B:38:97:4D:C4:CD:E7:16:0A:1F:99:65:37"] }
-      }
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "app.netlify.blockchain_bawang_ipb.twa",
+                   "sha256_cert_fingerprints": ["E3:97:2A:BD:3C:F4:99:D4:06:92:85:0E:FD:6A:DB:D1:D6:5D:53:54:D0:92:B8:92:49:14:BA:F5:07:26:88:43"] }
+    }
 ]
