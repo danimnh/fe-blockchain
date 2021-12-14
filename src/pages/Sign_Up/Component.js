@@ -98,9 +98,6 @@ function SignUpPage(props) {
       let stringValue = values;
       stringValue.noHP = values.noHP.toString();
       stringValue.luasLahanHa = parseFloat(values.luasLahanHa);
-      // stringValue.noKK = values.noKK.toString();
-      // stringValue.noNPWP = values.noNPWP.toString();
-      // stringValue.nik = values.nik.toString();
       if (values.orgName === "Petani" || values.orgName === "Penangkar") {
         delete stringValue.alamatToko;
       } else if (

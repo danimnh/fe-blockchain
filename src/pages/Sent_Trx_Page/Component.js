@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-// import { Link as RouterLink } from "react-router-dom";
-// import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import moment from "moment";
 import NumberFormat from "react-number-format";
@@ -27,7 +25,6 @@ import {
 } from "@material-ui/core";
 import QRCode from "qrcode.react";
 import Meta from "components/Meta";
-// import { useHistory } from "react-router-dom";
 
 import getUsername from "../../constants/GetUsername";
 import getUserOrgName from "../../constants/GetUserOrgName";
@@ -43,7 +40,6 @@ function SentTrx(props) {
   const [sentTrx, setSentTrx] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
   const [modalContent, setModalContent] = React.useState([]);
-  // const history = useHistory();
   const downloadQRCode = () => {
     console.log(modalContent.id);
     const qrCodeURL = document

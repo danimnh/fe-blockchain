@@ -10,15 +10,12 @@ import UpdateGenesis from "pages/Update_Genesis";
 import ConvertGenesis from "pages/Convert_Genesis_Bawang";
 import PanenBawang from "pages/Panen_Bawang";
 
-// import TransactionList from "pages/TransactionList";
 import SentTrx from "pages/Sent_Trx_Page";
 import InboxTrx from "pages/Inbox_Trx_Page";
 
 import Page from "components/Page";
 
 import { Switch, Route } from "react-router-dom";
-
-// import routes from "routes";
 
 function Content({
   user,
@@ -30,9 +27,6 @@ function Content({
   return (
     <Page>
       <Switch>
-        {/* {routes.map((route) => (
-          <Route {...route} key={route.path || "#"} handleLogin={handleLogin} />
-        ))} */}
         <Route
           exact
           path="/"

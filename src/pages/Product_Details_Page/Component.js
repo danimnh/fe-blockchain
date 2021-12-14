@@ -5,9 +5,6 @@ import {
   Typography,
   Container,
   Button,
-  // Card,
-  // CardContent,
-  // CardActionArea,
 } from "@material-ui/core";
 
 import Meta from "components/Meta";

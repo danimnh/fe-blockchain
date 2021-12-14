@@ -2,7 +2,6 @@ import React from "react";
 
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 
-// import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 
@@ -15,8 +14,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-
-// import { FaHome as WelcomeIcon } from "react-icons/fa";
 
 import { isMobile } from "utils";
 
@@ -40,12 +37,6 @@ function Menu({
   });
   const [openPending, setOpenPending] = React.useState(false);
   const [openConfirmed, setOpenConfirmed] = React.useState(false);
-  // const [selectedIndex, setSelectedIndex] = React.useState(0);
-
-  // const handleListItemClick = (index) => {
-  //   onClose();
-  //   setSelectedIndex(index);
-  // };
 
   const handleClickPending = () => {
     setOpenPending(!openPending);
@@ -71,9 +62,6 @@ function Menu({
           component={RouterLink}
           to="/"
         >
-          {/* <ListItemIcon>
-            <WelcomeIcon />
-          </ListItemIcon> */}
           <ListItemText primary="Halaman Utama" />
         </StyledMenuItem>
         <StyledMenuItem
@@ -142,7 +130,6 @@ function Menu({
         </Collapse>
         <StyledMenuItem
           onClick={(onClose, props.dialogLogout)}
-          // component={RouterLink}
         >
           <ListItemText primary="Logout" />
         </StyledMenuItem>

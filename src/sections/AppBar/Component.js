@@ -8,20 +8,13 @@ import Box from "@material-ui/core/Box";
 import DividerMU from "@material-ui/core/Divider";
 import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
-// import { MdNotifications } from "react-icons/md";
-import {
-  // FaBrush as BrushIcon,
-  FaRedo as RedoIcon,
-  FaBars as MenuIcon,
-  // FaGithub as GithubIcon,
-} from "react-icons/fa";
+
+import { FaRedo as RedoIcon, FaBars as MenuIcon } from "react-icons/fa";
 
 import Link from "components/Link";
 
-// import useTheme from "store/theme";
 import useSW from "store/sw";
 
-// import { title, repository } from "config";
 import { title } from "config";
 
 import useStyles from "./styles";
@@ -35,12 +28,7 @@ const Divider = withStyles({
 
 function AppBar_({ onMenuOpen, handleListItemClick }) {
   const classes = useStyles();
-  // const [, themeActions] = useTheme();
   const [swState, swActions] = useSW();
-
-  // function handleToggleTheme() {
-  //   themeActions.toggle();
-  // }
 
   function handleAppUpdate() {
     swActions.update();
@@ -88,33 +76,8 @@ function AppBar_({ onMenuOpen, handleListItemClick }) {
               <Divider />
             </>
           )}
-          {/* <Tooltip title="It's open source" arrow>
-            <IconButton
-              aria-label="go to github page"
-              component="a"
-              target="_blank"
-              rel="noreferrer"
-              href={repository}
-            >
-              <GithubIcon /> 
-            </IconButton>
-          </Tooltip> */}
-          {/* <Tooltip title="Change theme" arrow>
-            <IconButton
-              aria-label="toggle theme"
-              edge="end"
-              onClick={handleToggleTheme}
-            >
-              <BrushIcon />
-            </IconButton>
-          </Tooltip> */}
 
-          {/* <Button onClick={props.handleLogout}>Logout</Button> */}
           <Divider />
-
-          {/* <IconButton edge="end" onClick={onNotifOpen}>
-            <MdNotifications />
-          </IconButton> */}
         </Box>
       </Toolbar>
     </AppBar>

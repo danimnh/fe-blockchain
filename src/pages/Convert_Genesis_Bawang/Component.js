@@ -19,7 +19,6 @@ import UpdateGenesisFields from "./Form_Models/UpdateGenesisModels";
 import FormUpdateGenesis from "./Forms/FormUpdateGenesis";
 
 const { UpdateGenesisFormFields } = UpdateGenesisFields;
-//TANAM BAWANG
 function ConvertGenesis() {
   const classes = useStyles();
   const [user, setUser] = React.useState();

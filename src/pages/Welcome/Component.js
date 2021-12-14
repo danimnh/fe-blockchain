@@ -9,11 +9,6 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-// import { FaReact as ReactIcon } from "react-icons/fa";
-// import ipb_logo from "./ipb-logo.png";
-// import kementan_logo from "./kementan-logo-horizontal.jpg";
-// import arung_logo from "./arung-logo.png";
-
 import Meta from "components/Meta";
 
 import useStyles from "./styles";

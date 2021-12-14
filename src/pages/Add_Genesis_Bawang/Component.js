@@ -6,9 +6,6 @@ import {
   Typography,
   Container,
   Button,
-  // Card,
-  // CardContent,
-  // CardActionArea,
 } from "@material-ui/core";
 
 import { Formik, Form } from "formik";
@@ -21,7 +18,6 @@ import PkrAddTrxFields from "./Form_Models/PkrAddTrxModels";
 import FormPkrAddTrx from "./Forms/FormPkrAddTrx";
 
 const { PkrAddTrxFormFields } = PkrAddTrxFields;
-// todo : do this next
 function _renderStepContent() {
   return <FormPkrAddTrx PkrAddTrxFields={PkrAddTrxFormFields} />;
 }
