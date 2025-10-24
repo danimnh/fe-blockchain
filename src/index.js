@@ -4,7 +4,8 @@ import { getActions as getSWActions } from "store/sw";
 
 import "./global.css";
 
-axios.defaults.baseURL = process.env.BC_API_URL;
+axios.defaults.baseURL = process.env.REACT_APP_BC_API_URL;
+console.log("reading backend url: ", axios.defaults.baseURL);
 
 if (!document.ie) {
   // check for ie

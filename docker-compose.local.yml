@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   bm-frontend:
@@ -10,3 +10,6 @@ services:
     environment:
       PORT: ${PORT}
       REACT_APP_BC_API_URL: ${REACT_APP_BC_API_URL}
+    env_file:
+        - .env
+

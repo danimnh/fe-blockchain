@@ -13,6 +13,8 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 RUN npm run build --legacy-peer-deps
 
+RUN cp -r public build/
+
 # Install pm2 globally
 RUN npm install -g pm2
 
