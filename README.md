@@ -43,10 +43,18 @@ https://repository.ipb.ac.id/handle/123456789/108003
 
 ## Reproduce
 
+Make sure to use Node 16
+```bash
+nvm install 16
+nvm use 16
+```
+
 ```bash
 npm install
 npm run start
 ```
+
+App will ask for camera permissions, please do allow permission.
 
 ## Note
 

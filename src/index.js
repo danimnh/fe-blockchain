@@ -4,7 +4,7 @@ import { getActions as getSWActions } from "store/sw";
 
 import "./global.css";
 
-axios.defaults.baseURL = "https://bm-network.rfq.my.id";
+axios.defaults.baseURL = process.env.BC_API_URL;
 
 if (!document.ie) {
   // check for ie
